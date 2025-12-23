@@ -1,38 +1,53 @@
-<Daily verses html>
+<!DOCTYPE html>
 <html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Daily Verse - Christ Mandir</title>
-    
-    <link rel="stylesheet" href="style.css">
+    <title>Christ Mandir - Pro Editor</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@400;600;700&family=Tenali+Ramakrishna&family=Suranna&family=Ramabhadra&family=Mallanna&family=Mandali&family=NTR&family=Peddana&family=Timmana&family=Dhurjati&family=Gurajada&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        /* --- EDITOR STYLES --- */
-        :root { --gold: #D4AF37; --bg: #f2f2f2; }
+        :root { --gold: #D4AF37; --bg: #e8e8e8; }
         
-        /* Adjust Main for Editor Layout - Full Height minus Header */
-        main {
-            padding: 0 !important;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            /* Only subtract Header height (~70px) since footer is gone */
-            height: calc(100vh - 70px); 
-            min-height: 600px;
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            margin: 0; padding: 0; background: var(--bg); 
+            height: 100vh; font-family: 'Poppins', sans-serif; 
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
         }
 
-        /* SHELL */
+        /* --- UNIFIED SHELL --- */
         .app-shell {
-            width: 100%; height: 100%;
+            width: 100%; max-width: 450px; height: 100%;
             background: #fff;
-            display: flex; flex-direction: row;
+            display: flex; flex-direction: column;
+            box-shadow: 0 0 60px rgba(0,0,0,0.15);
+            border-radius: 0px; 
+            transition: max-width 0.3s;
         }
 
-        /* PREVIEW AREA */
+        /* Desktop Expansion Logic */
+        @media (min-width: 900px) {
+            .app-shell { 
+                max-width: 900px; /* Wider on desktop */
+                flex-direction: row; /* Side by side on desktop */
+                height: 85vh;
+                border-radius: 20px; /* Nice curves on desktop */
+                overflow: hidden;
+            }
+            .preview-zone { border-right: 1px solid #ddd; }
+            .controls-zone { 
+                width: 400px; 
+                overflow-y: auto; 
+                border-top: none !important;
+            }
+        }
+
+        /* --- PREVIEW ZONE --- */
         .preview-zone {
             flex: 1;
             background: #eef2f5; 
@@ -49,61 +64,74 @@
             border-radius: 30px; 
         }
 
-        /* CONTROLS AREA */
+        /* --- CONTROLS ZONE --- */
         .controls-zone {
-            width: 350px;
             background: #fff;
-            padding: 20px; 
+            padding: 20px 25px; 
             z-index: 10;
-            border-left: 1px solid #eee;
-            flex-shrink: 0; 
-            display: flex; flex-direction: column; gap: 10px;
-            overflow-y: auto;
+            border-top: 1px solid #eee;
+            display: flex; flex-direction: column; gap: 12px;
         }
 
-        h2.editor-title { margin: 0 0 10px 0; font-size: 14px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 5px; display: inline-block;}
+        h2 { margin: 0 0 5px 0; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
 
+        /* Inputs */
         textarea {
-            width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 10px;
-            font-family: 'Hind Guntur', sans-serif; font-size: 13px; 
+            width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 12px;
+            font-family: 'Hind Guntur', sans-serif; font-size: 14px; 
             background: #f8f9fa; transition: 0.2s;
             min-height: 60px; resize: none;
         }
-        textarea:focus { border-color: var(--gold); background: #fff; outline: none; }
+        textarea:focus { border-color: var(--gold); background: #fff; }
 
-        .compact-row { display: flex; gap: 8px; }
+        .compact-row { display: flex; gap: 10px; }
         
         .compact-input {
-            flex: 1; padding: 0 10px; height: 40px; 
-            border: 1px solid #e0e0e0; border-radius: 10px;
+            flex: 1; padding: 0 12px; height: 45px; 
+            border: 1px solid #e0e0e0; border-radius: 12px;
             font-size: 12px; background: #f8f9fa; font-family: 'Hind Guntur', sans-serif;
-            width: 100%;
         }
         
         .file-btn {
             flex: 1; display: flex; align-items: center; justify-content: center;
-            height: 40px; background: #f0f0f0; border: 1px dashed #ccc; 
-            border-radius: 10px; color: #555; font-size: 10px; font-weight: 600; cursor: pointer;
+            height: 45px; background: #f0f0f0; border: 1px dashed #ccc; 
+            border-radius: 12px; color: #555; font-size: 11px; font-weight: 600; cursor: pointer;
         }
         input[type="file"] { display: none; }
 
-        button.editor-btn {
-            border: none; border-radius: 10px; cursor: pointer;
-            font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
-            transition: transform 0.1s; height: 40px;
+        /* Buttons */
+        button {
+            border: none; border-radius: 12px; cursor: pointer;
+            font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+            transition: transform 0.1s; height: 45px;
         }
-        button.editor-btn:active { transform: scale(0.96); }
+        button:active { transform: scale(0.96); }
 
         .btn-bg { flex: 1; background: #333; color: #fff; }
         .btn-style { flex: 1; background: #666; color: #fff; }
-        .btn-dl { width: 100%; background: var(--gold); color: #000; height: 45px; font-size: 12px; letter-spacing: 1px; border-radius: 50px; margin-top: 5px; }
+        .btn-dl { width: 100%; background: var(--gold); color: #000; height: 50px; font-size: 13px; letter-spacing: 1px; border-radius: 50px; margin-top: auto; }
 
-        /* CARD STYLES */
+        /* --- PRO DESKTOP PANEL (Hidden on Mobile) --- */
+        .desktop-pro { display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+        
+        @media (min-width: 900px) {
+            .desktop-pro { display: block; }
+        }
+
+        .swatch-grid { display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
+        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .color-dot:hover { transform: scale(1.1); }
+        
+        .font-btn { padding: 5px 10px; font-size: 10px; border: 1px solid #ddd; background: #fff; border-radius: 8px; cursor: pointer; }
+        .font-btn:hover { background: #eee; }
+
+        /* --- CARD STYLES --- */
         .verse-card { width: 380px; height: 506px; position: relative; overflow: hidden; border-radius: 30px; background: #000; }
         .bg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; transform: scale(1.1); transition: 0.5s; }
         .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; transition: 0.5s; }
         .inner-frame { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; border-radius: 20px; z-index: 2; pointer-events: none; transition: 0.5s; }
         .content { position: relative; z-index: 4; height: 400px; padding: 45px; display: flex; flex-direction: column; box-sizing: border-box; transition: 0.5s; }
+        
         .v-text { font-size: 28px; line-height: 1.6; font-weight: 700; width: 100%; transition: 0.3s; }
         .v-ref { font-size: 13px; margin-top: 20px; display: inline-block; transition: 0.3s; }
         
@@ -120,9 +148,10 @@
         .ref-minimal { padding: 5px 0; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; font-weight: 400; font-style: italic; letter-spacing: 1px; background: transparent !important; }
         .ref-glass { padding: 8px 24px; border-radius: 8px; background: rgba(255,255,255,0.15) !important; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); font-weight: 700; letter-spacing: 1px; }
 
+        /* BANNER */
         .banner { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 340px; height: 82px; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.4); border-radius: 18px; }
         .banner-left { display: flex; align-items: center; }
-        .logo-img { height: 55px; width: auto; border-radius: 5px; margin-right: 8px; object-fit: contain; }
+        .logo-img { height: 42px; width: auto; border-radius: 5px; margin-right: 8px; object-fit: contain; }
         .banner-date { font-size: 9px; font-weight: 800; color: #fff; border-left: 1.2px solid rgba(255,255,255,0.4); border-right: 1.2px solid rgba(255,255,255,0.4); padding: 0 8px; white-space: nowrap; letter-spacing: 0.5px; }
         .cross-icon { color: rgba(255, 255, 255, 0.9); margin-right: 8px; width: 14px; height: 14px; flex-shrink: 0; }
         .person-info { display: flex; align-items: center; gap: 10px; }
@@ -130,97 +159,114 @@
         .author-name { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.3px; white-space: nowrap; }
         .brand-main { font-size: 10px; font-weight: 900; color: #fff; letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap; }
         .brand-tagline { font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.85); text-transform: uppercase; letter-spacing: 1.2px; white-space: nowrap; }
-        .person-photo { height: 56px; width: 56px; border-radius: 50%; border: 1.5px solid #fff; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
+        .person-photo { height: 55px; width: 55px; border-radius: 50%; border: 1.5px solid #fff; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
 
-        /* --- MOBILE OPTIMIZATION --- */
-        @media (max-width: 900px) {
-            .app-shell { flex-direction: column; }
-            
-            /* Preview on Top - REDUCED HEIGHT */
-            .preview-zone { 
-                flex: none; 
-                height: 35vh; /* Reduced to 35% */
-                width: 100%; 
-            }
-            
-            /* Controls on Bottom - INCREASED HEIGHT */
-            .controls-zone { 
-                width: 100%; 
-                height: 65vh; /* Increased to 65% */
-                border-left: none;
-                border-top: 1px solid #eee;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-            }
+        /* --- PREVIEW MODAL --- */
+        #preview-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.95); z-index: 10000; 
+            flex-direction: column; justify-content: center; align-items: center; 
         }
+        
+        /* Image Initial State */
+        #preview-img { 
+            max-width: 85%; max-height: 75vh; 
+            border-radius: 20px; border: 2px solid var(--gold); 
+            cursor: zoom-in; /* Indicates clickable */
+            transition: all 0.3s ease;
+        }
+
+        /* Image ZOOM State */
+        #preview-img.zoomed {
+            max-width: none; max-height: none;
+            width: 100%; height: auto;
+            border-radius: 0; border: none;
+            cursor: zoom-out;
+            margin: auto;
+        }
+
+        /* When zoomed, allow scrolling the modal */
+        #preview-modal.scroll-mode {
+            display: block; overflow-y: auto; padding-top: 0;
+        }
+
+        .modal-btn { background: var(--gold); color: #000; padding: 12px 50px; margin-top: 20px; border-radius: 30px; font-weight: 700; cursor: pointer; border: none; z-index: 10001; position: relative; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">Christ Mandir</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html"><span>🏠</span> Home</a></li>
-                <li><a href="bible.html"><span>📖</span> Bible</a></li>
-                <li><a href="quiz.html"><span>❓</span> Quiz</a></li>
-                <li><a href="dailyverse.html" class="active"><span>✨</span> Verse</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <div class="app-shell">
-            <div class="preview-zone">
-                <div id="card-scaler">
-                    <div class="verse-card" id="mainCard">
-                        <div id="bg-layer" class="bg-layer"></div>
-                        <div id="overlay-layer" class="overlay-layer"></div>
-                        <div id="frame-layer" class="inner-frame"></div>
-                        <div id="content-layer" class="content pos-center">
-                            <div id="verse-text" class="v-text"></div>
-                            <div id="verse-ref" class="v-ref"></div>
+<div class="app-shell">
+    
+    <div class="preview-zone">
+        <div id="card-scaler">
+            <div class="verse-card" id="mainCard">
+                <div id="bg-layer" class="bg-layer"></div>
+                <div id="overlay-layer" class="overlay-layer"></div>
+                <div id="frame-layer" class="inner-frame"></div>
+                <div id="content-layer" class="content pos-center">
+                    <div id="verse-text" class="v-text"></div>
+                    <div id="verse-ref" class="v-ref"></div>
+                </div>
+                <div class="banner">
+                    <div class="banner-left">
+                        <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="logo-img">
+                        <svg class="cross-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V22M4 8H20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                        <div class="banner-date" id="bannerDate">...</div>
+                    </div>
+                    <div class="person-info">
+                        <div class="person-text">
+                            <div class="author-name">Rev. A Daniel Paul</div>
+                            <div class="brand-main">CHRIST MANDIR</div>
+                            <div class="brand-tagline">Daily Bread</div>
                         </div>
-                        <div class="banner">
-                            <div class="banner-left">
-                                <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="logo-img">
-                                <svg class="cross-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V22M4 8H20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-                                <div class="banner-date" id="bannerDate">...</div>
-                            </div>
-                            <div class="person-info">
-                                <div class="person-text">
-                                    <div class="author-name">Rev. A Daniel Paul</div>
-                                    <div class="brand-main">CHRIST MANDIR</div>
-                                    <div class="brand-tagline">Daily Bread</div>
-                                </div>
-                                <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" class="person-photo">
-                            </div>
-                        </div>
+                        <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" class="person-photo">
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="controls-zone">
-                <h2 class="editor-title">Content Editor</h2>
-                <textarea id="inputVerse" placeholder="Type Verse Here..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
-                
-                <div class="compact-row">
-                    <input type="text" class="compact-input" id="inputRef" placeholder="Reference" value="యెషయా 54:17" oninput="updateText()">
-                    <label for="bgUpload" class="file-btn">📂 Image</label>
-                    <input type="file" id="bgUpload" accept="image/*" onchange="uploadBg(this)">
-                </div>
-                
-                <div class="compact-row">
-                    <button class="editor-btn btn-bg" onclick="refreshBackground()">🖼 New BG</button>
-                    <button class="editor-btn btn-style" onclick="refreshStyle()">🎨 New Style</button>
-                </div>
-                
-                <button class="editor-btn btn-dl" onclick="downloadCard()">⬇ Save & Share</button>
+    <div class="controls-zone">
+        <h2>Content Editor</h2>
+        
+        <textarea id="inputVerse" placeholder="Type Verse Here..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
+        
+        <div class="compact-row">
+            <input type="text" class="compact-input" id="inputRef" placeholder="Reference" value="యెషయా 54:17" oninput="updateText()">
+            <label for="bgUpload" class="file-btn">📂 Image</label>
+            <input type="file" id="bgUpload" accept="image/*" onchange="uploadBg(this)">
+        </div>
+
+        <div class="compact-row">
+            <button class="btn-bg" onclick="refreshBackground()">🖼 Shuffle BG</button>
+            <button class="btn-style" onclick="refreshStyle()">🎨 Shuffle Style</button>
+        </div>
+
+        <div class="desktop-pro">
+            <h2>Pro Controls (Desktop Only)</h2>
+            <div class="swatch-grid">
+                <div class="color-dot" style="background:#D4AF37" onclick="setTheme('#D4AF37')"></div>
+                <div class="color-dot" style="background:#fff" onclick="setTheme('#ffffff')"></div>
+                <div class="color-dot" style="background:#00F2FE" onclick="setTheme('#00F2FE')"></div>
+                <div class="color-dot" style="background:#E0B0FF" onclick="setTheme('#E0B0FF')"></div>
+                <button class="font-btn" onclick="setFont('Hind Guntur')">Guntur</button>
+                <button class="font-btn" onclick="setFont('Tenali Ramakrishna')">Tenali</button>
+                <button class="font-btn" onclick="setFont('Suranna')">Suranna</button>
             </div>
         </div>
-    </main>
+        
+        <button class="btn-dl" onclick="downloadCard()">⬇ Save & Share</button>
+    </div>
 
-    <script>
-    // 1. Editor Variables
+</div>
+
+<div id="preview-modal">
+    <img id="preview-img" src="" onclick="toggleZoom(this)">
+    <button class="modal-btn" onclick="document.getElementById('preview-modal').style.display='none'">Close</button>
+</div>
+
+<script>
+    /* --- ASSETS --- */
     const backgrounds = ["https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1000", "https://images.unsplash.com/photo-1493246507139-91e8bef99c02?w=1000", "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000", "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000"];
     const gradients = ['linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%)', 'radial-gradient(circle at top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.95) 100%)', 'linear-gradient(135deg, rgba(20,0,40,0.6), #000)', 'linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2), rgba(0,0,0,0.8))'];
     const frames = ['border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);', 'border: 2px solid #D4AF3733; box-shadow: inset 0 0 40px rgba(0,0,0,0.5);', 'border: 0.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);', ''];
@@ -229,18 +275,14 @@
     const textStyles = ['txt-glass', 'txt-strip', 'txt-quote', ''];
     const refStyles = ['ref-pill', 'ref-outline', 'ref-minimal', 'ref-glass'];
 
+    /* --- BASIC FUNCTIONS --- */
     function fitCardToScreen() {
         const wrapper = document.getElementById('card-scaler');
         const container = document.querySelector('.preview-zone');
-        // Subtract padding to find available space
-        const availableW = container.clientWidth - 40; 
-        const availableH = container.clientHeight - 40;
-        
-        // Card Dimensions
         const cardW = 380;
-        const cardH = 506;
-
-        let scale = Math.min(availableW / cardW, availableH / cardH, 1.1);
+        const availableW = container.clientWidth - 20; 
+        const availableH = container.clientHeight - 20;
+        let scale = Math.min(availableW / cardW, availableH / 506, 1);
         wrapper.style.transform = `scale(${scale})`;
     }
 
@@ -296,16 +338,36 @@
         r.className = `v-ref ${refSty}`;
     }
 
-    // --- HEAVY BLUR FIX + AUTO DOWNLOAD ---
-    async function downloadCard() {
-        const btn = document.querySelector('.btn-dl');
-        const originalText = btn.innerText;
-        btn.innerText = "Processing...";
+    /* --- PRO DESKTOP FUNCTIONS --- */
+    function setTheme(color) {
+        document.getElementById('verse-text').style.color = color;
+        // Also update reference if it's outline or minimal
+        document.getElementById('verse-ref').style.color = color;
+    }
+    
+    function setFont(fontName) {
+        document.getElementById('verse-text').style.fontFamily = fontName;
+        document.getElementById('verse-ref').style.fontFamily = fontName;
+    }
 
+    /* --- ZOOM FEATURE --- */
+    function toggleZoom(img) {
+        img.classList.toggle('zoomed');
+        const modal = document.getElementById('preview-modal');
+        if (img.classList.contains('zoomed')) {
+            modal.classList.add('scroll-mode');
+            modal.style.display = 'block'; // Ensure block display to allow scrolling
+        } else {
+            modal.classList.remove('scroll-mode');
+            modal.style.display = 'flex'; // Return to flex for centering
+        }
+    }
+
+    /* --- DOWNLOAD (Heavy Blur Fix) --- */
+    async function downloadCard() {
         const original = document.getElementById('mainCard');
         const clone = original.cloneNode(true);
 
-        // Position clone off-screen
         clone.style.transform = "none";
         clone.style.boxShadow = "none";
         clone.style.margin = "0";
@@ -314,45 +376,34 @@
         clone.style.top = "0";
         clone.style.zIndex = "9999";
         
-        // --- THE FIX ---
-        // 1. Remove the glass blur filter (html2canvas hates it)
+        // HEAVY BLUR FIX: Darker Gray + High Opacity
         const banner = clone.querySelector('.banner');
         banner.style.backdropFilter = "none";
         banner.style.webkitBackdropFilter = "none";
-        
-        // 2. Replace with a heavy, opaque gray to simulate the glass look
-        banner.style.background = "rgba(80, 80, 80, 0.95)"; 
-        banner.style.border = "1px solid rgba(120, 120, 120, 0.6)";
+        banner.style.background = "rgba(70, 70, 70, 0.9)"; // Darker Gray
+        banner.style.border = "1px solid rgba(100, 100, 100, 0.5)";
 
         document.body.appendChild(clone);
 
         try {
             const canvas = await html2canvas(clone, {
                 useCORS: true,
-                scale: 3, // High Resolution
+                scale: 3, 
                 width: 380,
                 height: 506,
                 backgroundColor: null
             });
-            
-            // Auto Download Logic
-            const link = document.createElement('a');
-            link.download = `ChristMandir_${Date.now()}.png`;
-            link.href = canvas.toDataURL("image/png");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            document.getElementById('preview-img').src = canvas.toDataURL("image/png");
+            // Reset zoom state on new open
+            document.getElementById('preview-img').classList.remove('zoomed');
+            document.getElementById('preview-modal').classList.remove('scroll-mode');
+            document.getElementById('preview-modal').style.display = 'flex';
+        } catch(e) { console.log(e); alert("Capture failed"); }
 
-        } catch(e) { 
-            console.log(e); 
-            alert("Capture failed"); 
-        } finally {
-            document.body.removeChild(clone);
-            btn.innerText = originalText;
-        }
+        document.body.removeChild(clone);
     }
 
     init();
-    </script>
+</script>
 </body>
 </html>
