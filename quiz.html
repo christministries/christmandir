@@ -13,7 +13,7 @@
             --wrong: #e74c3c;
             --bg-color: #f0f4f8;
             --whatsapp: #25D366;
-            --glass-nav: rgba(255, 255, 255, 0.9);
+            --glass-nav: rgba(255, 255, 255, 0.95);
             --text-main: #2d3436;
         }
 
@@ -25,10 +25,10 @@
             display: flex; justify-content: center; align-items: center; 
             min-height: 100vh; 
             background-color: var(--bg-color);
-            overflow: hidden; /* Prevent body scroll */
+            overflow: hidden; 
         }
 
-        /* --- DESKTOP BACKGROUND ANIMATION --- */
+        /* --- BACKGROUND ANIMATION (Desktop Only) --- */
         .background-shapes {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             overflow: hidden; z-index: -1; display: none;
@@ -38,11 +38,8 @@
         .shape-2 { width: 300px; height: 300px; background: #ffd700; bottom: -50px; right: -50px; animation-delay: -5s; }
         @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(30px, 50px); } }
 
-        /* --- PILL SHAPED NAVIGATION --- */
-        header {
-            position: fixed; z-index: 1000; transition: all 0.3s ease;
-        }
-
+        /* --- NAVIGATION --- */
+        header { position: fixed; z-index: 1000; transition: all 0.3s ease; }
         .nav-links { list-style: none; padding: 0; margin: 0; display: flex; }
         .nav-links li a { text-decoration: none; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
 
@@ -53,18 +50,24 @@
                 width: 90%; max-width: 350px; height: 65px;
                 background: var(--glass-nav);
                 backdrop-filter: blur(15px);
-                border-radius: 50px; /* Pill Shape */
+                border-radius: 50px; 
                 box-shadow: 0 10px 30px rgba(0,0,0,0.15);
                 border: 1px solid rgba(255,255,255,0.5);
             }
             .logo { display: none; }
-            .nav-links { height: 100%; justify-content: space-between; padding: 0 20px; }
+            .nav-links { height: 100%; justify-content: space-between; padding: 0 25px; }
             .nav-links li a { flex-direction: column; font-size: 0.7rem; color: #888; gap: 2px; }
             .nav-links li a span { font-size: 1.4rem; transition: 0.3s; }
             .nav-links li a.active { color: var(--primary); }
-            .nav-links li a.active span { transform: translateY(-3px); text-shadow: 0 5px 10px rgba(0,123,139,0.3); }
+            .nav-links li a.active span { transform: translateY(-3px); }
 
-            /* Mobile Button Fix */
+            /* CRITICAL FIX: Add extra padding to containers so content isn't hidden behind pill nav */
+            .quiz-container { height: 100vh !important; }
+            .welcome-page, .quiz-body-container, .result-screen {
+                padding-bottom: 120px !important; /* Enough space for floating nav + buttons */
+            }
+            
+            /* Mobile Buttons */
             .btn-group { flex-direction: row !important; gap: 10px; }
             .btn-action { font-size: 0.9rem !important; padding: 12px !important; }
         }
@@ -91,23 +94,39 @@
                 background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
                 border: 1px solid rgba(255,255,255,0.8);
             }
+
+            /* Desktop Buttons Fix: Side by Side & Smaller */
+            .btn-group { 
+                flex-direction: row !important; /* Force row */
+                gap: 15px; 
+            }
+            .btn-action { 
+                flex: 1; /* Equal width */
+                width: auto !important; 
+                padding: 10px 15px !important; /* Smaller padding */
+                font-size: 0.95rem !important; 
+                border-radius: 10px !important;
+            }
         }
 
-        /* --- MAIN CONTAINER --- */
+        /* --- MAIN LAYOUT --- */
         .quiz-container {
-            width: 100%; height: 100vh;
+            width: 100%; 
             display: flex; flex-direction: column;
             position: relative; overflow: hidden;
         }
 
-        /* Scrollable Content Areas with Bottom Padding for Pill Nav */
+        /* Scrollable Content */
         .welcome-page, .quiz-body-container, .result-screen {
             flex-grow: 1; display: flex; flex-direction: column;
             padding: 25px; overflow-y: auto;
-            /* CRITICAL: Space for Mobile Pill Nav so buttons aren't hidden */
-            padding-bottom: 100px; 
             animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            /* Scrollbar styling */
+            scrollbar-width: thin; scrollbar-color: #ccc transparent;
         }
+        .welcome-page::-webkit-scrollbar, .result-screen::-webkit-scrollbar { width: 6px; }
+        .welcome-page::-webkit-scrollbar-thumb, .result-screen::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 20px; }
+
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- WELCOME PAGE --- */
@@ -117,7 +136,7 @@
         
         .welcome-card {
             background: #fff; padding: 20px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: 15px;
         }
         .welcome-msg { color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
         
@@ -138,32 +157,27 @@
         /* --- QUIZ UI --- */
         .quiz-header {
             padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
-            background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.03); z-index: 10;
+            background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.03); z-index: 10; flex-shrink: 0;
         }
-        
-        /* TIMER ANIMATION */
         .timer-box {
-            width: 45px; height: 45px; border-radius: 50%;
+            width: 40px; height: 40px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            border: 3px solid var(--secondary); color: var(--primary); font-weight: 800;
+            border: 3px solid var(--secondary); color: var(--primary); font-weight: 800; font-size: 1rem;
             animation: pulseTimer 1s infinite;
         }
-        .timer-box.danger { 
-            border-color: var(--wrong); color: var(--wrong); 
-            animation: dangerPulse 0.5s infinite; 
-        }
-        @keyframes pulseTimer { 0% { box-shadow: 0 0 0 0 rgba(0,188,212,0.4); } 70% { box-shadow: 0 0 0 10px rgba(0,188,212,0); } 100% { box-shadow: 0 0 0 0 rgba(0,188,212,0); } }
+        .timer-box.danger { border-color: var(--wrong); color: var(--wrong); animation: dangerPulse 0.5s infinite; }
+        @keyframes pulseTimer { 0% { box-shadow: 0 0 0 0 rgba(0,188,212,0.4); } 70% { box-shadow: 0 0 0 5px rgba(0,188,212,0); } 100% { box-shadow: 0 0 0 0 rgba(0,188,212,0); } }
         @keyframes dangerPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        .q-progress { display: flex; gap: 5px; justify-content: center; margin: 20px 0; }
+        .q-progress { display: flex; gap: 5px; justify-content: center; margin: 15px 0; flex-shrink: 0; }
         .dot { height: 5px; flex: 1; background: #e0e0e0; border-radius: 5px; transition: 0.5s; }
-        .dot.active { background: var(--secondary); transform: scaleY(2); }
+        .dot.active { background: var(--secondary); transform: scaleY(1.5); }
         .dot.completed { background: var(--primary); }
 
-        .q-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 25px; }
+        .q-text { font-size: 1.25rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 25px; }
         
         .option-btn {
-            width: 100%; padding: 16px; margin-bottom: 12px; border: 2px solid #f0f0f0;
+            width: 100%; padding: 15px; margin-bottom: 12px; border: 2px solid #f0f0f0;
             border-radius: 15px; background: white; cursor: pointer; text-align: left;
             font-size: 1rem; color: #555; font-weight: 600; position: relative; overflow: hidden;
             transition: 0.2s; opacity: 0; transform: translateX(20px);
@@ -177,7 +191,7 @@
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
         /* --- RESULTS --- */
-        .result-content { text-align: center; margin-bottom: 20px; }
+        .result-content { text-align: center; margin-bottom: 15px; }
         .medal { font-size: 4rem; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
         
@@ -185,19 +199,21 @@
         
         .suggestion-card {
             background: #e0f7fa; border-left: 5px solid var(--secondary);
-            padding: 15px; border-radius: 10px; margin-top: 15px; text-align: left;
+            padding: 12px; border-radius: 10px; margin-top: 10px; text-align: left;
             font-size: 0.9rem; color: #006064; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        .review-area { text-align: left; margin-bottom: 15px; }
+        .review-area { text-align: left; margin-bottom: 10px; flex-grow: 1; }
         .review-item { padding: 12px; border-radius: 10px; background: #fff; border: 1px solid #eee; margin-bottom: 8px; font-size: 0.9rem; }
+        .review-item.correct { border-left: 4px solid var(--correct); background: #f4fff7; }
+        .review-item.wrong { border-left: 4px solid var(--wrong); background: #fff5f5; }
         
-        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
         .btn-action {
             width: 100%; padding: 15px; border-radius: 12px; border: none; color: white;
             font-weight: bold; cursor: pointer; text-decoration: none; text-align: center;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s;
+            display: flex; justify-content: center; align-items: center; gap: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s;
         }
         .btn-share { background: var(--whatsapp); }
         .btn-restart { background: var(--primary); }
@@ -321,8 +337,7 @@
     function loadQuestion() {
         if (currentQ >= quizSet.length) return finishGame();
         
-        const dots = document.querySelectorAll('.dot');
-        dots.forEach((d, i) => {
+        document.querySelectorAll('.dot').forEach((d, i) => {
             d.classList.remove('active');
             if(i < currentQ) d.classList.add('completed');
             if(i === currentQ) d.classList.add('active');
@@ -386,7 +401,6 @@
         const congrats = document.getElementById('congrats-text');
         const suggest = document.getElementById('suggestion-box');
 
-        // SUGGESTIONS & WARM MESSAGES
         if (score === 5) { 
             medal.innerText = "🥇"; 
             congrats.innerText = "అద్భుతం! (Excellent!)"; 
