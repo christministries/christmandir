@@ -3,48 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Christ Mandir - Pro Editor</title>
+    <title>Daily Verse - Christ Mandir</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@400;600;700&family=Tenali+Ramakrishna&family=Suranna&family=Ramabhadra&family=Mallanna&family=Mandali&family=NTR&family=Peddana&family=Timmana&family=Dhurjati&family=Gurajada&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        :root { --gold: #D4AF37; --bg: #e8e8e8; }
+        :root { --gold: #D4AF37; --bg: #f2f2f2; --nav-h: 60px; }
         
         * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
         
         body { 
             margin: 0; padding: 0; background: var(--bg); 
             height: 100vh; font-family: 'Poppins', sans-serif; 
-            display: flex; justify-content: center; align-items: center;
-            overflow: hidden;
+            display: flex; flex-direction: column; overflow: hidden;
         }
 
-        /* --- UNIFIED SHELL --- */
-        .app-shell {
-            width: 100%; max-width: 450px; height: 100%;
-            background: #fff;
+        /* --- 1. GLOBAL NAVIGATION --- */
+        header {
+            height: var(--nav-h); width: 100%; background: #fff;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 100;
+            border-bottom: 1px solid #eee; flex-shrink: 0;
+        }
+        .logo { font-weight: 800; font-size: 16px; letter-spacing: 1px; color: #111; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
+        .nav-links li a { 
+            text-decoration: none; color: #666; font-size: 12px; font-weight: 600; 
+            text-transform: uppercase; transition: 0.3s; display: flex; align-items: center; gap: 5px;
+        }
+        .nav-links li a:hover, .nav-links li a.active { color: var(--gold); }
+        .nav-links li a span { font-size: 14px; }
+
+        /* --- 2. MAIN LAYOUT --- */
+        main {
+            padding: 0; background: var(--bg);
             display: flex; flex-direction: column;
-            box-shadow: 0 0 60px rgba(0,0,0,0.15);
-            border-radius: 0px; 
-            transition: max-width 0.3s;
+            height: calc(100vh - var(--nav-h)); 
+            width: 100%;
         }
 
-        /* Desktop Expansion Logic */
-        @media (min-width: 900px) {
-            .app-shell { 
-                max-width: 900px; /* Wider on desktop */
-                flex-direction: row; /* Side by side on desktop */
-                height: 85vh;
-                border-radius: 20px; /* Nice curves on desktop */
-                overflow: hidden;
-            }
-            .preview-zone { border-right: 1px solid #ddd; }
-            .controls-zone { 
-                width: 400px; 
-                overflow-y: auto; 
-                border-top: none !important;
-            }
+        .app-shell {
+            width: 100%; height: 100%;
+            background: #fff;
+            display: flex; flex-direction: column; /* Mobile Default: Column */
         }
 
         /* --- PREVIEW ZONE --- */
@@ -55,6 +57,7 @@
             overflow: hidden;
             position: relative;
             padding: 20px;
+            cursor: zoom-in; /* Indicates clickable */
         }
 
         #card-scaler {
@@ -62,68 +65,79 @@
             transition: transform 0.3s ease;
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             border-radius: 30px; 
+            pointer-events: none; /* Passes clicks to container */
         }
+        /* Make internal card clickable for script */
+        .verse-card { pointer-events: auto; } 
 
         /* --- CONTROLS ZONE --- */
         .controls-zone {
+            width: 100%; /* Mobile default */
             background: #fff;
-            padding: 20px 25px; 
+            padding: 20px; 
             z-index: 10;
             border-top: 1px solid #eee;
-            display: flex; flex-direction: column; gap: 12px;
+            flex-shrink: 0; 
+            display: flex; flex-direction: column; gap: 10px;
+            overflow-y: auto;
         }
 
-        h2 { margin: 0 0 5px 0; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        /* --- DESKTOP LAYOUT (Split Screen) --- */
+        @media (min-width: 900px) {
+            .app-shell { 
+                flex-direction: row; /* Switch to Row */
+                max-width: 1200px; /* Limit max width */
+                margin: 0 auto; 
+                box-shadow: 0 0 50px rgba(0,0,0,0.05);
+            }
+            
+            .preview-zone { flex: 1; border-right: 1px solid #eee; }
+            
+            .controls-zone { 
+                width: 380px; /* Fixed sidebar width */
+                height: 100%; 
+                border-top: none;
+                border-left: 1px solid #eee;
+            }
+        }
 
-        /* Inputs */
+        /* --- UI ELEMENTS --- */
+        h2.editor-title { margin: 0 0 10px 0; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 5px; display: inline-block;}
+
         textarea {
             width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 12px;
             font-family: 'Hind Guntur', sans-serif; font-size: 14px; 
             background: #f8f9fa; transition: 0.2s;
-            min-height: 60px; resize: none;
+            min-height: 80px; resize: none;
         }
-        textarea:focus { border-color: var(--gold); background: #fff; }
+        textarea:focus { border-color: var(--gold); background: #fff; outline: none; }
 
         .compact-row { display: flex; gap: 10px; }
         
         .compact-input {
             flex: 1; padding: 0 12px; height: 45px; 
-            border: 1px solid #e0e0e0; border-radius: 12px;
+            border: 1px solid #e0e0e0; border-radius: 10px;
             font-size: 12px; background: #f8f9fa; font-family: 'Hind Guntur', sans-serif;
+            width: 100%;
         }
         
         .file-btn {
             flex: 1; display: flex; align-items: center; justify-content: center;
             height: 45px; background: #f0f0f0; border: 1px dashed #ccc; 
-            border-radius: 12px; color: #555; font-size: 11px; font-weight: 600; cursor: pointer;
+            border-radius: 10px; color: #555; font-size: 11px; font-weight: 600; cursor: pointer;
         }
         input[type="file"] { display: none; }
 
-        /* Buttons */
-        button {
-            border: none; border-radius: 12px; cursor: pointer;
+        button.editor-btn {
+            border: none; border-radius: 10px; cursor: pointer;
             font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
             transition: transform 0.1s; height: 45px;
         }
-        button:active { transform: scale(0.96); }
+        button.editor-btn:active { transform: scale(0.96); }
 
         .btn-bg { flex: 1; background: #333; color: #fff; }
         .btn-style { flex: 1; background: #666; color: #fff; }
-        .btn-dl { width: 100%; background: var(--gold); color: #000; height: 50px; font-size: 13px; letter-spacing: 1px; border-radius: 50px; margin-top: auto; }
-
-        /* --- PRO DESKTOP PANEL (Hidden on Mobile) --- */
-        .desktop-pro { display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
-        
-        @media (min-width: 900px) {
-            .desktop-pro { display: block; }
-        }
-
-        .swatch-grid { display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
-        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .color-dot:hover { transform: scale(1.1); }
-        
-        .font-btn { padding: 5px 10px; font-size: 10px; border: 1px solid #ddd; background: #fff; border-radius: 8px; cursor: pointer; }
-        .font-btn:hover { background: #eee; }
+        .btn-dl { width: 100%; background: var(--gold); color: #000; height: 50px; font-size: 13px; letter-spacing: 1px; border-radius: 50px; margin-top: 10px; box-shadow: 0 5px 15px rgba(212,175,55,0.3); }
 
         /* --- CARD STYLES --- */
         .verse-card { width: 380px; height: 506px; position: relative; overflow: hidden; border-radius: 30px; background: #000; }
@@ -131,7 +145,6 @@
         .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; transition: 0.5s; }
         .inner-frame { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; border-radius: 20px; z-index: 2; pointer-events: none; transition: 0.5s; }
         .content { position: relative; z-index: 4; height: 400px; padding: 45px; display: flex; flex-direction: column; box-sizing: border-box; transition: 0.5s; }
-        
         .v-text { font-size: 28px; line-height: 1.6; font-weight: 700; width: 100%; transition: 0.3s; }
         .v-ref { font-size: 13px; margin-top: 20px; display: inline-block; transition: 0.3s; }
         
@@ -148,10 +161,9 @@
         .ref-minimal { padding: 5px 0; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; font-weight: 400; font-style: italic; letter-spacing: 1px; background: transparent !important; }
         .ref-glass { padding: 8px 24px; border-radius: 8px; background: rgba(255,255,255,0.15) !important; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); font-weight: 700; letter-spacing: 1px; }
 
-        /* BANNER */
         .banner { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 340px; height: 82px; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.4); border-radius: 18px; }
         .banner-left { display: flex; align-items: center; }
-        .logo-img { height: 42px; width: auto; border-radius: 5px; margin-right: 8px; object-fit: contain; }
+        .logo-img { height: 55px; width: auto; border-radius: 5px; margin-right: 8px; object-fit: contain; }
         .banner-date { font-size: 9px; font-weight: 800; color: #fff; border-left: 1.2px solid rgba(255,255,255,0.4); border-right: 1.2px solid rgba(255,255,255,0.4); padding: 0 8px; white-space: nowrap; letter-spacing: 0.5px; }
         .cross-icon { color: rgba(255, 255, 255, 0.9); margin-right: 8px; width: 14px; height: 14px; flex-shrink: 0; }
         .person-info { display: flex; align-items: center; gap: 10px; }
@@ -159,114 +171,96 @@
         .author-name { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.3px; white-space: nowrap; }
         .brand-main { font-size: 10px; font-weight: 900; color: #fff; letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap; }
         .brand-tagline { font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.85); text-transform: uppercase; letter-spacing: 1.2px; white-space: nowrap; }
-        .person-photo { height: 55px; width: 55px; border-radius: 50%; border: 1.5px solid #fff; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
+        .person-photo { height: 56px; width: 56px; border-radius: 50%; border: 1.5px solid #fff; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
 
         /* --- PREVIEW MODAL --- */
         #preview-modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.95); z-index: 10000; 
+            background: rgba(0,0,0,0.98); z-index: 10000; 
             flex-direction: column; justify-content: center; align-items: center; 
-        }
-        
-        /* Image Initial State */
-        #preview-img { 
-            max-width: 85%; max-height: 75vh; 
-            border-radius: 20px; border: 2px solid var(--gold); 
-            cursor: zoom-in; /* Indicates clickable */
-            transition: all 0.3s ease;
-        }
-
-        /* Image ZOOM State */
-        #preview-img.zoomed {
-            max-width: none; max-height: none;
-            width: 100%; height: auto;
-            border-radius: 0; border: none;
             cursor: zoom-out;
-            margin: auto;
         }
-
-        /* When zoomed, allow scrolling the modal */
-        #preview-modal.scroll-mode {
-            display: block; overflow-y: auto; padding-top: 0;
+        #preview-img { 
+            max-width: 90%; max-height: 90vh; 
+            border: 2px solid var(--gold); border-radius: 10px; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
-
-        .modal-btn { background: var(--gold); color: #000; padding: 12px 50px; margin-top: 20px; border-radius: 30px; font-weight: 700; cursor: pointer; border: none; z-index: 10001; position: relative; }
+        #loader { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--gold); font-weight: 800; font-size: 14px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-<div class="app-shell">
-    
-    <div class="preview-zone">
-        <div id="card-scaler">
-            <div class="verse-card" id="mainCard">
-                <div id="bg-layer" class="bg-layer"></div>
-                <div id="overlay-layer" class="overlay-layer"></div>
-                <div id="frame-layer" class="inner-frame"></div>
-                <div id="content-layer" class="content pos-center">
-                    <div id="verse-text" class="v-text"></div>
-                    <div id="verse-ref" class="v-ref"></div>
-                </div>
-                <div class="banner">
-                    <div class="banner-left">
-                        <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="logo-img">
-                        <svg class="cross-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V22M4 8H20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-                        <div class="banner-date" id="bannerDate">...</div>
-                    </div>
-                    <div class="person-info">
-                        <div class="person-text">
-                            <div class="author-name">Rev. A Daniel Paul</div>
-                            <div class="brand-main">CHRIST MANDIR</div>
-                            <div class="brand-tagline">Daily Bread</div>
+    <header>
+        <div class="logo">Christ Mandir</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html"><span>🏠</span> Home</a></li>
+                <li><a href="bible.html"><span>📖</span> Bible</a></li>
+                <li><a href="quiz.html"><span>❓</span> Quiz</a></li>
+                <li><a href="dailyverse.html" class="active"><span>✨</span> Verse</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="app-shell">
+            
+            <div class="preview-zone" onclick="generatePreview()">
+                <div id="loader">GENERATING PREVIEW...</div>
+                <div id="card-scaler">
+                    <div class="verse-card" id="mainCard">
+                        <div id="bg-layer" class="bg-layer"></div>
+                        <div id="overlay-layer" class="overlay-layer"></div>
+                        <div id="frame-layer" class="inner-frame"></div>
+                        <div id="content-layer" class="content pos-center">
+                            <div id="verse-text" class="v-text"></div>
+                            <div id="verse-ref" class="v-ref"></div>
                         </div>
-                        <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" class="person-photo">
+                        <div class="banner">
+                            <div class="banner-left">
+                                <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="logo-img">
+                                <svg class="cross-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V22M4 8H20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                                <div class="banner-date" id="bannerDate">...</div>
+                            </div>
+                            <div class="person-info">
+                                <div class="person-text">
+                                    <div class="author-name">Rev. A Daniel Paul</div>
+                                    <div class="brand-main">CHRIST MANDIR</div>
+                                    <div class="brand-tagline">Daily Bread</div>
+                                </div>
+                                <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" class="person-photo">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="controls-zone">
-        <h2>Content Editor</h2>
-        
-        <textarea id="inputVerse" placeholder="Type Verse Here..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
-        
-        <div class="compact-row">
-            <input type="text" class="compact-input" id="inputRef" placeholder="Reference" value="యెషయా 54:17" oninput="updateText()">
-            <label for="bgUpload" class="file-btn">📂 Image</label>
-            <input type="file" id="bgUpload" accept="image/*" onchange="uploadBg(this)">
-        </div>
-
-        <div class="compact-row">
-            <button class="btn-bg" onclick="refreshBackground()">🖼 Shuffle BG</button>
-            <button class="btn-style" onclick="refreshStyle()">🎨 Shuffle Style</button>
-        </div>
-
-        <div class="desktop-pro">
-            <h2>Pro Controls (Desktop Only)</h2>
-            <div class="swatch-grid">
-                <div class="color-dot" style="background:#D4AF37" onclick="setTheme('#D4AF37')"></div>
-                <div class="color-dot" style="background:#fff" onclick="setTheme('#ffffff')"></div>
-                <div class="color-dot" style="background:#00F2FE" onclick="setTheme('#00F2FE')"></div>
-                <div class="color-dot" style="background:#E0B0FF" onclick="setTheme('#E0B0FF')"></div>
-                <button class="font-btn" onclick="setFont('Hind Guntur')">Guntur</button>
-                <button class="font-btn" onclick="setFont('Tenali Ramakrishna')">Tenali</button>
-                <button class="font-btn" onclick="setFont('Suranna')">Suranna</button>
+            <div class="controls-zone">
+                <h2 class="editor-title">Content Editor</h2>
+                <textarea id="inputVerse" placeholder="Type Verse Here..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
+                
+                <div class="compact-row">
+                    <input type="text" class="compact-input" id="inputRef" placeholder="Reference" value="యెషయా 54:17" oninput="updateText()">
+                    <label for="bgUpload" class="file-btn">📂 Image</label>
+                    <input type="file" id="bgUpload" accept="image/*" onchange="uploadBg(this)">
+                </div>
+                
+                <div class="compact-row">
+                    <button class="editor-btn btn-bg" onclick="refreshBackground()">🖼 New BG</button>
+                    <button class="editor-btn btn-style" onclick="refreshStyle()">🎨 New Style</button>
+                </div>
+                
+                <button class="editor-btn btn-dl" onclick="downloadCard()">⬇ Save & Download</button>
             </div>
         </div>
-        
-        <button class="btn-dl" onclick="downloadCard()">⬇ Save & Share</button>
+    </main>
+
+    <div id="preview-modal" onclick="closePreview()">
+        <img id="preview-img" src="">
     </div>
 
-</div>
-
-<div id="preview-modal">
-    <img id="preview-img" src="" onclick="toggleZoom(this)">
-    <button class="modal-btn" onclick="document.getElementById('preview-modal').style.display='none'">Close</button>
-</div>
-
-<script>
-    /* --- ASSETS --- */
+    <script>
+    // --- DATA ---
     const backgrounds = ["https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1000", "https://images.unsplash.com/photo-1493246507139-91e8bef99c02?w=1000", "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000", "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000"];
     const gradients = ['linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%)', 'radial-gradient(circle at top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.95) 100%)', 'linear-gradient(135deg, rgba(20,0,40,0.6), #000)', 'linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2), rgba(0,0,0,0.8))'];
     const frames = ['border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);', 'border: 2px solid #D4AF3733; box-shadow: inset 0 0 40px rgba(0,0,0,0.5);', 'border: 0.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);', ''];
@@ -275,13 +269,12 @@
     const textStyles = ['txt-glass', 'txt-strip', 'txt-quote', ''];
     const refStyles = ['ref-pill', 'ref-outline', 'ref-minimal', 'ref-glass'];
 
-    /* --- BASIC FUNCTIONS --- */
     function fitCardToScreen() {
         const wrapper = document.getElementById('card-scaler');
         const container = document.querySelector('.preview-zone');
         const cardW = 380;
-        const availableW = container.clientWidth - 20; 
-        const availableH = container.clientHeight - 20;
+        const availableW = container.clientWidth - 40; 
+        const availableH = container.clientHeight - 40;
         let scale = Math.min(availableW / cardW, availableH / 506, 1);
         wrapper.style.transform = `scale(${scale})`;
     }
@@ -338,33 +331,8 @@
         r.className = `v-ref ${refSty}`;
     }
 
-    /* --- PRO DESKTOP FUNCTIONS --- */
-    function setTheme(color) {
-        document.getElementById('verse-text').style.color = color;
-        // Also update reference if it's outline or minimal
-        document.getElementById('verse-ref').style.color = color;
-    }
-    
-    function setFont(fontName) {
-        document.getElementById('verse-text').style.fontFamily = fontName;
-        document.getElementById('verse-ref').style.fontFamily = fontName;
-    }
-
-    /* --- ZOOM FEATURE --- */
-    function toggleZoom(img) {
-        img.classList.toggle('zoomed');
-        const modal = document.getElementById('preview-modal');
-        if (img.classList.contains('zoomed')) {
-            modal.classList.add('scroll-mode');
-            modal.style.display = 'block'; // Ensure block display to allow scrolling
-        } else {
-            modal.classList.remove('scroll-mode');
-            modal.style.display = 'flex'; // Return to flex for centering
-        }
-    }
-
-    /* --- DOWNLOAD (Heavy Blur Fix) --- */
-    async function downloadCard() {
+    // --- SHARED HELPER: CREATES THE "FIXED" CLONE FOR IMAGE GEN ---
+    function createCaptureClone() {
         const original = document.getElementById('mainCard');
         const clone = original.cloneNode(true);
 
@@ -376,34 +344,56 @@
         clone.style.top = "0";
         clone.style.zIndex = "9999";
         
-        // HEAVY BLUR FIX: Darker Gray + High Opacity
+        // HEAVY GRAY BLUR FIX FOR IMAGE (Simulates glass)
         const banner = clone.querySelector('.banner');
         banner.style.backdropFilter = "none";
         banner.style.webkitBackdropFilter = "none";
-        banner.style.background = "rgba(70, 70, 70, 0.9)"; // Darker Gray
-        banner.style.border = "1px solid rgba(100, 100, 100, 0.5)";
-
+        banner.style.background = "rgba(80, 80, 80, 0.95)"; 
+        banner.style.border = "1px solid rgba(120, 120, 120, 0.6)";
+        
         document.body.appendChild(clone);
+        return clone;
+    }
 
+    // --- 1. PREVIEW GENERATOR (Triggered by click on image) ---
+    async function generatePreview() {
+        document.getElementById('loader').style.display = 'block';
+        const clone = createCaptureClone();
         try {
-            const canvas = await html2canvas(clone, {
-                useCORS: true,
-                scale: 3, 
-                width: 380,
-                height: 506,
-                backgroundColor: null
-            });
+            // Scale 2 is enough for screen preview
+            const canvas = await html2canvas(clone, { useCORS: true, scale: 2, width: 380, height: 506, backgroundColor: null });
             document.getElementById('preview-img').src = canvas.toDataURL("image/png");
-            // Reset zoom state on new open
-            document.getElementById('preview-img').classList.remove('zoomed');
-            document.getElementById('preview-modal').classList.remove('scroll-mode');
             document.getElementById('preview-modal').style.display = 'flex';
-        } catch(e) { console.log(e); alert("Capture failed"); }
-
+        } catch(e) { console.log(e); }
         document.body.removeChild(clone);
+        document.getElementById('loader').style.display = 'none';
+    }
+
+    function closePreview() { document.getElementById('preview-modal').style.display = 'none'; }
+
+    // --- 2. DOWNLOAD FUNCTION (Direct Download, No Modal) ---
+    async function downloadCard() {
+        const btn = document.querySelector('.btn-dl');
+        const originalText = btn.innerText;
+        btn.innerText = "Processing...";
+
+        const clone = createCaptureClone();
+        try {
+            // Scale 3 for High Quality Export
+            const canvas = await html2canvas(clone, { useCORS: true, scale: 3, width: 380, height: 506, backgroundColor: null });
+            const link = document.createElement('a');
+            link.download = `ChristMandir_${Date.now()}.png`;
+            link.href = canvas.toDataURL("image/png");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch(e) { alert("Download failed"); }
+        
+        document.body.removeChild(clone);
+        btn.innerText = originalText;
     }
 
     init();
-</script>
+    </script>
 </body>
 </html>
