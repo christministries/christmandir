@@ -4,208 +4,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Christ Mandir Bible Quiz</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary: #007b8b;
-            --primary-dark: #005662;
+            /* Vibrant Modern Palette */
+            --primary: #00897b;
+            --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
             --secondary: #00bcd4;
-            --correct: #27ae60;
-            --wrong: #e74c3c;
-            --bg-color: #f0f4f8;
-            --whatsapp: #25D366;
-            --glass-nav: rgba(255, 255, 255, 0.9);
+            --correct: #43a047;
+            --wrong: #e53935;
+            --bg-color: #f0f2f5;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glass-nav: rgba(255, 255, 255, 0.85);
             --text-main: #2d3436;
+            --text-light: #636e72;
+            
+            /* Fonts */
+            --font-head: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-body);
             margin: 0; padding: 0; 
             display: flex; justify-content: center; align-items: center; 
             min-height: 100vh; 
             background-color: var(--bg-color);
             overflow: hidden;
+            color: var(--text-main);
         }
 
-        /* --- DESKTOP BACKGROUND ANIMATION --- */
+        /* --- ANIMATED BACKGROUND --- */
         .background-shapes {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden; z-index: -1; display: none;
+            overflow: hidden; z-index: -1; pointer-events: none;
         }
-        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: float 20s infinite alternate; }
-        .shape-1 { width: 400px; height: 400px; background: #00bcd4; top: -100px; left: -100px; }
-        .shape-2 { width: 300px; height: 300px; background: #ffd700; bottom: -50px; right: -50px; animation-delay: -5s; }
-        @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(30px, 50px); } }
+        .shape { 
+            position: absolute; border-radius: 50%; 
+            filter: blur(80px); opacity: 0.6; 
+            animation: floatShape 25s infinite alternate ease-in-out; 
+        }
+        .shape-1 { width: 500px; height: 500px; background: #b2dfdb; top: -150px; left: -150px; }
+        .shape-2 { width: 400px; height: 400px; background: #ffe082; bottom: -100px; right: -100px; animation-delay: -5s; }
+        .shape-3 { width: 300px; height: 300px; background: #80deea; bottom: 30%; left: 20%; animation-delay: -10s; opacity: 0.4; }
+        
+        @keyframes floatShape { 
+            0% { transform: translate(0, 0) rotate(0deg); } 
+            100% { transform: translate(40px, 60px) rotate(10deg); } 
+        }
 
-        /* --- NAVIGATION --- */
-        header { position: fixed; z-index: 1000; transition: all 0.3s ease; }
+        /* --- NAVIGATION (Modern Pill) --- */
+        header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .nav-links { list-style: none; padding: 0; margin: 0; display: flex; }
-        .nav-links li a { text-decoration: none; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .nav-links li a { text-decoration: none; font-family: var(--font-head); font-weight: 600; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
 
-        /* MOBILE NAV (Floating Pill) */
+        /* MOBILE NAV */
         @media (max-width: 767px) {
             header {
                 bottom: 20px; left: 50%; transform: translateX(-50%);
-                width: 90%; max-width: 350px; height: 60px;
-                background: var(--glass-nav); backdrop-filter: blur(15px);
-                border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-                border: 1px solid rgba(255,255,255,0.5);
+                width: 92%; max-width: 380px; height: 70px;
+                background: var(--glass-nav);
+                backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                border-radius: 40px;
+                box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
+                border: 1px solid rgba(255,255,255,0.6);
             }
             .logo { display: none; }
-            .nav-links { height: 100%; justify-content: space-between; padding: 0 20px; }
-            .nav-links li a { flex-direction: column; font-size: 0.65rem; color: #888; gap: 2px; }
-            .nav-links li a span { font-size: 1.3rem; transition: 0.3s; }
+            .nav-links { height: 100%; justify-content: space-evenly; padding: 0 10px; }
+            .nav-links li { position: relative; }
+            .nav-links li a { flex-direction: column; font-size: 0.7rem; color: var(--text-light); gap: 4px; padding: 5px 10px; }
+            .nav-links li a span { font-size: 1.5rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+            
+            /* Active State Animation */
             .nav-links li a.active { color: var(--primary); }
-            .nav-links li a.active span { transform: translateY(-3px); }
-
+            .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
+            
+            /* Mobile Layout Adjustments */
             .quiz-container { height: 100vh !important; }
-            /* Compact padding for mobile result */
-            .result-screen { padding: 15px 20px 100px 20px !important; }
+            .welcome-page, .quiz-body-container, .result-screen { padding-bottom: 140px !important; } /* Space for nav + buttons */
+            
+            /* Side-by-side buttons on mobile */
+            .btn-group { flex-direction: row !important; gap: 12px; }
+            .btn-action { font-size: 0.95rem !important; padding: 14px !important; }
         }
 
-        /* DESKTOP NAV (Top Right) */
+        /* DESKTOP NAV */
         @media (min-width: 768px) {
-            body { padding-top: 80px; }
+            body { padding-top: 90px; }
             .background-shapes { display: block; }
             header {
                 top: 0; left: 0; width: 100%; height: 80px;
-                background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
-                display: flex; justify-content: space-between; align-items: center; padding: 0 50px;
-                box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+                background: rgba(255,255,255,0.85); backdrop-filter: blur(15px);
+                display: flex; justify-content: space-between; align-items: center; padding: 0 60px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.03);
             }
-            .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+            .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
             .nav-links { gap: 30px; }
-            .nav-links li a { font-size: 1rem; color: #555; gap: 8px; padding: 8px 16px; border-radius: 20px; }
-            .nav-links li a:hover { background: rgba(0,123,139,0.1); color: var(--primary); }
-            .nav-links li a.active { background: var(--primary); color: white; }
+            .nav-links li a { font-size: 1rem; color: var(--text-light); gap: 8px; padding: 10px 20px; border-radius: 25px; }
+            .nav-links li a:hover { background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); }
+            .nav-links li a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); }
 
             .quiz-container {
-                max-width: 800px; /* Made Wider for Desktop */
-                height: auto; max-height: 85vh;
-                border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-                background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
+                max-width: 900px; height: auto; max-height: 85vh;
+                border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+                background: var(--card-bg); backdrop-filter: blur(20px);
                 border: 1px solid rgba(255,255,255,0.8);
             }
-
-            /* Wide Result Layout for Desktop */
-            .result-layout-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 30px;
-                height: 100%;
-                align-items: center;
-            }
-            .result-left { text-align: center; border-right: 1px solid #eee; padding-right: 20px; }
-            .result-right { height: 100%; overflow-y: auto; padding-right: 10px; }
-            .review-area { max-height: 400px !important; }
+            
+            /* Split layout for desktop results */
+            .result-layout-grid { display: grid; grid-template-columns: 40% 60%; height: 100%; }
+            .result-left { border-right: 1px solid #f0f0f0; padding: 30px; display: flex; flex-direction: column; justify-content: center; }
+            .result-right { padding: 30px; overflow-y: auto; }
+            
+            .btn-group { flex-direction: row !important; gap: 15px; }
         }
 
-        /* --- MAIN CONTAINER --- */
+        /* --- LAYOUT CONTAINER --- */
         .quiz-container {
             width: 100%; height: 100vh;
             display: flex; flex-direction: column;
             position: relative; overflow: hidden;
         }
 
+        /* Scrollable Content */
         .welcome-page, .quiz-body-container, .result-screen {
             flex-grow: 1; display: flex; flex-direction: column;
-            padding: 25px; overflow-y: auto;
-            /* Padding bottom ensures content clears the mobile nav */
-            padding-bottom: 100px; 
-            animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            padding: 30px; overflow-y: auto;
+            animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            scrollbar-width: thin;
         }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- WELCOME PAGE --- */
         .welcome-content { text-align: center; margin: auto 0; }
-        .logo-icon { font-size: 4rem; display: inline-block; animation: floatIcon 3s ease-in-out infinite; }
-        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .logo-icon { 
+            font-size: 5rem; display: inline-block; margin-bottom: 10px;
+            animation: floatIcon 4s ease-in-out infinite; 
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        }
+        @keyframes floatIcon { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
         
-        .welcome-msg { color: #666; font-size: 0.95rem; line-height: 1.6; margin: 15px 0 25px; }
+        .welcome-title { font-family: var(--font-head); color: var(--primary); font-size: 2.2rem; margin: 0; }
+        .welcome-subtitle { color: #888; font-size: 0.9rem; margin-top: 5px; font-style: italic; }
+        
+        .welcome-card {
+            background: #fff; padding: 25px; border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05); margin-top: 25px;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .welcome-msg { color: var(--text-light); font-size: 1rem; line-height: 1.6; margin-bottom: 25px; }
+        
         .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .level-btn {
-            padding: 15px; border: none; border-radius: 15px; color: white; font-weight: bold;
-            cursor: pointer; position: relative; overflow: hidden; transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 20px; border: none; border-radius: 20px; color: white; font-weight: 700;
+            font-family: var(--font-head); cursor: pointer; position: relative; overflow: hidden; 
+            transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transform: scale(1);
         }
+        .level-btn:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.05); }
         .level-btn:active { transform: scale(0.95); }
+        /* Shine Effect */
+        .level-btn::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg); animation: shine 3s infinite;
+        }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
         /* --- QUIZ UI --- */
         .quiz-header {
-            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
-            background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.03); z-index: 10;
+            padding: 20px 30px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); z-index: 10; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
+        .q-label { font-family: var(--font-head); font-weight: 700; color: var(--primary); letter-spacing: 1px; font-size: 0.9rem; }
+        
         .timer-box {
-            width: 40px; height: 40px; border-radius: 50%;
+            width: 45px; height: 45px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            border: 3px solid var(--secondary); color: var(--primary); font-weight: 800; font-size: 0.9rem;
-            animation: pulseTimer 1s infinite;
+            background: white;
+            border: 3px solid var(--secondary); color: var(--primary); font-weight: 800; font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
-        .timer-box.danger { border-color: var(--wrong); color: var(--wrong); animation: dangerPulse 0.5s infinite; }
-        @keyframes pulseTimer { 0% { box-shadow: 0 0 0 0 rgba(0,188,212,0.4); } 70% { box-shadow: 0 0 0 5px rgba(0,188,212,0); } 100% { box-shadow: 0 0 0 0 rgba(0,188,212,0); } }
-        @keyframes dangerPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        .timer-box.animate { animation: heartBeat 1s infinite; }
+        .timer-box.danger { border-color: var(--wrong); color: var(--wrong); animation: shakeTimer 0.5s infinite; }
+        @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes shakeTimer { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
 
-        .q-progress { display: flex; gap: 5px; justify-content: center; margin: 15px 0; }
-        .dot { height: 5px; flex: 1; background: #e0e0e0; border-radius: 5px; transition: 0.5s; }
-        .dot.active { background: var(--secondary); transform: scaleY(1.5); }
+        .q-progress { display: flex; gap: 6px; justify-content: center; margin: 25px 0; }
+        .dot { height: 6px; width: 6px; background: #e0e0e0; border-radius: 10px; transition: 0.5s; flex: 1; max-width: 40px; }
+        .dot.active { background: var(--secondary); transform: scaleY(1.5); box-shadow: 0 0 10px var(--secondary); }
         .dot.completed { background: var(--primary); }
 
-        .q-text { font-size: 1.2rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 20px; }
-        .option-btn {
-            width: 100%; padding: 15px; margin-bottom: 10px; border: 2px solid #f0f0f0;
-            border-radius: 12px; background: white; cursor: pointer; text-align: left;
-            font-size: 0.95rem; color: #555; font-weight: 600; transition: 0.2s; 
-            opacity: 0; transform: translateX(20px);
+        .q-text { 
+            font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--text-main); 
+            text-align: center; margin-bottom: 30px; line-height: 1.4;
         }
-        .option-btn.show { animation: slideIn 0.4s forwards; }
-        @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
-        .option-btn:active { transform: scale(0.97); background: #f8f9fa; }
-        .selected-correct { background: var(--correct) !important; color: white !important; border-color: var(--correct) !important; }
-        .selected-wrong { background: var(--wrong) !important; color: white !important; border-color: var(--wrong) !important; }
-
-        /* --- RESULTS (Optimized) --- */
-        /* Result Layout Container */
-        .result-layout-grid { display: flex; flex-direction: column; width: 100%; }
-
-        .result-content { text-align: center; margin-bottom: 15px; }
-        .medal { font-size: 3.5rem; animation: popBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); display: inline-block; }
-        @keyframes popBounce { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
         
-        .score-big { font-size: 2.5rem; font-weight: 900; color: var(--primary); margin: 5px 0; }
-        .congrats-title { font-size: 1.2rem; margin: 5px 0; color: #333; }
+        .option-btn {
+            width: 100%; padding: 18px 20px; margin-bottom: 12px; border: none;
+            border-radius: 18px; background: white; cursor: pointer; text-align: left;
+            font-size: 1rem; color: var(--text-main); font-weight: 600; font-family: var(--font-body);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; position: relative; overflow: hidden;
+            transform: translateX(30px); opacity: 0;
+        }
+        .option-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .option-btn:active { transform: scale(0.98); }
+        
+        .option-btn.show { animation: slideInStagger 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        @keyframes slideInStagger { to { opacity: 1; transform: translateX(0); } }
+        
+        .selected-correct { background: var(--correct) !important; color: white !important; box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4) !important; }
+        .selected-wrong { background: var(--wrong) !important; color: white !important; box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4) !important; animation: errorShake 0.4s; }
+        @keyframes errorShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /* --- RESULTS --- */
+        .result-content { text-align: center; }
+        .medal { font-size: 5rem; display: inline-block; animation: popBounce 1s cubic-bezier(0.68, -0.55, 0.27, 1.55); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15)); }
+        @keyframes popBounce { 0% { transform: scale(0) rotate(-180deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        
+        .score-big { font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; color: var(--primary); margin: 5px 0; letter-spacing: -2px; }
+        .congrats-title { font-family: var(--font-head); font-size: 1.5rem; margin: 5px 0; color: var(--text-main); }
 
         .suggestion-card {
-            background: #e0f7fa; border-left: 4px solid var(--secondary);
-            padding: 10px; border-radius: 8px; margin-top: 10px; text-align: left;
-            font-size: 0.85rem; color: #006064; box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            background: #e0f2f1; border-left: 5px solid var(--primary);
+            padding: 15px; border-radius: 12px; margin-top: 15px; text-align: left;
+            font-size: 0.95rem; color: #004d40; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 1s ease 0.5s backwards;
         }
 
-        .review-area { text-align: left; flex-grow: 1; margin-bottom: 10px; overflow-y: auto; }
+        .review-area { width: 100%; }
         .review-item { 
-            padding: 10px; border-radius: 8px; background: #fff; border: 1px solid #eee; 
-            margin-bottom: 8px; font-size: 0.85rem; 
-            animation: fadeIn 0.5s ease;
+            padding: 15px; border-radius: 15px; background: #fff; margin-bottom: 10px; 
+            font-size: 0.9rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02);
+            transition: 0.3s;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .review-item.correct { border-left: 3px solid var(--correct); background: #f4fff7; }
-        .review-item.wrong { border-left: 3px solid var(--wrong); background: #fff5f5; }
-
-        .btn-group { margin-top: auto; display: flex; flex-direction: row; gap: 10px; }
+        .review-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .review-item.correct { border-left: 5px solid var(--correct); }
+        .review-item.wrong { border-left: 5px solid var(--wrong); }
+        
+        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
         .btn-action {
-            width: 100%; padding: 12px; border-radius: 10px; border: none; color: white;
-            font-weight: bold; cursor: pointer; text-decoration: none; text-align: center;
-            display: flex; justify-content: center; align-items: center; gap: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s; font-size: 0.9rem; flex: 1;
+            width: 100%; padding: 16px; border-radius: 15px; border: none; color: white;
+            font-family: var(--font-head); font-weight: 700; cursor: pointer; text-decoration: none; 
+            text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: 0.3s; font-size: 1rem; flex: 1;
         }
-        .btn-share { background: var(--whatsapp); }
-        .btn-restart { background: var(--primary); }
-        .btn-action:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        .btn-share { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .btn-restart { background: var(--primary-gradient); }
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.2); }
 
         /* Confetti Canvas */
         #confetti-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
 
         .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -213,15 +272,16 @@
 <div class="background-shapes">
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
 </div>
 
 <header>
-    <div class="logo" style="margin-left: 0;">Christ Mandir</div>
+    <div class="logo">Christ Mandir</div>
     <nav>
         <ul class="nav-links">
             <li><a href="index.html"><span>🏠</span> Home</a></li>
             <li><a href="bible.html"><span>📖</span> Bible</a></li>
-            <li><a href="quiz.html" class="active"><span>❓</span> Quiz</a></li>
+            <li><a href="quiz.html" class="active"><span>🧩</span> Quiz</a></li>
             <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
         </ul>
     </nav>
@@ -234,29 +294,34 @@
         <div class="welcome-content">
             <div class="logo-icon">🕊️</div>
             <h1 class="welcome-title">Bible Quiz</h1>
-            <p class="welcome-msg">
-                <b>దేవుని పేరిట స్వాగతం!</b><br>
-                మీ ఆత్మీయ జ్ఞానాన్ని పరీక్షించుకోండి.
-            </p>
-            <div class="level-grid">
-                <button class="level-btn" style="background: linear-gradient(135deg, #27ae60, #2ecc71);" onclick="setupGame('easy', 15)">
-                    EASY<br><span style="font-size:0.75rem; opacity:0.8">15 Secs</span>
-                </button>
-                <button class="level-btn" style="background: linear-gradient(135deg, #e67e22, #f39c12);" onclick="setupGame('hard', 10)">
-                    HARD<br><span style="font-size:0.75rem; opacity:0.8">10 Secs</span>
-                </button>
+            <p class="welcome-subtitle">"నీ వాక్యము నా పాదములకు దీపము"</p>
+            
+            <div class="welcome-card">
+                <p class="welcome-msg">
+                    <b>దేవుని పేరిట స్వాగతం!</b><br>
+                    ప్రతిరోజూ కొద్దిసేపు వాక్యాన్ని ధ్యానించండి. ఇది మీ ఆత్మీయ జీవితానికి ఎంతో మేలు చేస్తుంది. <br><br>
+                    సిద్ధమా?
+                </p>
+                <div class="level-grid">
+                    <button class="level-btn" style="background: linear-gradient(135deg, #27ae60, #2ecc71);" onclick="setupGame('easy', 15)">
+                        EASY<br><span style="font-size:0.75rem; opacity:0.8; font-weight:400;">15 Secs</span>
+                    </button>
+                    <button class="level-btn" style="background: linear-gradient(135deg, #e67e22, #f39c12);" onclick="setupGame('hard', 10)">
+                        HARD<br><span style="font-size:0.75rem; opacity:0.8; font-weight:400;">10 Secs</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="game-ui" class="hidden" style="height:100%; display:flex; flex-direction:column;">
         <div class="quiz-header">
-            <span style="font-weight:700; color:#555;">QUESTION</span>
-            <div class="timer-box" id="timer-text">15</div>
+            <span class="q-label">QUESTION</span>
+            <div class="timer-box animate" id="timer-text">15</div>
         </div>
         <div class="quiz-body-container">
             <div class="q-progress" id="q-dots"></div>
-            <div class="q-text" id="question-text"></div>
+            <div class="q-text" id="question-text">Loading...</div>
             <div id="options-list" style="width:100%;"></div>
         </div>
     </div>
@@ -270,14 +335,19 @@
                     <div class="score-big" id="final-score">0 / 5</div>
                     <div id="suggestion-box" class="suggestion-card"></div>
                 </div>
+                
                 <div class="btn-group">
-                    <a href="#" id="share-btn" class="btn-action btn-share" target="_blank"><span>📱 Share</span></a>
-                    <button class="btn-action btn-restart" onclick="location.reload()"><span>🔄 Retry</span></button>
+                    <a href="#" id="share-btn" class="btn-action btn-share" target="_blank">
+                        <span>📱 Share</span>
+                    </a>
+                    <button class="btn-action btn-restart" onclick="location.reload()">
+                        <span>🔄 Retry</span>
+                    </button>
                 </div>
             </div>
 
             <div class="result-right">
-                <div style="font-weight:bold; color:#666; margin: 10px 0 5px;">Review Answers:</div>
+                <div style="font-weight:700; color:var(--text-light); margin: 10px 0 15px; font-family:var(--font-head);">REVIEW ANSWERS</div>
                 <div class="review-area" id="review-area"></div>
             </div>
         </div>
@@ -292,7 +362,7 @@
         { q: "ప్రపంచంలో మొదటి మనిషి ఎవరు?", a: ["నోవహు", "మోషే", "ఆదాము", "అబ్రాహాము"], c: 2, level: "easy" },
         { q: "లోక రక్షకుడు అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "అబ్రాహాము", "యేసుక్రీస్తు", "పేతురు"], c: 2, level: "easy" },
         { q: "తప్పిపోయిన కుమారుడు తిరిగి వచ్చినప్పుడు తండ్రి ఏమి చేశాడు?", a: ["కోప్పడ్డాడు", "ముద్దుపెట్టుకున్నాడు", "వెళ్ళగొట్టాడు", "కొట్టాడు"], c: 1, level: "easy" },
-        { q: "మంచి సమరయుడు ఉపమానం ఎవరు చెప్పారు?", a: ["యేసుక్రీస్తు", "పౌలు", "పేతురు", "యోహాను"], c: 0, level: "easy" },
+        { q: "దానియేలును ఎందులో పడేశారు?", a: ["సింహాల గుహలో", "అగ్ని గుండంలో", "చెరసాలలో", "బావిలో"], c: 0, level: "easy" },
         
         { q: "నోవహు ఓడ కట్టిన కఱ్ఱ పేరు ఏమిటి?", a: ["గోపెరు కఱ్ఱ", "తుమ్మ కఱ్ఱ", "దేవదారు", "ఒలీవ"], c: 0, level: "hard" },
         { q: "ప్రకటన గ్రంథాన్ని యోహాను ఏ ద్వీపంలో రాశాడు?", a: ["సైప్రస్", "పత్మసు", "క్రీతు", "మాల్టా"], c: 1, level: "hard" },
@@ -336,7 +406,7 @@
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.innerText = opt;
-            btn.style.animationDelay = (i * 0.05) + 's';
+            btn.style.animationDelay = (i * 0.08) + 's';
             btn.classList.add('show');
             btn.onclick = () => selectOption(btn, i);
             optionsBox.appendChild(btn);
@@ -349,6 +419,7 @@
         const timerElem = document.getElementById('timer-text');
         timerElem.innerText = timeLeft;
         timerElem.classList.remove('danger');
+        
         clearInterval(timer);
         timer = setInterval(() => {
             timeLeft--;
@@ -372,21 +443,21 @@
             else { btn.classList.add('selected-wrong'); }
         }
         currentQ++;
-        setTimeout(loadQuestion, 1000);
+        setTimeout(loadQuestion, 1200);
     }
 
     function finishGame() {
         document.getElementById('game-ui').classList.add('hidden');
         document.getElementById('result-screen').classList.remove('hidden');
         
-        // ANIMATE SCORE
+        // Score Counter Animation
         let currentCount = 0;
         const scoreElem = document.getElementById('final-score');
         const countInterval = setInterval(() => {
             if (currentCount >= score) {
                 clearInterval(countInterval);
                 scoreElem.innerText = `${score} / 5`;
-                if(score > 3) startConfetti(); // Trigger Confetti if won
+                if(score > 3) startConfetti();
             } else {
                 currentCount++;
                 scoreElem.innerText = `${currentCount} / 5`;
@@ -397,20 +468,24 @@
         const congrats = document.getElementById('congrats-text');
         const suggest = document.getElementById('suggestion-box');
 
+        // SUGGESTIONS
         if (score === 5) { 
-            medal.innerText = "🥇"; congrats.innerText = "అద్భుతం! (Excellent!)"; 
-            suggest.innerHTML = "<b>చాలా సంతోషం!</b> దేవుని వాక్యం మీలో సమృద్ధిగా ఉంది. మీ జ్ఞానాన్ని ఇతరులతో పంచుకోండి."; 
+            medal.innerText = "🥇"; 
+            congrats.innerText = "అద్భుతం! (Excellent!)"; 
+            suggest.innerHTML = "<b>చాలా సంతోషం!</b> దేవుని వాక్యం మీలో సమృద్ధిగా ఉంది. ఇలాగే కొనసాగించండి."; 
         } 
         else if (score >= 3) { 
-            medal.innerText = "🥈"; congrats.innerText = "చాలా మంచిది! (Good!)"; 
-            suggest.innerHTML = "<b>బాగా ఆడారు!</b> కొన్ని ప్రశ్నలు తప్పు పోయాయి. వాక్యం చదవడం కొనసాగించండి."; 
+            medal.innerText = "🥈"; 
+            congrats.innerText = "చాలా మంచిది! (Great Job!)"; 
+            suggest.innerHTML = "<b>బాగా ఆడారు!</b> వాక్యం చదవడం కొనసాగించండి. ఇంకాస్త కృషి చేయండి."; 
         } 
         else { 
-            medal.innerText = "📖"; congrats.innerText = "మంచి ప్రయత్నం!"; 
-            suggest.innerHTML = "<b>నిరుత్సాహపడకండి!</b> ప్రతిరోజూ బైబిల్ చదవడం అలవాటు చేసుకోండి."; 
+            medal.innerText = "📖"; 
+            congrats.innerText = "మంచి ప్రయత్నం! (Good Try)"; 
+            suggest.innerHTML = "<b>నిరుత్సాహపడకండి!</b> ప్రతిరోజూ బైబిల్ చదవడం అలవాటు చేసుకోండి. ప్రభువు మీకు తోడైయుండును గాక."; 
         }
 
-        const shareMsg = `I scored ${score}/5 in Christ Mandir Bible Quiz!`;
+        const shareMsg = `I scored ${score}/5 in Christ Mandir Bible Quiz! Play now!`;
         document.getElementById('share-btn').href = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
         
         const reviewBox = document.getElementById('review-area');
@@ -418,24 +493,27 @@
         userAnswers.forEach((item, i) => {
             const div = document.createElement('div');
             div.className = `review-item ${item.isCorrect ? 'correct' : 'wrong'}`;
-            div.innerHTML = `<div style="font-weight:bold; margin-bottom:2px;">${i+1}. ${item.q}</div><div>You: <b style="color:${item.isCorrect ? '#27ae60' : '#e74c3c'}">${item.selected} ${item.isCorrect ? '✅' : '❌'}</b></div>`;
+            div.innerHTML = `
+                <div style="font-weight:700; margin-bottom:4px; font-family:var(--font-head);">${i+1}. ${item.q}</div>
+                <div>Your Answer: <b style="color:${item.isCorrect ? 'var(--correct)' : 'var(--wrong)'}">${item.selected} ${item.isCorrect ? '✅' : '❌'}</b></div>
+            `;
             reviewBox.appendChild(div);
         });
     }
 
-    // --- SIMPLE CONFETTI EFFECT ---
+    // --- CONFETTI EFFECT ---
     function startConfetti() {
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const particles = [];
-        const colors = ['#f44336', '#00bcd4', '#ffeb3b', '#4caf50', '#ff9800'];
+        const colors = ['#f44336', '#00bcd4', '#ffeb3b', '#4caf50', '#9c27b0'];
         
-        for(let i=0; i<100; i++) {
+        for(let i=0; i<150; i++) {
             particles.push({
                 x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
                 color: colors[Math.floor(Math.random() * colors.length)],
-                size: Math.random() * 5 + 5, speed: Math.random() * 3 + 2, angle: Math.random() * 6.2
+                size: Math.random() * 8 + 4, speed: Math.random() * 4 + 2, angle: Math.random() * 6.2
             });
         }
         
@@ -443,13 +521,17 @@
             ctx.clearRect(0,0,canvas.width,canvas.height);
             particles.forEach((p, i) => {
                 p.y += p.speed; p.x += Math.sin(p.angle);
-                if(p.y > canvas.height) particles[i].y = -10;
-                ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+                if(p.y > canvas.height) particles[i].y = -20;
+                ctx.fillStyle = p.color; ctx.beginPath(); 
+                // Draw confetti shapes (squares/circles)
+                if(i%2===0) ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                else ctx.rect(p.x, p.y, p.size, p.size);
+                ctx.fill();
             });
             requestAnimationFrame(animate);
         }
         animate();
-        setTimeout(() => canvas.style.display = 'none', 5000); // Stop after 5s
+        setTimeout(() => canvas.style.display = 'none', 6000);
     }
 </script>
 
