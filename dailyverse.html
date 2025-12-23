@@ -12,7 +12,7 @@
         :root { 
             --gold: #D4AF37; 
             --dark: #121212; 
-            --bg: #f8f9fa;
+            --bg: #f0f2f5;
             --panel-bg: #ffffff;
         }
         
@@ -44,7 +44,7 @@
         main {
             flex: 1; display: flex; width: 100%; height: 100%;
             position: relative; overflow: hidden;
-            flex-direction: column; /* Mobile Default */
+            flex-direction: column; 
         }
 
         .app-shell {
@@ -52,9 +52,9 @@
             display: flex; flex-direction: column; 
         }
 
-        /* --- 3. PREVIEW ZONE (MOBILE: 30%) --- */
+        /* --- 3. PREVIEW ZONE (Mobile: 35%) --- */
         .preview-zone {
-            height: 30vh; /* STRICTLY 30% */
+            height: 35vh; 
             width: 100%;
             background: #eef2f5; 
             display: flex; justify-content: center; align-items: center;
@@ -76,20 +76,22 @@
         }
         .verse-card { pointer-events: auto; width: 380px; height: 506px; position: relative; overflow: hidden; border-radius: 30px; background: #000; }
 
-        /* --- 4. CONTROLS ZONE (MOBILE: 70%) --- */
+        /* --- 4. CONTROLS ZONE (Mobile: 65%) --- */
         .controls-zone {
-            height: 70vh; /* STRICTLY 70% */
+            /* 100vh - 35vh (img) - 85px (nav space) */
+            height: calc(65vh - 85px); 
             width: 100%; 
             background: var(--panel-bg);
             display: flex; flex-direction: column;
             border-top: 1px solid #e0e0e0;
             z-index: 20;
             border-radius: 25px 25px 0 0;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
             position: relative;
+            margin-bottom: 85px; 
         }
 
-        /* Sticky Tabs */
+        /* Tabs (Visible on Desktop too now) */
         .ctrl-tabs {
             display: flex; height: 50px; border-bottom: 1px solid #f4f4f4; flex-shrink: 0; padding: 0 5px;
             background: #fff; border-radius: 25px 25px 0 0;
@@ -100,30 +102,29 @@
             cursor: pointer; transition: 0.3s; position: relative;
         }
         .tab-btn.active { color: var(--dark); }
-        .tab-btn.active::after { content:''; position: absolute; bottom: 0; left: 35%; width: 30%; height: 3px; background: var(--gold); border-radius: 10px; }
+        .tab-btn.active::after { content:''; position: absolute; bottom: 0; left: 30%; width: 40%; height: 3px; background: var(--gold); border-radius: 10px; }
 
-        /* Scrollable Content */
+        /* Content Area */
         .ctrl-content {
             flex: 1; overflow-y: auto; padding: 20px;
-            display: none; flex-direction: column; gap: 12px;
-            /* Extra padding to clear the internal action bar */
-            padding-bottom: 100px; 
+            display: none; flex-direction: column; gap: 15px;
+            padding-bottom: 90px; /* Space for Action Bar */
         }
         .ctrl-content.active { display: flex; }
 
-        /* INTERNAL ACTION BAR (Fixed inside Control Panel) */
+        /* ACTION BAR (Share/Download) */
         .ctrl-action-bar {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            height: 75px; /* Height of the bar */
+            height: 70px;
             background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
             border-top: 1px solid #eee;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 20px; gap: 15px;
+            display: flex; gap: 10px; padding: 10px 20px;
+            align-items: center; justify-content: space-between;
             z-index: 50;
-            /* Raise it above the site navigation if needed, but in this layout site nav is floating */
+            border-radius: 0 0 25px 25px;
         }
 
-        /* --- 5. FLOATING SITE NAVIGATION (Bottom) --- */
+        /* --- 5. BOTTOM NAV (Mobile) --- */
         .bottom-nav {
             position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
             width: 95%; max-width: 400px; height: 60px;
@@ -142,15 +143,15 @@
         .nav-item.active { color: var(--dark); }
         .nav-item.active span { color: var(--gold); transform: translateY(-2px); }
 
-        /* --- 6. DESKTOP OPTIMIZATION (Side-by-Side) --- */
+        /* --- 6. DESKTOP OPTIMIZATION --- */
         @media (min-width: 900px) {
             .app-header { display: flex; }
             .bottom-nav { display: none; } 
             
             main { 
                 flex-direction: row; 
-                max-width: 1400px; margin: 20px auto; 
-                height: calc(100vh - 100px); 
+                max-width: 1300px; margin: 30px auto; 
+                height: calc(100vh - 120px); 
                 box-shadow: 0 0 80px rgba(0,0,0,0.08);
                 border-radius: 24px; overflow: hidden;
                 border: 1px solid #fff;
@@ -168,25 +169,23 @@
 
             /* RIGHT: CONTROLS (40%) */
             .controls-zone { 
-                width: 420px; height: 100%; flex: none;
+                width: 400px; height: 100%; flex: none;
                 border-radius: 0; box-shadow: none; border-top: none;
+                margin-bottom: 0;
             }
             
-            .ctrl-tabs { display: flex; } /* Keep tabs on desktop for organization */
-            .ctrl-content { 
-                padding: 30px; 
-                padding-bottom: 100px; 
-            }
+            .ctrl-tabs { border-radius: 0; height: 55px; } 
+            .ctrl-content { padding: 30px; padding-bottom: 100px; }
+            .ctrl-action-bar { padding: 15px 30px; height: 80px; border-radius: 0; }
             
-            /* Label Styling */
-            .d-label { 
-                display: block; font-size: 11px; font-weight: 800; 
-                color: var(--gold); text-transform: uppercase; letter-spacing: 1px;
-                border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; margin-bottom: 8px;
-            }
+            .d-label { display: block; }
         }
         
-        .d-label { display: none; } /* Default hidden on mobile to save space */
+        .d-label { 
+            display: none; font-size: 11px; font-weight: 800; 
+            color: var(--gold); text-transform: uppercase; letter-spacing: 1px;
+            border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 10px; margin-bottom: 8px;
+        }
         @media (min-width: 900px) { .d-label { display: block; } }
 
         /* --- UI COMPONENTS --- */
@@ -207,9 +206,9 @@
         }
         .ref-input:focus { border-color: var(--gold); outline: none; }
 
-        .row { display: flex; gap: 8px; align-items: center; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
 
         /* BUTTONS */
         .btn {
@@ -219,24 +218,22 @@
             background: #fff; color: #444; border: 2px solid #f0f0f0; flex: 1;
         }
         .btn:hover { border-color: var(--dark); }
-        .btn:active { transform: scale(0.95); }
+        .btn:active { transform: scale(0.97); }
         .btn-dark { background: var(--dark); color: #fff; border: none; }
         
-        /* ACTION BUTTONS (In Fixed Bar) */
+        /* ACTION BUTTONS */
         .act-btn {
-            height: 45px; border: none; border-radius: 50px;
+            flex: 1; height: 45px; border: none; border-radius: 50px;
             font-size: 11px; font-weight: 800; text-transform: uppercase; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            flex: 1; transition: 0.2s;
+            transition: 0.2s;
         }
         .act-share { background: #f0f0f0; color: #333; }
         .act-down { background: linear-gradient(135deg, #D4AF37, #bfa035); color: #fff; box-shadow: 0 5px 15px rgba(212,175,55,0.3); }
         .act-btn:active { transform: scale(0.95); }
 
-        input[type=range] { width: 100%; accent-color: var(--gold); margin: 8px 0; height: 4px; background: #ddd; border-radius: 5px; appearance: none; }
-        input[type=range]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; cursor: pointer; }
+        input[type=range] { width: 100%; accent-color: var(--gold); margin: 5px 0; }
 
-        /* Swatches */
         .swatch-grid { display: flex; gap: 8px; flex-wrap: wrap; }
         .swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(0,0,0,0.05); }
 
@@ -337,16 +334,17 @@
                         <button class="btn" onclick="alignText('pos-center')">Center</button>
                     </div>
                     
-                    <label class="d-label">Line & Spacing</label>
+                    <label class="d-label">Transform</label>
+                    <div class="grid-3">
+                        <button class="btn" onclick="setTextTransform('uppercase')">UPPER</button>
+                        <button class="btn" onclick="setTextTransform('lowercase')">lower</button>
+                        <button class="btn" onclick="setTextTransform('none')">Normal</button>
+                    </div>
+                    
+                    <label class="d-label">Spacing</label>
                     <div class="grid-2">
-                        <div>
-                            <label>Line Height</label>
-                            <input type="range" min="1" max="2.5" step="0.1" value="1.6" oninput="setLineHeight(this.value)">
-                        </div>
-                        <div>
-                            <label>Spacing</label>
-                            <input type="range" min="-1" max="5" step="0.5" value="0" oninput="setLetterSpacing(this.value)">
-                        </div>
+                        <div><label>Height</label><input type="range" min="1" max="2.5" step="0.1" value="1.6" oninput="setLineHeight(this.value)"></div>
+                        <div><label>Space</label><input type="range" min="-1" max="5" step="0.5" value="0" oninput="setLetterSpacing(this.value)"></div>
                     </div>
                 </div>
 
@@ -358,16 +356,15 @@
                     </div>
                     <input type="file" id="bgUpload" accept="image/*" onchange="uploadBg(this)" style="display:none">
                     
-                    <label style="margin-top:10px">Overlay Darkness</label>
-                    <input type="range" min="0" max="90" value="40" oninput="setOverlay(this.value)">
+                    <label class="d-label" style="margin-top:10px">Zoom Image</label>
+                    <input type="range" min="1" max="2" step="0.1" value="1.1" oninput="setBgScale(this.value)">
                     
-                    <label class="d-label">Frame Style</label>
+                    <label class="d-label" style="margin-top:10px">Overlay</label>
                     <div class="grid-2">
-                        <button class="btn" onclick="setFrame(0)">Glass</button>
-                        <button class="btn" onclick="setFrame(1)">Gold</button>
-                        <button class="btn" onclick="setFrame(2)">Thin</button>
-                        <button class="btn" onclick="setFrame(3)">None</button>
+                        <button class="btn" onclick="setOverlayColor('black')">Dark</button>
+                        <button class="btn" onclick="setOverlayColor('white')">Light</button>
                     </div>
+                    <input type="range" min="0" max="90" value="40" oninput="setOverlay(this.value)">
                 </div>
 
                 <div id="tab-style" class="ctrl-content">
@@ -377,7 +374,7 @@
                         <button class="btn" onclick="setRandomFont()">🅰 Fonts</button>
                     </div>
 
-                    <label style="margin-top:5px">Colors</label>
+                    <label style="margin-top:10px">Colors</label>
                     <div class="swatch-grid">
                         <div class="swatch" style="background:#fff" onclick="setColor('#fff')"></div>
                         <div class="swatch" style="background:#000" onclick="setColor('#000')"></div>
@@ -386,21 +383,23 @@
                         <div class="swatch" style="background:#3498db" onclick="setColor('#3498db')"></div>
                     </div>
                     
-                    <label style="margin-top:10px">Effect</label>
+                    <label style="margin-top:10px">Frame</label>
                     <div class="grid-2">
-                        <button class="btn" onclick="setEffect('glass')">Glass</button>
-                        <button class="btn" onclick="setEffect('clean')">Clean</button>
+                        <button class="btn" onclick="setFrame(0)">Glass</button>
+                        <button class="btn" onclick="setFrame(1)">Gold</button>
+                        <button class="btn" onclick="setFrame(2)">Thin</button>
+                        <button class="btn" onclick="setFrame(3)">None</button>
                     </div>
                 </div>
                 
                 <div id="tab-effects" class="ctrl-content">
-                    <label class="d-label">Shadow Control</label>
-                    <label>Horizontal (X)</label>
-                    <input type="range" min="-10" max="10" value="0" oninput="setShadowX(this.value)">
-                    <label>Vertical (Y)</label>
+                    <label class="d-label">Text Rotation</label>
+                    <input type="range" min="-15" max="15" value="0" oninput="setTextRotation(this.value)">
+                    
+                    <label class="d-label" style="margin-top:10px">Shadow</label>
                     <input type="range" min="-10" max="10" value="2" oninput="setShadowY(this.value)">
                     
-                    <label class="d-label" style="margin-top:10px">Border Radius</label>
+                    <label class="d-label" style="margin-top:10px">Card Radius</label>
                     <input type="range" min="0" max="50" value="20" oninput="setBorderRadius(this.value)">
                 </div>
 
@@ -425,12 +424,14 @@
 
     <script>
     /* --- ASSETS & VARIABLES --- */
-    const backgrounds = ["https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1000", "https://images.unsplash.com/photo-1493246507139-91e8bef99c02?w=1000", "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000", "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000", "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=1000", "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1000", "https://images.unsplash.com/photo-1518098268026-4e187743369b?w=1000"];
-    const fontList = ['Hind Guntur', 'Tenali Ramakrishna', 'Suranna', 'Ramabhadra', 'Mallanna', 'Mandali', 'NTR', 'Peddana', 'Timmana', 'Gurajada', 'Poppins'];
+    const backgrounds = ["https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1000", "https://images.unsplash.com/photo-1493246507139-91e8bef99c02?w=1000", "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000", "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000"];
+    const fontList = ['Hind Guntur', 'Tenali Ramakrishna', 'Suranna', 'Ramabhadra', 'Mallanna', 'Mandali', 'NTR', 'Poppins'];
     const frames = ['border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);', 'border: 2px solid #D4AF3733; box-shadow: inset 0 0 40px rgba(0,0,0,0.5);', 'border: 0.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);', 'border: none;'];
     
     let currentFontSize = 28;
-    let shadowX = 0, shadowY = 2;
+    let shadowY = 2;
+    let overlayColor = 'black';
+    let overlayOpacity = 40;
 
     function init() {
         initParticles();
@@ -446,7 +447,7 @@
     function initParticles() {
         if(window.innerWidth > 900) {
             const p = document.querySelector('.particles');
-            for(let i=0; i<25; i++) {
+            for(let i=0; i<20; i++) {
                 let d = document.createElement('div');
                 d.className = 'particle';
                 d.style.left = Math.random()*100 + '%';
@@ -507,7 +508,18 @@
     }
 
     function setOverlay(val) {
-        document.getElementById('overlay-layer').style.backgroundColor = `rgba(0,0,0,${val/100})`;
+        overlayOpacity = val;
+        applyOverlay();
+    }
+    
+    function setOverlayColor(color) {
+        overlayColor = color;
+        applyOverlay();
+    }
+    
+    function applyOverlay() {
+        const rgb = overlayColor === 'white' ? '255,255,255' : '0,0,0';
+        document.getElementById('overlay-layer').style.backgroundColor = `rgba(${rgb},${overlayOpacity/100})`;
     }
 
     function setFrame(index) {
@@ -535,24 +547,15 @@
     }
 
     /* --- NEW PRO CONTROLS --- */
-    function setLineHeight(val) {
-        document.getElementById('verse-text').style.lineHeight = val;
-    }
-    
-    function setLetterSpacing(val) {
-        document.getElementById('verse-text').style.letterSpacing = val + "px";
-    }
-    
-    function setShadowX(val) {
-        shadowX = val; updateShadow();
-    }
+    function setLineHeight(val) { document.getElementById('verse-text').style.lineHeight = val; }
+    function setLetterSpacing(val) { document.getElementById('verse-text').style.letterSpacing = val + "px"; }
+    function setTextTransform(val) { document.getElementById('verse-text').style.textTransform = val; }
+    function setTextRotation(val) { document.getElementById('verse-text').style.transform = `rotate(${val}deg)`; }
+    function setBgScale(val) { document.getElementById('bg-layer').style.transform = `scale(${val})`; }
     
     function setShadowY(val) {
-        shadowY = val; updateShadow();
-    }
-    
-    function updateShadow() {
-        document.getElementById('verse-text').style.textShadow = `${shadowX}px ${shadowY}px 5px rgba(0,0,0,0.5)`;
+        shadowY = val; 
+        document.getElementById('verse-text').style.textShadow = `0px ${shadowY}px 5px rgba(0,0,0,0.5)`;
     }
     
     function setBorderRadius(val) {
