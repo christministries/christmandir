@@ -2,7 +2,7 @@
 <html lang="te">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Christ Mandir Bible Quiz</title>
     <style>
         :root {
@@ -13,6 +13,8 @@
             --bg-static: #ffffff;
             --whatsapp: #25D366;
             --glass-bg: rgba(255, 255, 255, 0.95);
+            --nav-height-mobile: 60px;
+            --nav-height-desktop: 70px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -23,7 +25,7 @@
             display: flex; justify-content: center; align-items: center; 
             min-height: 100vh; 
             background-color: var(--bg-static);
-            overflow: hidden; 
+            overflow: hidden; /* Prevent body scroll */
         }
 
         /* --- BACKGROUND ANIMATION (Desktop Only) --- */
@@ -37,7 +39,7 @@
         .shape-3 { width: 350px; height: 350px; background: #007b8b; bottom: 20%; left: 20%; animation-delay: -10s; opacity: 0.4; }
         @keyframes floatShape { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(20px, 40px) scale(1.1); } }
 
-        /* --- NEW NAVIGATION STYLES (Based on your snippet) --- */
+        /* --- NAVIGATION STYLES --- */
         header {
             position: fixed;
             z-index: 1000;
@@ -49,87 +51,85 @@
         }
 
         .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
+            list-style: none; padding: 0; margin: 0; display: flex;
         }
 
         .nav-links li a {
-            text-decoration: none;
-            color: #888;
-            font-weight: 600;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
+            text-decoration: none; color: #888; font-weight: 600; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .nav-links li a.active { color: var(--primary); }
-        .nav-links li a:hover { color: var(--secondary); }
+        .nav-links li a.active span { transform: scale(1.1); }
 
-        /* --- MOBILE NAV (Bottom Sticky) --- */
+        /* --- MOBILE OPTIMIZATIONS --- */
         @media (max-width: 767px) {
             header {
                 bottom: 0; left: 0;
-                height: 70px;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
-                display: flex; justify-content: center; align-items: center;
+                height: var(--nav-height-mobile);
+                background: #ffffff;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+                border-top: 1px solid #f0f0f0;
             }
 
-            .logo { display: none; } /* Hide text logo on mobile bottom bar */
+            .logo { display: none; } 
 
             .nav-links {
-                width: 100%;
+                width: 100%; height: 100%;
                 justify-content: space-around;
+                align-items: center;
             }
+
+            .nav-links li { flex: 1; text-align: center; }
 
             .nav-links li a {
-                flex-direction: column; /* Icon top, text bottom */
-                font-size: 0.75rem;
-                gap: 4px;
+                flex-direction: column; 
+                font-size: 0.7rem; 
+                gap: 2px;
+                padding: 5px 0;
             }
 
-            .nav-links li a span { font-size: 1.4rem; } /* Icon size */
+            .nav-links li a span { font-size: 1.3rem; margin-bottom: 2px; }
             
-            /* Add padding to quiz container so it doesn't hide behind nav */
-            .quiz-container { height: calc(100vh - 70px); margin-bottom: 70px; }
+            /* Main Container Adjustment for Mobile */
+            .quiz-container { 
+                height: calc(100vh - var(--nav-height-mobile)) !important; 
+                margin-bottom: var(--nav-height-mobile);
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+
+            /* Buttons Side-by-Side on Mobile */
+            .btn-group {
+                flex-direction: row !important;
+                gap: 10px;
+            }
+            .btn-action {
+                font-size: 0.9rem !important;
+                padding: 12px !important;
+                flex: 1; /* Equal width */
+            }
         }
 
-        /* --- DESKTOP NAV (Top Sticky) --- */
+        /* --- DESKTOP OPTIMIZATIONS --- */
         @media (min-width: 768px) {
-            body { padding-top: 80px; } /* Push content down */
+            body { padding-top: var(--nav-height-desktop); }
             .background-shapes { display: block; }
 
             header {
                 top: 0; left: 0;
-                height: 70px;
-                display: flex;
-                justify-content: space-between; /* Logo Left, Nav Right */
-                align-items: center;
+                height: var(--nav-height-desktop);
+                justify-content: space-between;
                 padding: 0 50px;
                 box-shadow: 0 5px 20px rgba(0,0,0,0.03);
             }
 
             .logo {
-                font-size: 1.5rem;
-                font-weight: 900;
-                color: var(--primary);
-                letter-spacing: 1px;
-                display: block;
+                font-size: 1.5rem; font-weight: 900; color: var(--primary); letter-spacing: 1px; display: block;
             }
 
             .nav-links { gap: 40px; }
-
-            .nav-links li a {
-                flex-direction: row; /* Icon left, text right */
-                font-size: 1rem;
-                gap: 8px;
-                padding: 8px 15px;
-                border-radius: 20px;
-            }
-
+            .nav-links li a { flex-direction: row; font-size: 1rem; gap: 8px; padding: 8px 15px; border-radius: 20px; }
             .nav-links li a:hover { background: rgba(0, 123, 139, 0.05); }
 
             .quiz-container {
@@ -142,65 +142,106 @@
             }
         }
 
-        /* --- QUIZ STYLES --- */
+        /* --- QUIZ CONTAINER LAYOUT --- */
         .quiz-container { 
             width: 100%; 
             display: flex; flex-direction: column;
             position: relative; overflow: hidden;
+            background: #fff;
         }
 
-        /* Buttons */
-        .btn-group { margin-top: auto; padding-top: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .btn-action { width: 100%; padding: 16px; border-radius: 15px; border: none; color: white; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; transition: 0.2s; font-size: 1rem; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        /* --- SCROLLABLE CONTENT AREA (Confined Space) --- */
+        .welcome-page, .quiz-body-container, .result-screen { 
+            flex-grow: 1; 
+            display: flex; flex-direction: column; 
+            padding: 20px; 
+            animation: fadeInUp 0.4s ease-out; 
+            overflow-y: auto; /* Internal scrolling */
+            /* Custom Scrollbar */
+            scrollbar-width: thin; scrollbar-color: #ddd transparent;
+        }
+        
+        .quiz-body-container { justify-content: flex-start; } /* Align top */
+
+        /* --- BUTTONS --- */
+        .btn-group { 
+            margin-top: auto; 
+            padding-top: 15px; 
+            display: flex; 
+            flex-direction: column; /* Default stack on desktop */
+            gap: 12px; 
+            flex-shrink: 0; /* Don't shrink buttons */
+        }
+        .btn-action { 
+            width: 100%; padding: 16px; border-radius: 12px; border: none; 
+            color: white; font-weight: bold; cursor: pointer; text-decoration: none; 
+            text-align: center; transition: 0.2s; font-size: 1rem; 
+            display: flex; justify-content: center; align-items: center; gap: 8px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
         .btn-share { background: var(--whatsapp); }
         .btn-restart { background: var(--primary); }
-        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+        .btn-action:hover { transform: translateY(-2px); filter: brightness(1.05); }
         .btn-action:active { transform: scale(0.98); }
 
-        /* Animations */
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- GAME ELEMENTS --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
-        .welcome-page, .quiz-body-container, .result-screen { flex-grow: 1; display: flex; flex-direction: column; padding: 30px; animation: fadeInUp 0.6s ease-out; overflow-y: auto; }
         .welcome-content { margin: auto 0; text-align: center; }
-        .logo-box { font-size: 5rem; display: inline-block; animation: bounceLogo 3s infinite ease-in-out; filter: drop-shadow(0 0 20px rgba(0,188,212,0.4)); }
-        @keyframes bounceLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .logo-box { font-size: 4.5rem; display: inline-block; animation: bounceLogo 3s infinite ease-in-out; }
+        @keyframes bounceLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 40px; }
-        .level-card { padding: 20px; border-radius: 20px; border: none; color: white; font-weight: bold; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transform: scale(1); transition: 0.3s; }
+        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .level-card { padding: 18px; border-radius: 18px; border: none; color: white; font-weight: bold; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transform: scale(1); transition: 0.3s; }
         .level-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent); transform: skewX(-20deg); animation: shine 3s infinite; }
-        .level-card:hover { transform: translateY(-3px) scale(1.02); }
+        .level-card:active { transform: scale(0.96); }
 
-        .quiz-header { background: var(--primary); padding: 20px 25px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 5px 15px rgba(0,0,0,0.05); z-index: 10; flex-shrink: 0; }
-        .timer-box { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; justify-content: center; align-items: center; border: 3px solid var(--secondary); color: var(--primary); font-weight: 900; font-size: 1.2rem; transition: 0.3s; }
+        .quiz-header { 
+            background: var(--primary); padding: 15px 20px; 
+            display: flex; align-items: center; justify-content: space-between; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 10; flex-shrink: 0; 
+        }
+        .timer-box { width: 40px; height: 40px; background: white; border-radius: 10px; display: flex; justify-content: center; align-items: center; border: 3px solid var(--secondary); color: var(--primary); font-weight: 800; font-size: 1.1rem; }
         .timer-box.danger { border-color: var(--wrong); color: var(--wrong); animation: panicPulse 0.5s infinite; }
-        @keyframes panicPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 10px var(--wrong); } }
+        @keyframes panicPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        .q-progress { display: flex; gap: 6px; justify-content: center; margin-bottom: 20px; margin-top: 10px; }
-        .dot { height: 6px; flex: 1; background: #eee; border-radius: 10px; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .dot.active { background: var(--secondary); transform: scaleY(1.5); }
+        .q-progress { display: flex; gap: 5px; justify-content: center; margin-bottom: 20px; margin-top: 5px; flex-shrink: 0; }
+        .dot { height: 5px; flex: 1; background: #eee; border-radius: 10px; transition: 0.4s; }
+        .dot.active { background: var(--secondary); transform: scaleY(1.4); }
         .dot.completed { background: var(--primary); }
 
-        .q-text { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; text-align: center; line-height: 1.5; }
-        .option-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: 2px solid #f0f0f0; border-radius: 16px; background: white; cursor: pointer; text-align: left; font-size: 1rem; font-weight: 600; color: #555; opacity: 0; transform: translateX(30px); transition: transform 0.2s, background-color 0.3s, border-color 0.3s; position: relative; overflow: hidden; }
-        .option-btn.reveal { animation: slideInStagger 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .q-text { 
+            font-size: 1.25rem; font-weight: 700; color: var(--text-dark); 
+            margin-bottom: 20px; text-align: center; line-height: 1.4;
+            max-height: 150px; overflow-y: auto; /* Scroll long questions */
+        }
+        
+        .option-btn { 
+            width: 100%; padding: 16px; margin-bottom: 10px; border: 2px solid #f4f4f4; 
+            border-radius: 14px; background: white; cursor: pointer; text-align: left; 
+            font-size: 0.95rem; font-weight: 600; color: #555; opacity: 0; 
+            transform: translateX(20px); transition: 0.2s; position: relative; overflow: hidden; 
+        }
+        .option-btn.reveal { animation: slideInStagger 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes slideInStagger { to { opacity: 1; transform: translateX(0); } }
-        .option-btn:active { transform: scale(0.96) !important; }
-        .option-btn:hover { border-color: var(--secondary); background: #f0fbff; transform: translateX(5px); }
-
-        .selected-correct { background: var(--correct) !important; color: white !important; border-color: var(--correct) !important; animation: popSuccess 0.4s; }
+        .option-btn:active { transform: scale(0.97); background: #f0f0f0; }
+        
+        .selected-correct { background: var(--correct) !important; color: white !important; border-color: var(--correct) !important; }
         .selected-wrong { background: var(--wrong) !important; color: white !important; border-color: var(--wrong) !important; animation: shake 0.4s; }
-        @keyframes popSuccess { 50% { transform: scale(1.05); } }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-        .result-content { text-align: center; margin-bottom: 20px; }
-        .medal-box { font-size: 5rem; margin-bottom: 10px; animation: zoomRotate 0.8s backwards; text-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .result-content { text-align: center; margin-bottom: 15px; }
+        .medal-box { font-size: 4rem; margin-bottom: 5px; animation: zoomRotate 0.8s backwards; }
         @keyframes zoomRotate { from { transform: scale(0) rotate(-180deg); } to { transform: scale(1) rotate(0); } }
 
-        .review-label { font-weight: bold; color: var(--primary); margin-top: 10px; font-size: 0.95rem; text-align: left; }
-        .review-area { text-align: left; max-height: 200px; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; border: 1px solid #f0f0f0; border-radius: 15px; padding: 10px; }
-        .review-item { padding: 12px; border-radius: 10px; margin-bottom: 8px; background: #f9f9f9; border-left: 4px solid #ddd; font-size: 0.9rem; animation: slideUpFade 0.5s ease forwards; opacity: 0; transform: translateY(10px); }
-        @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } }
+        .review-label { font-weight: bold; color: var(--primary); margin-top: 5px; font-size: 0.9rem; text-align: left; }
+        .review-area { 
+            text-align: left; flex-grow: 1; overflow-y: auto; 
+            padding-right: 5px; margin-bottom: 10px; 
+            border: 1px solid #f0f0f0; border-radius: 15px; padding: 10px; 
+        }
+        .review-item { padding: 10px; border-radius: 8px; margin-bottom: 6px; background: #f9f9f9; border-left: 3px solid #ddd; font-size: 0.85rem; }
         .review-item.correct { border-left-color: var(--correct); background: #f4fff7; }
         .review-item.wrong { border-left-color: var(--wrong); background: #fff5f5; }
 
@@ -217,8 +258,7 @@
 
 <header>
     <div class="logo">Christ Mandir</div>
-    <nav>
-        <ul class="nav-links">
+    <nav style="width: 100%; max-width: 500px;"> <ul class="nav-links">
             <li><a href="index.html"><span>🏠</span> Home</a></li>
             <li><a href="bible.html"><span>📖</span> Bible</a></li>
             <li><a href="quiz.html" class="active"><span>❓</span> Quiz</a></li>
@@ -231,11 +271,11 @@
     <div id="start-screen" class="welcome-page">
         <div class="welcome-content">
             <div class="logo-box">🕊️</div>
-            <h1 style="color: var(--primary); margin: 5px 0; font-size: 2.3rem;">Christ Mandir</h1>
-            <p style="color: #888; font-style: italic;">"నీ వాక్యము నా పాదములకు దీపము..."</p>
-            <div class="welcome-text-box" style="margin-top: 25px;">
+            <h1 style="color: var(--primary); margin: 5px 0; font-size: 2rem;">Christ Mandir</h1>
+            <p style="color: #888; font-style: italic; font-size: 0.9rem;">"నీ వాక్యము నా పాదములకు దీపము..."</p>
+            <div class="welcome-text-box" style="margin-top: 20px;">
                 <h3 style="color: var(--primary); margin-bottom: 5px;">స్వాగతం!</h3>
-                <p style="color: #666; margin: 0; line-height: 1.5;">స్థాయిని ఎంచుకోండి:</p>
+                <p style="color: #666; margin: 0; font-size: 0.95rem;">స్థాయిని ఎంచుకోండి:</p>
             </div>
             <div class="level-grid">
                 <button class="level-card" style="background: linear-gradient(135deg, #27ae60, #2ecc71);" onclick="setupGame('easy', 15)">EASY<br><small>15 Secs</small></button>
@@ -246,67 +286,57 @@
 
     <div id="game-ui" class="hidden" style="height:100%; display:flex; flex-direction:column;">
         <div class="quiz-header">
-            <div style="color: white; font-weight: bold; font-size: 1.1rem; letter-spacing: 1px;">BIBLE QUIZ</div>
+            <div style="color: white; font-weight: bold; font-size: 1rem; letter-spacing: 0.5px;">BIBLE QUIZ</div>
             <div class="timer-box" id="timer-text">15</div>
         </div>
         <div class="quiz-body-container">
             <div class="q-progress" id="q-dots"></div>
             <div class="q-text" id="question-text"></div>
-            <div id="options-list"></div>
+            <div id="options-list" style="width: 100%;"></div>
         </div>
     </div>
 
     <div id="result-screen" class="result-screen hidden">
         <div class="result-content">
             <div class="medal-box" id="medal-icon">🏆</div>
-            <h2 id="congrats-text" style="color: #333; margin: 0;">అభినందనలు!</h2>
-            <div style="font-size: 3.5rem; font-weight: 900; color: var(--primary); margin: 10px 0;" id="final-score">0 / 5</div>
-            <div id="suggestion-box" style="font-size: 0.9rem; color: #555; background:#fffbe6; padding:10px; border-radius:10px;"></div>
+            <h2 id="congrats-text" style="color: #333; margin: 0; font-size: 1.5rem;">అభినందనలు!</h2>
+            <div style="font-size: 3rem; font-weight: 900; color: var(--primary); margin: 5px 0;" id="final-score">0 / 5</div>
+            <div id="suggestion-box" style="font-size: 0.85rem; color: #555; background:#fffbe6; padding:8px; border-radius:8px;"></div>
         </div>
-        <div class="review-label">మీ సమాధానాలు (Review):</div>
+        <div class="review-label">సమాధానాలు:</div>
         <div class="review-area" id="review-area"></div>
         <div class="btn-group">
-            <a href="#" id="share-btn" class="btn-action btn-share" target="_blank"><span>📱 WhatsApp లో షేర్ చేయండి</span></a>
-            <button class="btn-action btn-restart" onclick="location.reload()"><span>🔄 మళ్ళీ ఆడండి (Try Again)</span></button>
+            <a href="#" id="share-btn" class="btn-action btn-share" target="_blank">
+                <span style="font-size: 1.2rem;">📱</span> Share
+            </a>
+            <button class="btn-action btn-restart" onclick="location.reload()">
+                <span style="font-size: 1.2rem;">🔄</span> Retry
+            </button>
         </div>
     </div>
 </div>
 
 <script>
-    // ప్రశ్నల జాబితా (పెద్ద లిస్ట్ నుండి కొన్ని)
+    // --- Data & Logic ---
     const masterQuestionBank = [
-        // Easy
         { q: "బైబిల్లో మొత్తం ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["66", "77", "55", "44"], c: 0, level: "easy" },
         { q: "యేసుక్రీస్తు ఏ నదిలో బాప్తిస్మం పొందాడు?", a: ["నీలు", "యొర్దాను", "గంగా", "యూఫ్రటీస్"], c: 1, level: "easy" },
         { q: "ప్రపంచంలో మొదటి మనిషి ఎవరు?", a: ["నోవహు", "మోషే", "ఆదాము", "అబ్రాహాము"], c: 2, level: "easy" },
         { q: "యేసు ఎక్కడ జన్మించాడు?", a: ["నజరేతు", "యెరూషలేము", "బెత్లెహేము", "యెరికో"], c: 2, level: "easy" },
-        { q: "యేసును అమ్మిన శిష్యుడు ఎవరు?", a: ["పేతురు", "యూదా", "యోహాను", "తోమా"], c: 1, level: "easy" },
         { q: "లోక రక్షకుడు అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "అబ్రాహాము", "యేసుక్రీస్తు", "పేతురు"], c: 2, level: "easy" },
-        { q: "దానియేలును ఎందులో పడేశారు?", a: ["సింహాల గుహలో", "అగ్ని గుండంలో", "చెరసాలలో", "బావిలో"], c: 0, level: "easy" },
         { q: "తప్పిపోయిన కుమారుడు తిరిగి వచ్చినప్పుడు తండ్రి ఏమి చేశాడు?", a: ["కోప్పడ్డాడు", "ముద్దుపెట్టుకున్నాడు", "వెళ్ళగొట్టాడు", "కొట్టాడు"], c: 1, level: "easy" },
-        { q: "మంచి సమరయుడు ఉపమానం ఎవరు చెప్పారు?", a: ["యేసుక్రీస్తు", "పౌలు", "పేతురు", "యోహాను"], c: 0, level: "easy" },
         
-        // Hard
         { q: "నోవహు ఓడ కట్టిన కఱ్ఱ పేరు ఏమిటి?", a: ["గోపెరు కఱ్ఱ", "తుమ్మ కఱ్ఱ", "దేవదారు", "ఒలీవ"], c: 0, level: "hard" },
         { q: "ప్రకటన గ్రంథాన్ని యోహాను ఏ ద్వీపంలో రాశాడు?", a: ["సైప్రస్", "పత్మసు", "క్రీతు", "మాల్టా"], c: 1, level: "hard" },
-        { q: "కీర్తనల గ్రంథం మొత్తం ఎన్ని భాగాలుగా విభజించబడింది?", a: ["3", "5", "7", "10"], c: 1, level: "hard" },
+        { q: "మొదటి క్రైస్తవ అమరవీరుడు ఎవరు?", a: ["పేతురు", "స్తెఫను", "యాకోబు", "పౌలు"], c: 1, level: "hard" },
         { q: "బైబిల్లో 'దేవుడు' అనే పదం లేని పుస్తకం ఏది?", a: ["రూతు", "ఎస్తేరు", "యోబు", "ఆమోసు"], c: 1, level: "hard" },
         { q: "యెరికో గోడలు కూలిపోవడానికి ముందు ఇశ్రాయేలీయులు ఆ పట్టణం చుట్టూ మొత్తం ఎన్నిసార్లు తిరిగారు?", a: ["7", "10", "13", "14"], c: 2, level: "hard" },
-        { q: "యేసుక్రీస్తు సిలువ వేయబడినప్పుడు ప్రధాన యాజకుడు ఎవరు?", a: ["అన్న", "కయప", "గమలియేలు", "నికోదేము"], c: 1, level: "hard" },
-        { q: "ఎడమ చేతి వాటం గల ఏహూదు ఏ 'లావుపాటి రాజు'ను చంపాడు?", a: ["సిహోను", "ఓగు", "ఎగ్లోను", "బాలాకు"], c: 2, level: "hard" },
-        { q: "బైబిల్లో అతి దీర్ఘకాలం (969 ఏళ్లు) బ్రతికిన వ్యక్తి ఎవరు?", a: ["ఆదాము", "నోవహు", "మెతూషెలా", "ఏనోకు"], c: 2, level: "hard" }
+        { q: "ఎడమ చేతి వాటం గల ఏహూదు ఏ 'లావుపాటి రాజు'ను చంపాడు?", a: ["సిహోను", "ఓగు", "ఎగ్లోను", "బాలాకు"], c: 2, level: "hard" }
     ];
 
-    let quizSet = [];
-    let currentQ = 0;
-    let score = 0;
-    let timer;
-    let timeLimit = 15;
-    let userAnswers = [];
-    let gameLevel = "";
+    let quizSet = [], currentQ = 0, score = 0, timer, timeLimit = 15, userAnswers = [];
 
     function setupGame(level, time) {
-        gameLevel = level;
         timeLimit = time;
         const filtered = masterQuestionBank.filter(q => q.level === level);
         for (let i = filtered.length - 1; i > 0; i--) {
@@ -391,11 +421,11 @@
         const congrats = document.getElementById('congrats-text');
         const suggest = document.getElementById('suggestion-box');
 
-        if (score === 5) { medal.innerText = "🥇"; congrats.innerText = "అద్భుతం! శభాష్!"; suggest.innerHTML = "<b>చాలా సంతోషం!</b> దేవుని వాక్యం మీలో సమృద్ధిగా ఉంది."; } 
-        else if (score >= 3) { medal.innerText = "🥈"; congrats.innerText = "చాలా మంచి ప్రయత్నం!"; suggest.innerHTML = "<b>బాగా ఆడారు!</b> వాక్యం చదవడం కొనసాగించండి."; } 
-        else { medal.innerText = "📖"; congrats.innerText = "మంచి ప్రారంభం!"; suggest.innerHTML = "<b>నిరుత్సాహపడకండి!</b> ప్రతిరోజూ బైబిల్ చదవడం అలవాటు చేసుకోండి."; }
+        if (score === 5) { medal.innerText = "🥇"; congrats.innerText = "అద్భుతం!"; suggest.innerHTML = "దేవుని వాక్యం మీలో సమృద్ధిగా ఉంది."; } 
+        else if (score >= 3) { medal.innerText = "🥈"; congrats.innerText = "బాగుంది!"; suggest.innerHTML = "మంచి ప్రయత్నం, కొనసాగించండి."; } 
+        else { medal.innerText = "📖"; congrats.innerText = "మంచి ప్రారంభం!"; suggest.innerHTML = "ప్రతిరోజూ బైబిల్ చదవడం అలవాటు చేసుకోండి."; }
 
-        const shareMsg = `నేను Christ Mandir బైబిల్ క్విజ్ లో ${score}/5 సాధించాను! మీరు పాల్గొనండి!`;
+        const shareMsg = `నేను Christ Mandir బైబిల్ క్విజ్ లో ${score}/5 సాధించాను!`;
         document.getElementById('share-btn').href = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
         
         const reviewBox = document.getElementById('review-area');
@@ -404,7 +434,7 @@
             const div = document.createElement('div');
             div.className = `review-item ${item.isCorrect ? 'correct' : 'wrong'}`;
             div.style.animationDelay = `${i * 0.1}s`;
-            div.innerHTML = `<span style="font-weight:bold;">${i+1}. ${item.q}</span><br><div style="margin-top:5px;">మీరు ఎంచుకున్నది: <b style="color:${item.isCorrect ? '#27ae60' : '#e74c3c'}">${item.selected} ${item.isCorrect ? '✅' : '❌'}</b></div>`;
+            div.innerHTML = `<span style="font-weight:bold;">${i+1}. ${item.q}</span><br><div style="margin-top:2px;">మీరు: <b style="color:${item.isCorrect ? '#27ae60' : '#e74c3c'}">${item.selected} ${item.isCorrect ? '✅' : '❌'}</b></div>`;
             reviewBox.appendChild(div);
         });
     }
