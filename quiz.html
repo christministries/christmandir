@@ -7,216 +7,203 @@
     <style>
         :root {
             --primary: #007b8b;
-            --primary-dark: #005f6b;
+            --primary-dark: #005662;
             --secondary: #00bcd4;
             --correct: #27ae60;
             --wrong: #e74c3c;
-            --bg-static: #f4f6f8;
+            --bg-color: #f0f4f8;
             --whatsapp: #25D366;
-            --nav-bg-mobile: rgba(255, 255, 255, 0.98);
-            --nav-bg-desktop: rgba(255, 255, 255, 0.9);
-            --text-dark: #2c3e50;
-            --nav-height-mobile: 65px;
-            --nav-height-desktop: 80px;
+            --glass-nav: rgba(255, 255, 255, 0.9);
+            --text-main: #2d3436;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0; padding: 0; 
             display: flex; justify-content: center; align-items: center; 
             min-height: 100vh; 
-            background-color: var(--bg-static);
-            overflow: hidden; 
+            background-color: var(--bg-color);
+            overflow: hidden; /* Prevent body scroll */
         }
 
-        /* --- BACKGROUND ANIMATION (Desktop Only) --- */
+        /* --- DESKTOP BACKGROUND ANIMATION --- */
         .background-shapes {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             overflow: hidden; z-index: -1; display: none;
         }
-        .shape { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: floatShape 20s infinite alternate; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: float 20s infinite alternate; }
         .shape-1 { width: 400px; height: 400px; background: #00bcd4; top: -100px; left: -100px; }
-        .shape-2 { width: 350px; height: 350px; background: #ffd700; bottom: -50px; right: -50px; animation-delay: -5s; }
-        @keyframes floatShape { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
+        .shape-2 { width: 300px; height: 300px; background: #ffd700; bottom: -50px; right: -50px; animation-delay: -5s; }
+        @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(30px, 50px); } }
 
-        /* --- NAVIGATION STYLES (New Aesthetic) --- */
+        /* --- PILL SHAPED NAVIGATION --- */
         header {
-            position: fixed; z-index: 1000; width: 100%; transition: all 0.3s ease;
+            position: fixed; z-index: 1000; transition: all 0.3s ease;
         }
 
         .nav-links { list-style: none; padding: 0; margin: 0; display: flex; }
-        .nav-links li a { text-decoration: none; font-weight: 600; transition: 0.3s; display: flex; align-items: center; }
-        
-        /* Nav Colors */
-        .nav-links li a { color: #607d8b; }
-        .nav-links li a.active { color: var(--primary); }
-        .nav-links li a:hover { color: var(--primary-dark); }
+        .nav-links li a { text-decoration: none; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
 
-        /* --- MOBILE STYLES (Bottom Nav) --- */
+        /* MOBILE NAV (Floating Pill) */
         @media (max-width: 767px) {
             header {
-                bottom: 0; left: 0;
-                height: var(--nav-height-mobile);
-                background: var(--nav-bg-mobile);
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
+                bottom: 20px; left: 50%; transform: translateX(-50%);
+                width: 90%; max-width: 350px; height: 65px;
+                background: var(--glass-nav);
+                backdrop-filter: blur(15px);
+                border-radius: 50px; /* Pill Shape */
+                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                border: 1px solid rgba(255,255,255,0.5);
             }
-            .logo { display: none; } 
-            
-            nav { width: 100%; height: 100%; }
-            .nav-links { height: 100%; justify-content: space-around; align-items: center; }
-            .nav-links li { flex: 1; text-align: center; }
-            .nav-links li a { flex-direction: column; font-size: 0.7rem; gap: 4px; }
-            .nav-links li a span { font-size: 1.4rem; }
-            .nav-links li a.active span { transform: translateY(-2px); }
+            .logo { display: none; }
+            .nav-links { height: 100%; justify-content: space-between; padding: 0 20px; }
+            .nav-links li a { flex-direction: column; font-size: 0.7rem; color: #888; gap: 2px; }
+            .nav-links li a span { font-size: 1.4rem; transition: 0.3s; }
+            .nav-links li a.active { color: var(--primary); }
+            .nav-links li a.active span { transform: translateY(-3px); text-shadow: 0 5px 10px rgba(0,123,139,0.3); }
 
-            /* Button Optimization for Mobile */
-            .btn-group { flex-direction: row !important; gap: 10px; padding-bottom: 5px; }
-            .btn-action { padding: 10px !important; font-size: 0.9rem !important; }
-            
-            /* Container Adjustment */
-            .quiz-container { 
-                height: calc(100vh - var(--nav-height-mobile)) !important; 
-                top: 0; /* Align to top */
-                border-radius: 0 !important;
-                background: #fff;
-            }
-            /* Add padding to bottom of scrollable areas so content isn't cut off */
-            .welcome-page, .result-screen, .quiz-body-container {
-                padding-bottom: 20px !important;
-            }
+            /* Mobile Button Fix */
+            .btn-group { flex-direction: row !important; gap: 10px; }
+            .btn-action { font-size: 0.9rem !important; padding: 12px !important; }
         }
 
-        /* --- DESKTOP STYLES (Top Right Nav) --- */
+        /* DESKTOP NAV (Top Right) */
         @media (min-width: 768px) {
-            body { padding-top: var(--nav-height-desktop); }
+            body { padding-top: 80px; }
             .background-shapes { display: block; }
-
             header {
-                top: 0; left: 0;
-                height: var(--nav-height-desktop);
-                background: var(--nav-bg-desktop);
-                backdrop-filter: blur(15px);
-                display: flex; justify-content: space-between; align-items: center;
-                padding: 0 50px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+                top: 0; left: 0; width: 100%; height: 80px;
+                background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+                display: flex; justify-content: space-between; align-items: center; padding: 0 50px;
+                box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             }
-
-            .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
-            
-            /* Align Nav to Right */
+            .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
             .nav-links { gap: 30px; }
-            .nav-links li a { flex-direction: row; font-size: 1rem; gap: 8px; padding: 8px 16px; border-radius: 20px; }
-            .nav-links li a:hover { background: rgba(0, 123, 139, 0.08); }
-            .nav-links li a.active { background: rgba(0, 123, 139, 0.1); }
+            .nav-links li a { font-size: 1rem; color: #555; gap: 8px; padding: 8px 16px; border-radius: 20px; }
+            .nav-links li a:hover { background: rgba(0,123,139,0.1); color: var(--primary); }
+            .nav-links li a.active { background: var(--primary); color: white; }
 
             .quiz-container {
-                max-width: 480px; height: auto; max-height: 85vh;
-                border-radius: 25px; 
-                background: rgba(255, 255, 255, 0.9);
-                backdrop-filter: blur(20px);
+                max-width: 500px; height: auto; max-height: 85vh;
+                border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+                background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
                 border: 1px solid rgba(255,255,255,0.8);
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
             }
         }
 
-        /* --- QUIZ LAYOUT & SCROLLING --- */
-        .quiz-container { 
-            width: 100%; display: flex; flex-direction: column; 
-            position: relative; overflow: hidden; 
+        /* --- MAIN CONTAINER --- */
+        .quiz-container {
+            width: 100%; height: 100vh;
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
         }
 
-        /* Confined Scrollable Areas */
-        .welcome-page, .quiz-body-container, .result-screen { 
-            flex-grow: 1; 
-            display: flex; flex-direction: column; 
-            padding: 25px; 
-            animation: fadeIn 0.5s ease-out; 
-            overflow-y: auto; /* Internal scrolling */
-            scrollbar-width: thin;
+        /* Scrollable Content Areas with Bottom Padding for Pill Nav */
+        .welcome-page, .quiz-body-container, .result-screen {
+            flex-grow: 1; display: flex; flex-direction: column;
+            padding: 25px; overflow-y: auto;
+            /* CRITICAL: Space for Mobile Pill Nav so buttons aren't hidden */
+            padding-bottom: 100px; 
+            animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- TYPOGRAPHY & ELEMENTS --- */
+        /* --- WELCOME PAGE --- */
         .welcome-content { text-align: center; margin: auto 0; }
-        .logo-box { font-size: 4rem; display: inline-block; animation: floatIcon 3s ease-in-out infinite; }
+        .logo-icon { font-size: 4.5rem; display: inline-block; animation: floatIcon 3s ease-in-out infinite; }
         @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        .welcome-title { color: var(--primary); margin: 10px 0 5px; font-size: 1.8rem; }
-        .welcome-desc { color: #666; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.5; }
-
-        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-        .level-card { 
-            padding: 15px; border-radius: 15px; border: none; color: white; 
-            font-weight: bold; cursor: pointer; position: relative; overflow: hidden; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s; 
+        
+        .welcome-card {
+            background: #fff; padding: 20px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 20px;
         }
-        .level-card:active { transform: scale(0.96); }
-
-        /* Quiz Header */
-        .quiz-header { 
-            padding: 15px 25px; background: #fff; border-bottom: 1px solid #f0f0f0;
-            display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; 
+        .welcome-msg { color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        
+        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .level-btn {
+            padding: 15px; border: none; border-radius: 15px; color: white; font-weight: bold;
+            cursor: pointer; position: relative; overflow: hidden; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .timer-box { 
-            width: 38px; height: 38px; background: #fff; border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; 
-            border: 2px solid var(--secondary); color: var(--primary); font-weight: 700; 
+        .level-btn:active { transform: scale(0.95); }
+        .level-btn::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg); animation: shine 3s infinite;
         }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
-        /* Questions */
-        .q-progress { display: flex; gap: 4px; justify-content: center; margin: 15px 0; flex-shrink: 0; }
-        .dot { height: 4px; flex: 1; background: #e0e0e0; border-radius: 2px; transition: 0.3s; }
-        .dot.active { background: var(--secondary); } .dot.completed { background: var(--primary); }
-
-        .q-text { 
-            font-size: 1.2rem; font-weight: 700; color: var(--text-dark); 
-            margin-bottom: 20px; text-align: center; line-height: 1.4;
+        /* --- QUIZ UI --- */
+        .quiz-header {
+            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
+            background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.03); z-index: 10;
         }
-
-        .option-btn { 
-            width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #e0e0e0; 
-            border-radius: 12px; background: white; cursor: pointer; text-align: left; 
-            font-size: 0.95rem; color: #444; font-weight: 600;
-            transition: 0.2s; position: relative; 
+        
+        /* TIMER ANIMATION */
+        .timer-box {
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            border: 3px solid var(--secondary); color: var(--primary); font-weight: 800;
+            animation: pulseTimer 1s infinite;
         }
-        .option-btn:active { background: #f5f5f5; transform: scale(0.98); }
+        .timer-box.danger { 
+            border-color: var(--wrong); color: var(--wrong); 
+            animation: dangerPulse 0.5s infinite; 
+        }
+        @keyframes pulseTimer { 0% { box-shadow: 0 0 0 0 rgba(0,188,212,0.4); } 70% { box-shadow: 0 0 0 10px rgba(0,188,212,0); } 100% { box-shadow: 0 0 0 0 rgba(0,188,212,0); } }
+        @keyframes dangerPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        .q-progress { display: flex; gap: 5px; justify-content: center; margin: 20px 0; }
+        .dot { height: 5px; flex: 1; background: #e0e0e0; border-radius: 5px; transition: 0.5s; }
+        .dot.active { background: var(--secondary); transform: scaleY(2); }
+        .dot.completed { background: var(--primary); }
+
+        .q-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 25px; }
+        
+        .option-btn {
+            width: 100%; padding: 16px; margin-bottom: 12px; border: 2px solid #f0f0f0;
+            border-radius: 15px; background: white; cursor: pointer; text-align: left;
+            font-size: 1rem; color: #555; font-weight: 600; position: relative; overflow: hidden;
+            transition: 0.2s; opacity: 0; transform: translateX(20px);
+        }
+        .option-btn.show { animation: slideIn 0.4s forwards; }
+        @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+        
+        .option-btn:active { transform: scale(0.97); background: #f8f9fa; }
         .selected-correct { background: var(--correct) !important; color: white !important; border-color: var(--correct) !important; }
-        .selected-wrong { background: var(--wrong) !important; color: white !important; border-color: var(--wrong) !important; }
+        .selected-wrong { background: var(--wrong) !important; color: white !important; border-color: var(--wrong) !important; animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-        /* Results */
-        .result-content { text-align: center; margin-bottom: 15px; }
-        .medal-box { font-size: 3.5rem; margin-bottom: 5px; }
-        .score-display { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin: 5px 0; }
-        .suggestion-box { font-size: 0.9rem; color: #555; background:#e0f7fa; padding: 12px; border-radius: 12px; margin-top: 10px; border: 1px solid #b2ebf2; }
-
-        /* Review Area (Scrollable) */
-        .review-area { 
-            text-align: left; flex-grow: 1; overflow-y: auto; 
-            margin-bottom: 10px; padding: 5px;
+        /* --- RESULTS --- */
+        .result-content { text-align: center; margin-bottom: 20px; }
+        .medal { font-size: 4rem; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+        
+        .score-big { font-size: 3rem; font-weight: 900; color: var(--primary); margin: 5px 0; }
+        
+        .suggestion-card {
+            background: #e0f7fa; border-left: 5px solid var(--secondary);
+            padding: 15px; border-radius: 10px; margin-top: 15px; text-align: left;
+            font-size: 0.9rem; color: #006064; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        .review-item { 
-            padding: 10px; border-radius: 8px; margin-bottom: 8px; 
-            background: #fff; border: 1px solid #eee; border-left: 3px solid #ccc; font-size: 0.85rem; 
-        }
-        .review-item.correct { border-left-color: var(--correct); } 
-        .review-item.wrong { border-left-color: var(--wrong); }
 
-        /* Buttons */
-        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
-        .btn-action { 
-            width: 100%; padding: 14px; border-radius: 12px; border: none; 
-            color: white; font-weight: bold; cursor: pointer; text-decoration: none; 
-            text-align: center; font-size: 1rem; flex: 1;
-            display: flex; justify-content: center; align-items: center; gap: 6px;
+        .review-area { text-align: left; margin-bottom: 15px; }
+        .review-item { padding: 12px; border-radius: 10px; background: #fff; border: 1px solid #eee; margin-bottom: 8px; font-size: 0.9rem; }
+        
+        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+        .btn-action {
+            width: 100%; padding: 15px; border-radius: 12px; border: none; color: white;
+            font-weight: bold; cursor: pointer; text-decoration: none; text-align: center;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s;
         }
         .btn-share { background: var(--whatsapp); }
         .btn-restart { background: var(--primary); }
+        .btn-action:hover { transform: translateY(-2px); filter: brightness(1.05); }
 
         .hidden { display: none !important; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -227,7 +214,7 @@
 </div>
 
 <header>
-    <div class="logo" style="margin-left: 0;">Christ Mandir</div>
+    <div class="logo">Christ Mandir</div>
     <nav>
         <ul class="nav-links">
             <li><a href="index.html"><span>🏠</span> Home</a></li>
@@ -242,46 +229,50 @@
     
     <div id="start-screen" class="welcome-page">
         <div class="welcome-content">
-            <div class="logo-box">🕊️</div>
+            <div class="logo-icon">🕊️</div>
             <h1 class="welcome-title">Christ Mandir Quiz</h1>
-            <p class="welcome-desc">
-                దేవుని వాక్యంలో మీ జ్ఞానాన్ని పెంచుకోండి.<br>
-                <b>"నీ వాక్యము నా పాదములకు దీపము"</b><br><br>
-                ప్రారంభించడానికి సిద్ధమా?
-            </p>
             
-            <div class="level-grid">
-                <button class="level-card" style="background: linear-gradient(135deg, #27ae60, #2ecc71);" onclick="setupGame('easy', 15)">
-                    EASY LEVEL<br><small style="font-weight:normal; opacity:0.9">15 Secs</small>
-                </button>
-                <button class="level-card" style="background: linear-gradient(135deg, #e67e22, #f39c12);" onclick="setupGame('hard', 10)">
-                    HARD LEVEL<br><small style="font-weight:normal; opacity:0.9">10 Secs</small>
-                </button>
+            <div class="welcome-card">
+                <p class="welcome-msg">
+                    <b>దేవుని పేరిట మీకు శుభములు!</b><br>
+                    ఈ క్విజ్ ద్వారా దేవుని వాక్యాన్ని ధ్యానించండి. 
+                    జ్ఞానాన్ని మరియు ఆత్మీయతను పెంచుకోండి.
+                </p>
+                
+                <p style="margin-bottom:10px; font-size:0.9rem; color:#888;">Select a Difficulty:</p>
+                <div class="level-grid">
+                    <button class="level-btn" style="background: linear-gradient(135deg, #27ae60, #2ecc71);" onclick="setupGame('easy', 15)">
+                        EASY<br><span style="font-size:0.8rem; opacity:0.8">15 Secs</span>
+                    </button>
+                    <button class="level-btn" style="background: linear-gradient(135deg, #e67e22, #f39c12);" onclick="setupGame('hard', 10)">
+                        HARD<br><span style="font-size:0.8rem; opacity:0.8">10 Secs</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="game-ui" class="hidden" style="height:100%; display:flex; flex-direction:column;">
         <div class="quiz-header">
-            <span style="font-weight:700; color:var(--primary);">QUESTION</span>
+            <span style="font-weight:700; color:#555;">QUESTION</span>
             <div class="timer-box" id="timer-text">15</div>
         </div>
         <div class="quiz-body-container">
             <div class="q-progress" id="q-dots"></div>
             <div class="q-text" id="question-text"></div>
-            <div id="options-list" style="width: 100%;"></div>
+            <div id="options-list" style="width:100%;"></div>
         </div>
     </div>
 
     <div id="result-screen" class="result-screen hidden">
         <div class="result-content">
-            <div class="medal-box" id="medal-icon">🏆</div>
-            <h2 id="congrats-text" style="color: #333; margin: 0; font-size: 1.4rem;">Well Done!</h2>
-            <div class="score-display" id="final-score">0 / 5</div>
-            <div id="suggestion-box" class="suggestion-box"></div>
+            <div class="medal" id="medal-icon">🏆</div>
+            <h2 id="congrats-text" style="color:#333; margin:5px 0;">Well Done!</h2>
+            <div class="score-big" id="final-score">0 / 5</div>
+            <div id="suggestion-box" class="suggestion-card"></div>
         </div>
-        
-        <div style="font-weight:bold; color:#666; margin-bottom:5px; font-size:0.9rem;">Review Answers:</div>
+
+        <div style="font-weight:bold; color:#666; margin-bottom:5px;">Review Answers:</div>
         <div class="review-area" id="review-area"></div>
         
         <div class="btn-group">
@@ -293,37 +284,34 @@
             </button>
         </div>
     </div>
+
 </div>
 
 <script>
-    // --- QUESTION BANK ---
     const masterQuestionBank = [
         { q: "బైబిల్లో మొత్తం ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["66", "77", "55", "44"], c: 0, level: "easy" },
         { q: "యేసుక్రీస్తు ఏ నదిలో బాప్తిస్మం పొందాడు?", a: ["నీలు", "యొర్దాను", "గంగా", "యూఫ్రటీస్"], c: 1, level: "easy" },
         { q: "ప్రపంచంలో మొదటి మనిషి ఎవరు?", a: ["నోవహు", "మోషే", "ఆదాము", "అబ్రాహాము"], c: 2, level: "easy" },
         { q: "లోక రక్షకుడు అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "అబ్రాహాము", "యేసుక్రీస్తు", "పేతురు"], c: 2, level: "easy" },
         { q: "తప్పిపోయిన కుమారుడు తిరిగి వచ్చినప్పుడు తండ్రి ఏమి చేశాడు?", a: ["కోప్పడ్డాడు", "ముద్దుపెట్టుకున్నాడు", "వెళ్ళగొట్టాడు", "కొట్టాడు"], c: 1, level: "easy" },
-        { q: "యేసుక్రీస్తు 5000 మందికి ఆహారం పెట్టినప్పుడు ఏమి ఉపయోగించారు?", a: ["5 రొట్టెలు 2 చేపలు", "7 రొట్టెలు", "బియ్యం", "పండ్లు"], c: 0, level: "easy" },
         
         { q: "నోవహు ఓడ కట్టిన కఱ్ఱ పేరు ఏమిటి?", a: ["గోపెరు కఱ్ఱ", "తుమ్మ కఱ్ఱ", "దేవదారు", "ఒలీవ"], c: 0, level: "hard" },
         { q: "ప్రకటన గ్రంథాన్ని యోహాను ఏ ద్వీపంలో రాశాడు?", a: ["సైప్రస్", "పత్మసు", "క్రీతు", "మాల్టా"], c: 1, level: "hard" },
         { q: "మొదటి క్రైస్తవ అమరవీరుడు ఎవరు?", a: ["పేతురు", "స్తెఫను", "యాకోబు", "పౌలు"], c: 1, level: "hard" },
         { q: "యెరికో గోడలు కూలిపోవడానికి ముందు ఇశ్రాయేలీయులు ఆ పట్టణం చుట్టూ మొత్తం ఎన్నిసార్లు తిరిగారు?", a: ["7", "10", "13", "14"], c: 2, level: "hard" },
-        { q: "ఎడమ చేతి వాటం గల ఏహూదు ఏ 'లావుపాటి రాజు'ను చంపాడు?", a: ["సిహోను", "ఓగు", "ఎగ్లోను", "బాలాకు"], c: 2, level: "hard" }
+        { q: "బైబిల్లో అతి దీర్ఘకాలం (969 ఏళ్లు) బ్రతికిన వ్యక్తి ఎవరు?", a: ["ఆదాము", "నోవహు", "మెతూషెలా", "ఏనోకు"], c: 2, level: "hard" }
     ];
 
     let quizSet = [], currentQ = 0, score = 0, timer, timeLimit = 15, userAnswers = [];
 
     function setupGame(level, time) {
+        timeLimit = time;
         const filtered = masterQuestionBank.filter(q => q.level === level);
-        // Shuffle
         for (let i = filtered.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
         }
         quizSet = filtered.slice(0, 5);
-        
-        timeLimit = time;
         document.getElementById('q-dots').innerHTML = quizSet.map(() => '<div class="dot"></div>').join('');
         document.getElementById('start-screen').classList.add('hidden');
         document.getElementById('game-ui').classList.remove('hidden');
@@ -333,8 +321,8 @@
     function loadQuestion() {
         if (currentQ >= quizSet.length) return finishGame();
         
-        // Dot update
-        document.querySelectorAll('.dot').forEach((d, i) => {
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((d, i) => {
             d.classList.remove('active');
             if(i < currentQ) d.classList.add('completed');
             if(i === currentQ) d.classList.add('active');
@@ -350,6 +338,7 @@
             btn.className = 'option-btn';
             btn.innerText = opt;
             btn.style.animationDelay = (i * 0.05) + 's';
+            btn.classList.add('show');
             btn.onclick = () => selectOption(btn, i);
             optionsBox.appendChild(btn);
         });
@@ -360,17 +349,13 @@
         let timeLeft = timeLimit;
         const timerElem = document.getElementById('timer-text');
         timerElem.innerText = timeLeft;
-        timerElem.style.color = 'var(--primary)';
-        timerElem.style.borderColor = 'var(--secondary)';
+        timerElem.classList.remove('danger');
         
         clearInterval(timer);
         timer = setInterval(() => {
             timeLeft--;
             timerElem.innerText = timeLeft;
-            if (timeLeft <= 5) {
-                timerElem.style.color = 'var(--wrong)';
-                timerElem.style.borderColor = 'var(--wrong)';
-            }
+            if (timeLeft <= 5) timerElem.classList.add('danger');
             if (timeLeft <= 0) { clearInterval(timer); selectOption(null, -1); }
         }, 1000);
     }
@@ -389,7 +374,7 @@
             else { btn.classList.add('selected-wrong'); }
         }
         currentQ++;
-        setTimeout(loadQuestion, 1000);
+        setTimeout(loadQuestion, 1200);
     }
 
     function finishGame() {
@@ -401,24 +386,24 @@
         const congrats = document.getElementById('congrats-text');
         const suggest = document.getElementById('suggestion-box');
 
-        // WARM CONGRATS MESSAGES
+        // SUGGESTIONS & WARM MESSAGES
         if (score === 5) { 
             medal.innerText = "🥇"; 
-            congrats.innerText = "అద్భుతం! (Amazing!)"; 
-            suggest.innerHTML = "మీ బైబిల్ జ్ఞానం చాలా బాగుంది. దేవుని కృప మీకు తోడైయుండును గాక!"; 
+            congrats.innerText = "అద్భుతం! (Excellent!)"; 
+            suggest.innerHTML = "<b>చాలా సంతోషం!</b> దేవుని వాక్యం మీలో సమృద్ధిగా ఉంది. మీ జ్ఞానాన్ని ఇతరులతో పంచుకోండి."; 
         } 
         else if (score >= 3) { 
             medal.innerText = "🥈"; 
-            congrats.innerText = "చాలా మంచిది! (Great Job!)"; 
-            suggest.innerHTML = "మీరు బాగా ఆడారు. మరిన్ని విషయాలు నేర్చుకుంటూ ఉండండి."; 
+            congrats.innerText = "చాలా మంచిది! (Good Job!)"; 
+            suggest.innerHTML = "<b>బాగా ఆడారు!</b> కొన్ని ప్రశ్నలు తప్పు పోయాయి, కానీ పర్వాలేదు. వాక్యం చదవడం కొనసాగించండి."; 
         } 
         else { 
             medal.innerText = "📖"; 
-            congrats.innerText = "మంచి ప్రయత్నం! (Good Try!)"; 
-            suggest.innerHTML = "నిరుత్సాహపడకండి. వాక్యం చదవడం ద్వారా జ్ఞానం పెరుగుతుంది."; 
+            congrats.innerText = "మంచి ప్రయత్నం! (Good Try)"; 
+            suggest.innerHTML = "<b>నిరుత్సాహపడకండి!</b> ప్రతిరోజూ బైబిల్ చదవడం అలవాటు చేసుకోండి. ప్రభువు మీకు జ్ఞానాన్ని అనుగ్రహించును గాక."; 
         }
 
-        const shareMsg = `Christ Mandir Quiz Score: ${score}/5. Play now!`;
+        const shareMsg = `I scored ${score}/5 in Christ Mandir Bible Quiz! Can you beat me?`;
         document.getElementById('share-btn').href = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
         
         const reviewBox = document.getElementById('review-area');
@@ -427,7 +412,7 @@
             const div = document.createElement('div');
             div.className = `review-item ${item.isCorrect ? 'correct' : 'wrong'}`;
             div.innerHTML = `
-                <div style="font-weight:bold; margin-bottom:4px;">${i+1}. ${item.q}</div>
+                <div style="font-weight:bold; margin-bottom:3px;">${i+1}. ${item.q}</div>
                 <div>Your Answer: <b style="color:${item.isCorrect ? '#27ae60' : '#e74c3c'}">${item.selected} ${item.isCorrect ? '✅' : '❌'}</b></div>
             `;
             reviewBox.appendChild(div);
