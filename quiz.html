@@ -1,14 +1,10 @@
-<Quiz html>
+<!DOCTYPE html>
 <html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz - Christ Mandir</title>
-    
-    <link rel="stylesheet" href="style.css">
-    
+    <title>Christ Mandir Bible Quiz</title>
     <style>
-        /* --- QUIZ SPECIFIC STYLES --- */
         :root {
             --primary: #007b8b;
             --secondary: #00bcd4;
@@ -16,160 +12,194 @@
             --wrong: #e74c3c;
             --bg-static: #ffffff;
             --whatsapp: #25D366;
+            --glass-bg: rgba(255, 255, 255, 0.95);
         }
 
-        /* Adjust Main to center the quiz */
-        main {
-            flex: 1; /* Takes up remaining space between Header and Footer */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            margin: 0; padding: 0; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; 
             background-color: var(--bg-static);
+            overflow: hidden; 
+        }
+
+        /* --- BACKGROUND ANIMATION (Desktop Only) --- */
+        .background-shapes {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; display: none; background: #f0f4f8;
+        }
+        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: floatShape 20s infinite alternate; }
+        .shape-1 { width: 400px; height: 400px; background: #00bcd4; top: -100px; left: -100px; }
+        .shape-2 { width: 300px; height: 300px; background: #ffd700; bottom: -50px; right: -50px; animation-delay: -5s; }
+        .shape-3 { width: 350px; height: 350px; background: #007b8b; bottom: 20%; left: 20%; animation-delay: -10s; opacity: 0.4; }
+        @keyframes floatShape { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(20px, 40px) scale(1.1); } }
+
+        /* --- NEW NAVIGATION STYLES (Based on your snippet) --- */
+        header {
+            position: fixed;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            list-style: none;
             padding: 0;
-            overflow: hidden; /* Prevents double scrollbars */
+            margin: 0;
+            display: flex;
         }
 
-        /* Quiz Container - Mobile Full Height */
-        .quiz-container { 
-            background: #ffffff; 
-            width: 100%; 
-            height: 100%; /* Fill the Main area */
-            display: flex; 
-            flex-direction: column;
-            position: relative; 
-            overflow: hidden;
+        .nav-links li a {
+            text-decoration: none;
+            color: #888;
+            font-weight: 600;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
         }
 
-        /* Desktop Card Style */
+        .nav-links li a.active { color: var(--primary); }
+        .nav-links li a:hover { color: var(--secondary); }
+
+        /* --- MOBILE NAV (Bottom Sticky) --- */
+        @media (max-width: 767px) {
+            header {
+                bottom: 0; left: 0;
+                height: 70px;
+                box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                display: flex; justify-content: center; align-items: center;
+            }
+
+            .logo { display: none; } /* Hide text logo on mobile bottom bar */
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav-links li a {
+                flex-direction: column; /* Icon top, text bottom */
+                font-size: 0.75rem;
+                gap: 4px;
+            }
+
+            .nav-links li a span { font-size: 1.4rem; } /* Icon size */
+            
+            /* Add padding to quiz container so it doesn't hide behind nav */
+            .quiz-container { height: calc(100vh - 70px); margin-bottom: 70px; }
+        }
+
+        /* --- DESKTOP NAV (Top Sticky) --- */
         @media (min-width: 768px) {
-            main { padding: 20px; background-color: #f8f9fa; }
+            body { padding-top: 80px; } /* Push content down */
+            .background-shapes { display: block; }
+
+            header {
+                top: 0; left: 0;
+                height: 70px;
+                display: flex;
+                justify-content: space-between; /* Logo Left, Nav Right */
+                align-items: center;
+                padding: 0 50px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 900;
+                color: var(--primary);
+                letter-spacing: 1px;
+                display: block;
+            }
+
+            .nav-links { gap: 40px; }
+
+            .nav-links li a {
+                flex-direction: row; /* Icon left, text right */
+                font-size: 1rem;
+                gap: 8px;
+                padding: 8px 15px;
+                border-radius: 20px;
+            }
+
+            .nav-links li a:hover { background: rgba(0, 123, 139, 0.05); }
+
             .quiz-container {
-                max-width: 500px; 
-                height: auto; 
-                max-height: 85vh; /* Keep it inside viewport */
+                max-width: 500px; height: auto; max-height: 85vh;
                 border-radius: 30px; 
-                box-shadow: 0 25px 60px rgba(0,0,0,0.1);
-                border: 1px solid rgba(0,0,0,0.05);
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
             }
         }
 
-        /* --- BUTTONS --- */
-        .btn-group { 
-            margin-top: auto; 
-            padding-top: 15px;
-            display: flex; flex-direction: column; gap: 12px; 
+        /* --- QUIZ STYLES --- */
+        .quiz-container { 
+            width: 100%; 
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
         }
-        
-        .btn-action { 
-            width: 100%;
-            padding: 15px; border-radius: 15px; border: none; color: white; font-weight: bold; 
-            cursor: pointer; text-decoration: none; text-align: center; transition: 0.2s; 
-            font-size: 1rem; display: flex; justify-content: center; align-items: center; gap: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            font-family: inherit;
-        }
-        
+
+        /* Buttons */
+        .btn-group { margin-top: auto; padding-top: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .btn-action { width: 100%; padding: 16px; border-radius: 15px; border: none; color: white; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; transition: 0.2s; font-size: 1rem; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn-share { background: var(--whatsapp); }
         .btn-restart { background: var(--primary); }
-        
-        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); filter: brightness(1.05); }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
         .btn-action:active { transform: scale(0.98); }
 
-        /* --- ANIMATIONS --- */
+        /* Animations */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
-        .welcome-page, .quiz-body-container, .result-screen {
-            flex-grow: 1; display: flex; flex-direction: column;
-            padding: 20px; animation: fadeInUp 0.6s ease-out;
-            overflow-y: auto; /* Allow scrolling inside containers if content is long */
-        }
-
-        /* --- WELCOME SCREEN --- */
+        .welcome-page, .quiz-body-container, .result-screen { flex-grow: 1; display: flex; flex-direction: column; padding: 30px; animation: fadeInUp 0.6s ease-out; overflow-y: auto; }
         .welcome-content { margin: auto 0; text-align: center; }
-        .logo-box { 
-            font-size: 4rem; display: inline-block; 
-            animation: bounceLogo 3s infinite ease-in-out;
-        }
+        .logo-box { font-size: 5rem; display: inline-block; animation: bounceLogo 3s infinite ease-in-out; filter: drop-shadow(0 0 20px rgba(0,188,212,0.4)); }
         @keyframes bounceLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .level-card {
-            padding: 15px; border-radius: 20px; border: none; color: white;
-            font-weight: bold; cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transform: scale(1); transition: 0.3s;
-        }
-        .level-card::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-20deg); animation: shine 3s infinite;
-        }
-        .level-card:active { transform: scale(0.95); }
+        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 40px; }
+        .level-card { padding: 20px; border-radius: 20px; border: none; color: white; font-weight: bold; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transform: scale(1); transition: 0.3s; }
+        .level-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent); transform: skewX(-20deg); animation: shine 3s infinite; }
+        .level-card:hover { transform: translateY(-3px) scale(1.02); }
 
-        /* --- HEADER (Quiz Internal) --- */
-        .quiz-header { 
-            background: var(--primary); padding: 15px 20px; 
-            display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); z-index: 10; flex-shrink: 0;
-        }
-        .timer-box {
-            width: 40px; height: 40px; background: white; border-radius: 12px;
-            display: flex; justify-content: center; align-items: center;
-            border: 3px solid var(--secondary); color: var(--primary); 
-            font-weight: 900; font-size: 1.1rem; transition: 0.3s;
-        }
+        .quiz-header { background: var(--primary); padding: 20px 25px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 5px 15px rgba(0,0,0,0.05); z-index: 10; flex-shrink: 0; }
+        .timer-box { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; justify-content: center; align-items: center; border: 3px solid var(--secondary); color: var(--primary); font-weight: 900; font-size: 1.2rem; transition: 0.3s; }
         .timer-box.danger { border-color: var(--wrong); color: var(--wrong); animation: panicPulse 0.5s infinite; }
         @keyframes panicPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 10px var(--wrong); } }
 
-        /* --- QUESTIONS --- */
         .q-progress { display: flex; gap: 6px; justify-content: center; margin-bottom: 20px; margin-top: 10px; }
         .dot { height: 6px; flex: 1; background: #eee; border-radius: 10px; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .dot.active { background: var(--secondary); transform: scaleY(1.5); }
         .dot.completed { background: var(--primary); }
 
-        .q-text { font-size: 1.2rem; font-weight: 700; color: #333; margin-bottom: 20px; text-align: center; line-height: 1.5; }
-        
-        .option-btn {
-            width: 100%; padding: 15px; margin-bottom: 10px; border: 2px solid #f0f0f0;
-            border-radius: 16px; background: white; cursor: pointer; text-align: left;
-            font-size: 0.95rem; font-weight: 600; color: #555; 
-            opacity: 0; transform: translateX(30px); transition: transform 0.2s, background-color 0.3s, border-color 0.3s;
-            position: relative; overflow: hidden;
-            font-family: inherit;
-        }
-        
+        .q-text { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; text-align: center; line-height: 1.5; }
+        .option-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: 2px solid #f0f0f0; border-radius: 16px; background: white; cursor: pointer; text-align: left; font-size: 1rem; font-weight: 600; color: #555; opacity: 0; transform: translateX(30px); transition: transform 0.2s, background-color 0.3s, border-color 0.3s; position: relative; overflow: hidden; }
         .option-btn.reveal { animation: slideInStagger 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes slideInStagger { to { opacity: 1; transform: translateX(0); } }
         .option-btn:active { transform: scale(0.96) !important; }
+        .option-btn:hover { border-color: var(--secondary); background: #f0fbff; transform: translateX(5px); }
 
         .selected-correct { background: var(--correct) !important; color: white !important; border-color: var(--correct) !important; animation: popSuccess 0.4s; }
         .selected-wrong { background: var(--wrong) !important; color: white !important; border-color: var(--wrong) !important; animation: shake 0.4s; }
         @keyframes popSuccess { 50% { transform: scale(1.05); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
 
-        /* --- RESULT SCREEN --- */
         .result-content { text-align: center; margin-bottom: 20px; }
-        .medal-box { font-size: 4rem; margin-bottom: 10px; animation: zoomRotate 0.8s backwards; }
+        .medal-box { font-size: 5rem; margin-bottom: 10px; animation: zoomRotate 0.8s backwards; text-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         @keyframes zoomRotate { from { transform: scale(0) rotate(-180deg); } to { transform: scale(1) rotate(0); } }
 
-        /* Review Section */
         .review-label { font-weight: bold; color: var(--primary); margin-top: 10px; font-size: 0.95rem; text-align: left; }
-        .review-area { 
-            text-align: left; 
-            max-height: 150px; /* Scrollable review on mobile */
-            overflow-y: auto; 
-            padding-right: 5px; 
-            margin-bottom: 10px;
-            border: 1px solid #f0f0f0;
-            border-radius: 15px;
-            padding: 10px;
-        }
-        
-        .review-item { 
-            padding: 10px; border-radius: 10px; margin-bottom: 8px; 
-            background: #f9f9f9; border-left: 4px solid #ddd; font-size: 0.85rem;
-            animation: slideUpFade 0.5s ease forwards; opacity: 0; transform: translateY(10px);
-        }
+        .review-area { text-align: left; max-height: 200px; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; border: 1px solid #f0f0f0; border-radius: 15px; padding: 10px; }
+        .review-item { padding: 12px; border-radius: 10px; margin-bottom: 8px; background: #f9f9f9; border-left: 4px solid #ddd; font-size: 0.9rem; animation: slideUpFade 0.5s ease forwards; opacity: 0; transform: translateY(10px); }
         @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } }
         .review-item.correct { border-left-color: var(--correct); background: #f4fff7; }
         .review-item.wrong { border-left-color: var(--wrong); background: #fff5f5; }
@@ -179,541 +209,206 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo">Christ Mandir</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html"><span>🏠</span> Home</a></li>
-                <li><a href="bible.html"><span>📖</span> Bible</a></li>
-                <li><a href="quiz.html" class="active"><span>❓</span> Quiz</a></li>
-                <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
-            </ul>
-        </nav>
-    </header>
+<div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+</div>
 
-    <main>
-        <div class="quiz-container">
-            
-            <div id="start-screen" class="welcome-page">
-                <div class="welcome-content">
-                    <div class="logo-box">🕊️</div>
-                    <h1 style="color: var(--primary); margin: 5px 0; font-size: 2rem;">Christ Mandir</h1>
-                    <p style="color: #888; font-style: italic;">"నీ వాక్యము నా పాదములకు దీపము..."</p>
-                    
-                    <div class="welcome-text-box" style="margin-top: 25px;">
-                        <h3 style="color: var(--primary); margin-bottom: 5px;">స్వాగతం!</h3>
-                        <p style="color: #666; margin: 0; line-height: 1.5;">
-                            స్థాయిని ఎంచుకోండి:
-                        </p>
-                    </div>
+<header>
+    <div class="logo">Christ Mandir</div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html"><span>🏠</span> Home</a></li>
+            <li><a href="bible.html"><span>📖</span> Bible</a></li>
+            <li><a href="quiz.html" class="active"><span>❓</span> Quiz</a></li>
+            <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
+        </ul>
+    </nav>
+</header>
 
-                    <div class="level-grid">
-                        <button class="level-card" style="background: linear-gradient(135deg, #27ae60, #2ecc71);" onclick="setupGame('easy', 15)">EASY<br><small>15 Secs</small></button>
-                        <button class="level-card" style="background: linear-gradient(135deg, #e67e22, #f39c12);" onclick="setupGame('hard', 10)">HARD<br><small>10 Secs</small></button>
-                    </div>
-                </div>
+<div class="quiz-container">
+    <div id="start-screen" class="welcome-page">
+        <div class="welcome-content">
+            <div class="logo-box">🕊️</div>
+            <h1 style="color: var(--primary); margin: 5px 0; font-size: 2.3rem;">Christ Mandir</h1>
+            <p style="color: #888; font-style: italic;">"నీ వాక్యము నా పాదములకు దీపము..."</p>
+            <div class="welcome-text-box" style="margin-top: 25px;">
+                <h3 style="color: var(--primary); margin-bottom: 5px;">స్వాగతం!</h3>
+                <p style="color: #666; margin: 0; line-height: 1.5;">స్థాయిని ఎంచుకోండి:</p>
             </div>
-
-            <div id="game-ui" class="hidden" style="height:100%; display:flex; flex-direction:column;">
-                <div class="quiz-header">
-                    <div style="color: white; font-weight: bold; font-size: 1.1rem; letter-spacing: 1px;">BIBLE QUIZ</div>
-                    <div class="timer-box" id="timer-text">15</div>
-                </div>
-                <div class="quiz-body-container">
-                    <div class="q-progress" id="q-dots"></div>
-                    <div class="q-text" id="question-text"></div>
-                    <div id="options-list"></div>
-                </div>
-            </div>
-
-            <div id="result-screen" class="result-screen hidden">
-                <div class="result-content">
-                    <div class="medal-box" id="medal-icon">🏆</div>
-                    <h2 id="congrats-text" style="color: #333; margin: 0;">అభినందనలు!</h2>
-                    <div style="font-size: 3rem; font-weight: 900; color: var(--primary); margin: 5px 0;" id="final-score">0 / 5</div>
-                    <div id="suggestion-box" style="font-size: 0.9rem; color: #555; background:#fffbe6; padding:10px; border-radius:10px;"></div>
-                </div>
-                
-                <div class="review-label">మీ సమాధానాలు (Review):</div>
-                <div class="review-area" id="review-area"></div>
-                
-                <div class="btn-group">
-                    <a href="#" id="share-btn" class="btn-action btn-share" target="_blank">
-                        <span>📱 WhatsApp లో షేర్ చేయండి</span>
-                    </a>
-                    <button class="btn-action btn-restart" onclick="location.reload()">
-                        <span>🔄 మళ్ళీ ఆడండి (Try Again)</span>
-                    </button>
-                </div>
+            <div class="level-grid">
+                <button class="level-card" style="background: linear-gradient(135deg, #27ae60, #2ecc71);" onclick="setupGame('easy', 15)">EASY<br><small>15 Secs</small></button>
+                <button class="level-card" style="background: linear-gradient(135deg, #e67e22, #f39c12);" onclick="setupGame('hard', 10)">HARD<br><small>10 Secs</small></button>
             </div>
         </div>
-    </main>
+    </div>
 
-   
+    <div id="game-ui" class="hidden" style="height:100%; display:flex; flex-direction:column;">
+        <div class="quiz-header">
+            <div style="color: white; font-weight: bold; font-size: 1.1rem; letter-spacing: 1px;">BIBLE QUIZ</div>
+            <div class="timer-box" id="timer-text">15</div>
+        </div>
+        <div class="quiz-body-container">
+            <div class="q-progress" id="q-dots"></div>
+            <div class="q-text" id="question-text"></div>
+            <div id="options-list"></div>
+        </div>
+    </div>
 
-    <script>
-        // 1. Footer Year
+    <div id="result-screen" class="result-screen hidden">
+        <div class="result-content">
+            <div class="medal-box" id="medal-icon">🏆</div>
+            <h2 id="congrats-text" style="color: #333; margin: 0;">అభినందనలు!</h2>
+            <div style="font-size: 3.5rem; font-weight: 900; color: var(--primary); margin: 10px 0;" id="final-score">0 / 5</div>
+            <div id="suggestion-box" style="font-size: 0.9rem; color: #555; background:#fffbe6; padding:10px; border-radius:10px;"></div>
+        </div>
+        <div class="review-label">మీ సమాధానాలు (Review):</div>
+        <div class="review-area" id="review-area"></div>
+        <div class="btn-group">
+            <a href="#" id="share-btn" class="btn-action btn-share" target="_blank"><span>📱 WhatsApp లో షేర్ చేయండి</span></a>
+            <button class="btn-action btn-restart" onclick="location.reload()"><span>🔄 మళ్ళీ ఆడండి (Try Again)</span></button>
+        </div>
+    </div>
+</div>
 
-        // 2. Quiz Logic
-        const masterQuestionBank = [
-            { q: "బైబిల్లో మొత్తం ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["66", "77", "55", "44"], c: 0, level: "easy" },
-            { q: "యేసుక్రీస్తు ఏ నదిలో బాప్తిస్మం పొందాడు?", a: ["నీలు", "యొర్దాను", "గంగా", "యూఫ్రటీస్"], c: 1, level: "easy" },
-            { q: "ప్రపంచంలో మొదటి మనిషి ఎవరు?", a: ["నోవహు", "మోషే", "ఆదాము", "అబ్రాహాము"], c: 2, level: "easy" },
-            { q: "యేసు ఎక్కడ జన్మించాడు?", a: ["నజరేతు", "యెరూషలేము", "బెత్లెహేము", "యెరికో"], c: 2, level: "easy" },
-            { q: "యేసును అమ్మిన శిష్యుడు ఎవరు?", a: ["పేతురు", "యూదా", "యోహాను", "తోమా"], c: 1, level: "easy" },
-            { q: "లోక రక్షకుడు అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "అబ్రాహాము", "యేసుక్రీస్తు", "పేతురు"], c: 2, level: "easy" },
-            { q: "ఎర్ర సముద్రాన్ని పాయలు చేసిన నాయకుడు ఎవరు?", a: ["యోహాను", "మోషే", "దావీదు", "నోవహు"], c: 1, level: "easy" },
-            
-            { q: "నోవహు ఓడ కట్టిన కఱ్ఱ పేరు ఏమిటి?", a: ["గోపెరు కఱ్ఱ", "తుమ్మ కఱ్ఱ", "దేవదారు", "ఒలీవ"], c: 0, level: "hard" },
-            { q: "ప్రకటన గ్రంథాన్ని యోహాను ఏ ద్వీపంలో రాశాడు?", a: ["సైప్రస్", "పత్మసు", "క్రీతు", "మాల్టా"], c: 1, level: "hard" },
-            { q: "కీర్తనల గ్రంథం మొత్తం ఎన్ని భాగాలుగా విభజించబడింది?", a: ["3", "5", "7", "10"], c: 1, level: "hard" },
-            { q: "మొదటి క్రైస్తవ అమరవీరుడు ఎవరు?", a: ["పేతురు", "స్తెఫను", "యాకోబు", "పౌలు"], c: 1, level: "hard" },
-            { q: "బైబిల్లో 'దేవుడు' అనే పదం లేని పుస్తకం ఏది?", a: ["రూతు", "ఎస్తేరు", "యోబు", "ఆమోసు"], c: 1, level: "hard" },
-            { q: "యెరికో గోడలు కూలిపోవడానికి ముందు ఇశ్రాయేలీయులు ఆ పట్టణం చుట్టూ మొత్తం ఎన్నిసార్లు తిరిగారు?", a: ["7", "10", "13", "14"], c: 2, level: "hard" },
-    // --- EASY LEVEL (సాధారణ జ్ఞానం) ---
-    { q: "గొల్యాతును చంపిన బాలుడు ఎవరు?", a: ["సౌలు", "దావీదు", "సమ్సోను", "యోనాతాను"], c: 1, level: "easy" },
-    { q: "దేవుడు మోషేకు పది ఆజ్ఞలను ఏ కొండ మీద ఇచ్చాడు?", a: ["సీనాయి", "ఒలీవ", "హెర్మోను", "తాబోరు"], c: 0, level: "easy" },
-    { q: "సింహాల బోనులో వేయబడిన ప్రవక్త ఎవరు?", a: ["యెషయా", "దానియేలు", "ఎలీషా", "యిర్మీయా"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఎంతమంది శిష్యులను ఎంచుకున్నాడు?", a: ["10", "12", "7", "3"], c: 1, level: "easy" },
-    { q: "బైబిల్లో అతి బలవంతుడు అని ఎవరిని అంటారు?", a: ["సమ్సోను", "గోల్యాతు", "దావీదు", "గిద్యోను"], c: 0, level: "easy" },
-    { q: "ప్రపంచంలో మొదటి స్త్రీ ఎవరు?", a: ["మరియ", "హవ్వ", "శారా", "రూతు"], c: 1, level: "easy" },
-    { q: "జ్ఞానము గల రాజు అని ఎవరిని పిలుస్తారు?", a: ["దావీదు", "సొలొమోను", "సౌలు", "హిజ్కియా"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు తల్లి పేరు ఏమిటి?", a: ["ఎలిజబెత్", "మరియ", "మార్త", "హన్నా"], c: 1, level: "easy" },
-    { q: "పెద్ద చేప కడుపులో మూడు రోజులు ఉన్న ప్రవక్త ఎవరు?", a: ["యోనా", "యోవేలు", "ఆమోసు", "మీకా"], c: 0, level: "easy" },
-    { q: "యేసుక్రీస్తు చేసిన మొదటి అద్భుతం ఎక్కడ జరిగింది?", a: ["కపెర్నహూము", "కానా", "నజరేతు", "బెత్లెహేము"], c: 1, level: "easy" },
-    { q: "ఇశ్రాయేలీయులు అరణ్యంలో తిన్న ఆహారం పేరు ఏమిటి?", a: ["మన్నా", "రొట్టె", "అంజూరపు పండ్లు", "తేనె"], c: 0, level: "easy" },
-    { q: "బైబిల్లో మొదటి పుస్తకం ఏది?", a: ["మత్తయి", "ఆదికాండము", "నిర్గమకాండము", "కీర్తనలు"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఏ నదిలో బాప్తిస్మం పొందాడు?", a: ["నీలు", "యొర్దాను", "యూఫ్రటీస్", "టైగ్రిస్"], c: 1, level: "easy" },
-    { q: "విశ్వాసులకు తండ్రి అని ఎవరిని అంటారు?", a: ["అబ్రాహాము", "ఇస్సాకు", "యాకోబు", "మోషే"], c: 0, level: "easy" },
-    { q: "తండ్రికి తిరిగి వచ్చిన కుమారుడి ఉపమానం ఏది?", a: ["తప్పిపోయిన కుమారుడు", "మంచి సమరయుడు", "విత్తువాడు", "యజమాని"], c: 0, level: "easy" },
+<script>
+    // ప్రశ్నల జాబితా (పెద్ద లిస్ట్ నుండి కొన్ని)
+    const masterQuestionBank = [
+        // Easy
+        { q: "బైబిల్లో మొత్తం ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["66", "77", "55", "44"], c: 0, level: "easy" },
+        { q: "యేసుక్రీస్తు ఏ నదిలో బాప్తిస్మం పొందాడు?", a: ["నీలు", "యొర్దాను", "గంగా", "యూఫ్రటీస్"], c: 1, level: "easy" },
+        { q: "ప్రపంచంలో మొదటి మనిషి ఎవరు?", a: ["నోవహు", "మోషే", "ఆదాము", "అబ్రాహాము"], c: 2, level: "easy" },
+        { q: "యేసు ఎక్కడ జన్మించాడు?", a: ["నజరేతు", "యెరూషలేము", "బెత్లెహేము", "యెరికో"], c: 2, level: "easy" },
+        { q: "యేసును అమ్మిన శిష్యుడు ఎవరు?", a: ["పేతురు", "యూదా", "యోహాను", "తోమా"], c: 1, level: "easy" },
+        { q: "లోక రక్షకుడు అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "అబ్రాహాము", "యేసుక్రీస్తు", "పేతురు"], c: 2, level: "easy" },
+        { q: "దానియేలును ఎందులో పడేశారు?", a: ["సింహాల గుహలో", "అగ్ని గుండంలో", "చెరసాలలో", "బావిలో"], c: 0, level: "easy" },
+        { q: "తప్పిపోయిన కుమారుడు తిరిగి వచ్చినప్పుడు తండ్రి ఏమి చేశాడు?", a: ["కోప్పడ్డాడు", "ముద్దుపెట్టుకున్నాడు", "వెళ్ళగొట్టాడు", "కొట్టాడు"], c: 1, level: "easy" },
+        { q: "మంచి సమరయుడు ఉపమానం ఎవరు చెప్పారు?", a: ["యేసుక్రీస్తు", "పౌలు", "పేతురు", "యోహాను"], c: 0, level: "easy" },
+        
+        // Hard
+        { q: "నోవహు ఓడ కట్టిన కఱ్ఱ పేరు ఏమిటి?", a: ["గోపెరు కఱ్ఱ", "తుమ్మ కఱ్ఱ", "దేవదారు", "ఒలీవ"], c: 0, level: "hard" },
+        { q: "ప్రకటన గ్రంథాన్ని యోహాను ఏ ద్వీపంలో రాశాడు?", a: ["సైప్రస్", "పత్మసు", "క్రీతు", "మాల్టా"], c: 1, level: "hard" },
+        { q: "కీర్తనల గ్రంథం మొత్తం ఎన్ని భాగాలుగా విభజించబడింది?", a: ["3", "5", "7", "10"], c: 1, level: "hard" },
+        { q: "బైబిల్లో 'దేవుడు' అనే పదం లేని పుస్తకం ఏది?", a: ["రూతు", "ఎస్తేరు", "యోబు", "ఆమోసు"], c: 1, level: "hard" },
+        { q: "యెరికో గోడలు కూలిపోవడానికి ముందు ఇశ్రాయేలీయులు ఆ పట్టణం చుట్టూ మొత్తం ఎన్నిసార్లు తిరిగారు?", a: ["7", "10", "13", "14"], c: 2, level: "hard" },
+        { q: "యేసుక్రీస్తు సిలువ వేయబడినప్పుడు ప్రధాన యాజకుడు ఎవరు?", a: ["అన్న", "కయప", "గమలియేలు", "నికోదేము"], c: 1, level: "hard" },
+        { q: "ఎడమ చేతి వాటం గల ఏహూదు ఏ 'లావుపాటి రాజు'ను చంపాడు?", a: ["సిహోను", "ఓగు", "ఎగ్లోను", "బాలాకు"], c: 2, level: "hard" },
+        { q: "బైబిల్లో అతి దీర్ఘకాలం (969 ఏళ్లు) బ్రతికిన వ్యక్తి ఎవరు?", a: ["ఆదాము", "నోవహు", "మెతూషెలా", "ఏనోకు"], c: 2, level: "hard" }
+    ];
 
-    // --- HARD LEVEL (లోతైన జ్ఞానం) ---
-    { q: "బైబిల్లో అతి దీర్ఘకాలం (969 ఏళ్లు) బ్రతికిన వ్యక్తి ఎవరు?", a: ["ఆదాము", "నోవహు", "మెతూషెలా", "ఏనోకు"], c: 2, level: "hard" },
-    { q: "శిష్యులు మొట్టమొదట ఏ పట్టణంలో 'క్రైస్తవులు' అని పిలువబడ్డారు?", a: ["యెరూషలేము", "రోమా", "అంతియొకయ", "ఎఫెసు"], c: 2, level: "hard" },
-    { q: "బైబిల్లో 'కన్నీటి ప్రవక్త' (Weeping Prophet) అని ఎవరిని అంటారు?", a: ["యెషయా", "యిర్మీయా", "ఎహెజ్కేలు", "దానియేలు"], c: 1, level: "hard" },
-    { q: "అపోస్తలుడైన పౌలు అసలు పేరు ఏమిటి?", a: ["సీమోను", "సౌలు", "లేవి", "బర్నబా"], c: 1, level: "hard" },
-    { q: "యెరికో గోడలు కూలిపోవడానికి ఇశ్రాయేలీయులు ఆ పట్టణం చుట్టూ మొత్తం ఎన్నిసార్లు తిరిగారు?", a: ["7", "10", "13", "12"], c: 2, level: "hard" },
-    { q: "యేసుక్రీస్తు ఏ వంశావళిలో జన్మించాడు?", a: ["లేవీ", "యూదా", "బెన్యామీను", "దాను"], c: 1, level: "hard" },
-    { q: "బైబిల్లో 'దేవుడు' అనే పదం లేని పుస్తకం ఏది?", a: ["ఎస్తేరు", "రూతు", "యోబు", "పరమగీతము"], c: 0, level: "hard" },
-    { q: "మోషే భార్య పేరు ఏమిటి?", a: ["మిర్యాము", "సిప్పోరా", "రాహేలు", "హన్నా"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తును అప్పగించిన శిష్యుడు ఎవరు?", a: ["పేతురు", "యూదా ఇస్కరియోతు", "తోమా", "ఫిలిప్పు"], c: 1, level: "hard" },
-    { q: "యోహాను రాసిన ప్రకటన గ్రంథంలో ఎన్ని సంఘాలకు లేఖలు రాయబడ్డాయి?", a: ["5", "7", "10", "12"], c: 1, level: "hard" },
-    { q: "ఏలీయా ప్రవక్త పరలోకానికి ఎలా వెళ్ళాడు?", a: ["చనిపోయి", "అగ్ని రథం మీద", "నడిచి", "ఓడలో"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు సిలువపై పలికిన చివరి మాట ఏమిటి?", a: ["సమాప్తమైనది", "తండ్రీ, నీ చేతికి నా ఆత్మను అప్పగించుచున్నాను", "దాహగొనుచున్నాను", "ఏలోయీ ఏలోయీ"], c: 1, level: "hard" },
-    { q: "ఇశ్రాయేలు మొదటి రాజు ఎవరు?", a: ["దావీదు", "సౌలు", "సొలొమోను", "శామూయేలు"], c: 1, level: "hard" },
-    { q: "బైబిల్లో అతి చిన్న వచనము ఏది?", a: ["దేవుడు ప్రేమాస్వరూపి", "యేసు కన్నీళ్లు విడిచెను", "ప్రార్థన చేయుడి", "ఆనందించుడి"], c: 1, level: "hard" },
-    { q: "మొదటి అమరవీరుడు (Martyr) ఎవరు?", a: ["పేతురు", "యూదా", "స్తెఫను", "యాకోబు"], c: 2, level: "hard" },
-// --- NEW EASY QUESTIONS ---
-    { q: "మోషే సోదరుడి పేరు ఏమిటి?", a: ["అహరోను", "కయీను", "సేతు", "యోసేపు"], c: 0, level: "easy" },
-    { q: "యేసుక్రీస్తు బాప్తిస్మం ఇచ్చినది ఎవరు?", a: ["పేతురు", "యోహాను (స్నాతకుడు)", "పౌలు", "యాకోబు"], c: 1, level: "easy" },
-    { q: "బైబిల్లో చివరి పుస్తకం ఏది?", a: ["ఆదికాండము", "మలాకీ", "ప్రకటన గ్రంథం", "యోహాను"], c: 2, level: "easy" },
-    { q: "దేవుడు సృష్టించిన మొదటి పురుషుడు ఎవరు?", a: ["ఆదాము", "నోవహు", "మోషే", "అబ్రాహాము"], c: 0, level: "easy" },
-    { q: "దానియేలును ఏ గుహలో పడేశారు?", a: ["ఎలుగుబంట్ల", "పాముల", "సింహాల", "పులుల"], c: 2, level: "easy" },
-    { q: "ఐగుప్తులో దేవుడు ఎన్ని తెగుళ్లను పంపాడు?", a: ["7", "10", "12", "5"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు సమాధి నుండి ఎన్నవ రోజున లేచాడు?", a: ["రెండవ", "మూడవ", "ఏడవ", "నలభైవ"], c: 1, level: "easy" },
-    { q: "గొర్రెల కాపరిగా ఉండి రాజు అయినది ఎవరు?", a: ["సౌలు", "సొలొమోను", "దావీదు", "శామూయేలు"], c: 2, level: "easy" },
-    { q: "యేసుక్రీస్తు ఎవరిని 'బండ' (Rock) అని పిలిచాడు?", a: ["యోహాను", "పేతురు", "తోమా", "యూదా"], c: 1, level: "easy" },
-    { q: "నోవహు ఓడలో వర్షం ఎన్ని రోజులు కురిసింది?", a: ["7 పగళ్లు", "40 పగళ్లు 40 రాత్రులు", "100 రోజులు", "3 రోజులు"], c: 1, level: "easy" },
-    { q: "పాత నిబంధనలో కీర్తనలు ఎక్కువగా రాసింది ఎవరు?", a: ["మోషే", "దావీదు", "సొలొమోను", "ఆసాపు"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తుకు ఎంతమంది శిష్యులు (Apostles) ఉన్నారు?", a: ["10", "12", "70", "7"], c: 1, level: "easy" },
-    { q: "బైబిల్లో 'విశ్వాసుల తండ్రి' అని ఎవరిని అంటారు?", a: ["అబ్రాహాము", "మోషే", "ఏలీయా", "ఈసాకు"], c: 0, level: "easy" },
-    { q: "యేసుక్రీస్తు మొదటి అద్భుతంలో నీటిని ఏమని మార్చాడు?", a: ["పాలు", "ద్రాక్షారసం", "నూనె", "తేనె"], c: 1, level: "easy" },
-    { q: "బైబిల్లో అతి చిన్న పుస్తకం (పాత నిబంధన) ఏది?", a: ["ఓబద్యా", "యోనా", "మీకా", "నహూము"], c: 0, level: "easy" },
+    let quizSet = [];
+    let currentQ = 0;
+    let score = 0;
+    let timer;
+    let timeLimit = 15;
+    let userAnswers = [];
+    let gameLevel = "";
 
-    // --- NEW HARD QUESTIONS ---
-    { q: "మొదటి అమరవీరుడు (Martyr) ఎవరు?", a: ["పేతురు", "స్తెఫను", "యాకోబు", "పౌలు"], c: 1, level: "hard" },
-    { q: "మెతూషెలా తండ్రి ఎవరు?", a: ["ఏనోకు", "యెరెదు", "మహలలేలు", "నోవహు"], c: 0, level: "hard" },
-    { q: "బైబిల్లో 'ముసలివాడు' (Ancient of Days) అని ఎవరిని పిలిచారు?", a: ["యేసు", "దేవుడు (తండ్రి)", "ఆదాము", "మెలకీసెదెకు"], c: 1, level: "hard" },
-    { q: "సౌలు రాజు తండ్రి పేరు ఏమిటి?", a: ["కీష్", "నేరు", "అబ్నేరు", "యెష్షయి"], c: 0, level: "hard" },
-    { q: "యోహాను సువార్త ప్రకారం, యేసు ఎవరి చెవిని తెగనరికాడు?", a: ["మల్కు", "కయప", "అన్న", "పిలాతు"], c: 0, level: "hard" }, // (పేతురు నరికాడు, మల్కు చెవి)
-    { q: "బైబిల్లో ఏ పక్షిని 'అపవిత్రమైనది' అని మొదటిసారి పేర్కొన్నారు?", a: ["కాకి", "గద్ద", "రాబందు", "పావురం"], c: 0, level: "hard" },
-    { q: "ఏ ప్రవక్తకు గాడిద మాట్లాడింది?", a: ["బిలాము", "యోనా", "ఎలీషా", "యెషయా"], c: 0, level: "hard" },
-    { q: "సొలొమోను దేవాలయంలోని రెండు స్తంభాల పేర్లు ఏమిటి?", a: ["యాకీను, బోయజు", "సీనాయి, హోరేబు", "ఉరీమ్, తుమ్మీమ్", "ఏలీ, ఏలీషా"], c: 0, level: "hard" },
-    { q: "ఎస్తేరు రాణి అసలు పేరు (హీబ్రూ పేరు) ఏమిటి?", a: ["హదస్సా", "వష్తి", "మారా", "రూతు"], c: 0, level: "hard" },
-    { q: "పౌలు ఏ గోత్రానికి చెందినవాడు?", a: ["యూదా", "లేవీ", "బెన్యామీను", "రను"], c: 2, level: "hard" },
-    { q: "అబ్రాహాము రెండవ భార్య పేరు ఏమిటి?", a: ["కెతూర", "హాగరు", "శారా", "మిల్కా"], c: 0, level: "hard" },
-    { q: "మోషే చనిపోయినప్పుడు ఆయన వయస్సు ఎంత?", a: ["100", "110", "120", "130"], c: 2, level: "hard" },
-    { q: "ఏలీయా ప్రవక్త దేని మీద పరలోకానికి వెళ్ళాడు?", a: ["గుర్రం", "అగ్ని రథం", "మేఘం", "ఓడ"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు సిలువ వేయబడిన స్థలం 'గొల్గొతా' అంటే అర్థం ఏమిటి?", a: ["పుర్రె స్థలము", "శాంతి స్థలము", "న్యాయ స్థలము", "బలిపీఠం"], c: 0, level: "hard" },
-    { q: "బైబిల్లో 'ఏడుస్తూ విత్తువాడు సంతోషంతో పంట కోస్తాడు' అని ఏ పుస్తకంలో ఉంది?", a: ["సామెతలు", "కీర్తనలు", "ప్రసంగి", "యెషయా"], c: 1, level: "hard" },
-            // --- NEW EASY QUESTIONS (సులభమైన ప్రశ్నలు) ---
-    { q: "యేసుక్రీస్తును చూడడానికి మేడి చెట్టు ఎెక్కినది ఎవరు?", a: ["పేతురు", "జక్కయ్య", "మత్తయి", "నికోదేము"], c: 1, level: "easy" },
-    { q: "దేవుడు నోవహుతో చేసిన నిబంధనకు గుర్తుగా ఆకాశంలో ఏమి ఉంచాడు?", a: ["నక్షత్రం", "చంద్రుడు", "ఇంద్రధనస్సు", "మేఘం"], c: 2, level: "easy" },
-    { q: "బైబిల్లో 'విశ్వాసమునకు తండ్రి' అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "అబ్రాహాము", "దావీదు", "పౌలు"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఎవరిని తిరిగి బ్రతికించాడు?", a: ["లాజరు", "బర్నబా", "మత్తయి", "యూదా"], c: 0, level: "easy" },
-    { q: "సంసోను బలం దేనిలో ఉంది?", a: ["కండరాలలో", "కళ్ళలో", "జుట్టులో", "పాదాలలో"], c: 2, level: "easy" },
-    { q: "మోషే చేతిలోని కర్రను దేవుడు ఏ జంతువుగా మార్చాడు?", a: ["పాము", "సింహం", "పులి", "తేలు"], c: 0, level: "easy" },
-    { q: "యేసుక్రీస్తు ఐదు రొట్టెలు, రెండు చేపలతో ఎంతమందికి భోజనం పెట్టాడు?", a: ["1000", "4000", "5000", "3000"], c: 2, level: "easy" },
-    { q: "దావీదు గొల్యాతును దేనితో చంపాడు?", a: ["కత్తి", "వడిసెల రాయి", "బాణం", "ఈటె"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు సమాధి వద్ద ఉన్న రాయిని ఎవరు దొర్లించారు?", a: ["పేతురు", "దేవదూత", "సైనికులు", "మరియ"], c: 1, level: "easy" },
-    { q: "బైబిల్లోని కీర్తనల గ్రంథంలో మొత్తం ఎన్ని అధ్యాయాలు ఉన్నాయి?", a: ["100", "120", "150", "200"], c: 2, level: "easy" },
-    { q: "యేసుక్రీస్తు పర్వత ప్రసంగం ఏ సువార్తలో ఉంది?", a: ["మత్తయి", "మార్కు", "లూకా", "యోహాను"], c: 0, level: "easy" },
-    { q: "అబ్రాహాము భార్య పేరు ఏమిటి?", a: ["రిబ్కా", "శారా", "రాహేలు", "లేయా"], c: 1, level: "easy" },
-    { q: "ఇశ్రాయేలీయులు ఎర్ర సముద్రాన్ని ఎలా దాటారు?", a: ["ఓడలో", "ఈదుకుంటూ", "ఆరిన నేల మీద", "వంతెన మీద"], c: 2, level: "easy" },
-    { q: "యేసుక్రీస్తును ముద్దు పెట్టుకుని అప్పగించినది ఎవరు?", a: ["పేతురు", "యూదా ఇస్కరియోతు", "తోమా", "పిలాతు"], c: 1, level: "easy" },
-    { q: "ప్రపంచాన్ని సృష్టించడానికి దేవుడు ఎన్ని రోజులు తీసుకున్నాడు?", a: ["5", "6", "7", "10"], c: 1, level: "easy" },
-
-    // --- NEW HARD QUESTIONS (కఠినమైన ప్రశ్నలు) ---
-    { q: "బైబిల్లో 'ఎడమ చేతి వాటం' గల న్యాయాధిపతి ఎవరు?", a: ["గిద్యోను", "ఏహూదు", "సంసోను", "యెఫ్తా"], c: 1, level: "hard" },
-    { q: "పౌలు ప్రసంగిస్తుండగా కిటికీలో నుండి కిందపడి చనిపోయి, తిరిగి బ్రతికిన యువకుడు ఎవరు?", a: ["తిమోతి", "ఐతుకు (Eutychus)", "తీతు", "సిలాస్"], c: 1, level: "hard" },
-    { q: "నోవహు ఓడ ఏ పర్వతం మీద నిలిచింది?", a: ["సీనాయి", "హెర్మోను", "అరా రాతు", "ఒలీవ"], c: 2, level: "hard" },
-    { q: "మోషే సోదరి పేరు ఏమిటి?", a: ["సిప్పోరా", "మిర్యాము", "యొకేబెదు", "ఎలీషెబా"], c: 1, level: "hard" },
-    { q: "బైబిల్లో అతి చిన్న అధ్యాయం ఏది?", a: ["కీర్తన 117", "కీర్తన 119", "కీర్తన 23", "కీర్తన 100"], c: 0, level: "hard" },
-    { q: "సొలొమోను తర్వాత ఇశ్రాయేలు రాజ్యం ఎన్ని భాగాలుగా విడిపోయింది?", a: ["2", "3", "4", "12"], c: 0, level: "hard" },
-    { q: "యేసుక్రీస్తు సిలువ వేయబడినప్పుడు ఏలాంటి వింత జరిగింది?", a: ["వర్షం పడింది", "దేవాలయపు తెర చినిగింది", "నక్షత్రం రాలింది", "నది ఎండిపోయింది"], c: 1, level: "hard" },
-    { q: "దావీదు గోల్యాతుతో యుద్ధం చేయడానికి ఎన్ని నునుపైన రాళ్లను ఏరుకున్నాడు?", a: ["1", "3", "5", "7"], c: 2, level: "hard" },
-    { q: "బైబిల్లో ఏ ప్రవక్తకు 'బట్టతల' (Bald head) ఉంది అని పిల్లలు ఎగతాళి చేశారు?", a: ["ఏలీయా", "ఎలీషా", "యెషయా", "యిర్మీయా"], c: 1, level: "hard" },
-    { q: "అబ్రాహాము తండ్రి పేరు ఏమిటి?", a: ["న与ోరు", "తేరాహు", "హారాను", "లోతు"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు ఏ తోటలో రక్తపు చెమట కార్చి ప్రార్థించాడు?", a: ["ఏదేను", "గెత్సెమనే", "ఒలీవ", "కర్మెలు"], c: 1, level: "hard" },
-    { q: "యోహాను (John the Baptist) తల్లిదండ్రులు ఎవరు?", a: ["యోసేపు, మరియ", "జెకర్యా, ఎలిజబెత్", "అబ్రాహాము, శారా", "ఇస్సాకు, రిబ్కా"], c: 1, level: "hard" },
-    { q: "దానియేలు రాజు కల భావాన్ని చెప్పినప్పుడు రాజు అతనికి ఏ రంగు వస్త్రము ధరింపజేశాడు?", a: ["తెలుపు", "ఊదా (Purple)", "ఎరుపు", "నలుపు"], c: 1, level: "hard" },
-    { q: "బైబిల్లోని ఏ పుస్తకంలో 'దేవుని సర్వాంగ కవచము' గురించి వ్రాయబడింది?", a: ["రోమా", "ఎఫెసీ", "గలతీ", "ఫిలిప్పీ"], c: 1, level: "hard" },
-    { q: "ఇశ్రాయేలీయులు మన్నాను ఎన్ని సంవత్సరాలు తిన్నారు?", a: ["30", "40", "50", "70"], c: 1, level: "hard" },
-            // --- NEW EASY QUESTIONS (మరిన్ని సులభమైన ప్రశ్నలు) ---
-    { q: "యేసుక్రీస్తు ఏ వృత్తిని చేసేవాడు?", a: ["జాలరి", "వడ్రంగి", "వైద్యుడు", "గొర్రెల కాపరి"], c: 1, level: "easy" },
-    { q: "పేతురు యేసుక్రీస్తును ఎన్నిసార్లు 'ఎరుగను' అని చెప్పాడు?", a: ["ఒక్కసారి", "ఏడు సార్లు", "మూడు సార్లు", "రెండు సార్లు"], c: 2, level: "easy" },
-    { q: "బైబిల్లో 'మంచి కాపరి' అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "దావీదు", "యేసుక్రీస్తు", "అబ్రాహాము"], c: 2, level: "easy" },
-    { q: "ఆదాము మరియు హవ్వల మూడవ కుమారుని పేరు ఏమిటి?", a: ["కయీను", "హేబెలు", "సేతు", "ఏనోకు"], c: 2, level: "easy" },
-    { q: "యేసుక్రీస్తు పుట్టినప్పుడు తూర్పు దేశపు జ్ఞానులు ఆయనకు ఏమి సమర్పించారు?", a: ["బట్టలు", "పండ్లు", "బంగారం, సాంబ్రాణి, బోళం", "డబ్బు"], c: 2, level: "easy" },
-    { q: "మోషే తర్వాత ఇశ్రాయేలీయులను నడిపించిన నాయకుడు ఎవరు?", a: ["కాలేబు", "యెహోషువ", "అహరోను", "గిద్యోను"], c: 1, level: "easy" },
-    { q: "సొలొమోను రాజు దేవునిని ఏమి కోరుకున్నాడు?", a: ["ఐశ్వర్యం", "దీర్ఘాయువు", "జ్ఞానం", "శత్రువుల నాశనం"], c: 2, level: "easy" },
-    { q: "నోవహు ఓడ నుండి పంపిన మొదటి పక్షి ఏది?", a: ["పావురం", "కాకి", "గ్రద్ద", "పిచ్చుక"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఎవరి కాళ్లను కడిగాడు?", a: ["పరిసయ్యుల", "రోమా సైనికుల", "శిష్యుల", "ప్రజల"], c: 2, level: "easy" },
-    { q: "బైబిల్లో 'విశ్వాసము' అనే అధ్యాయం (Faith Chapter) ఏది?", a: ["హెబ్రీ 11", "1 కొరింథీ 13", "కీర్తన 23", "రోమా 8"], c: 0, level: "easy" },
-
-    // --- NEW HARD QUESTIONS (మరిన్ని కఠినమైన ప్రశ్నలు) ---
-    { q: "బైబిల్లో గాడిద దవడ ఎముకతో 1000 మందిని చంపినది ఎవరు?", a: ["సౌలు", "సమ్సోను", "దావీదు", "యోనాతాను"], c: 1, level: "hard" },
-    { q: "యూదా ఇస్కరియోతు యేసును ఎంతకు అమ్మేశాడు?", a: ["30 వెండి నాణేలు", "50 బంగారు నాణేలు", "20 వెండి నాణేలు", "100 దేనారాలు"], c: 0, level: "hard" },
-    { q: "యాకోబు తన మామగారైన లాబాను దగ్గర ఎవరి కోసం 14 ఏళ్ళు పనిచేశాడు?", a: ["లేయా", "రాహేలు", "జిల్పా", "బిల్హా"], c: 1, level: "hard" },
-    { q: "బైబిల్లో ఏ రాజు గడ్డిని మేసాడు?", a: ["ఫరో", "నెబుకద్నెజరు", "సౌలు", "ఆహాబు"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు సిలువను మోయడానికి సహాయం చేసిన వ్యక్తి ఎవరు?", a: ["సిరేనే వాడైన సీమోను", "అరిమతయియ యోసేపు", "బర్నబా", "లష్కర్"], c: 0, level: "hard" },
-    { q: "అపోస్తలుడైన పౌలుకు సువార్త సేవలో సహాయం చేసిన దంపతులు ఎవరు?", a: ["అననీయ, సప్పీరా", "అకుల, ప్రిస్కిల్ల", "అబ్రాహాము, శారా", "జెకర్యా, ఎలిజబెత్"], c: 1, level: "hard" },
-    { q: "దేవుడు ఏ ప్రవక్తను 'నరపుత్రుడా' (Son of Man) అని ఎక్కువగా పిలిచాడు?", a: ["యెషయా", "దానియేలు", "యెహెజ్కేలు", "యిర్మీయా"], c: 2, level: "hard" },
-    { q: "ఎలీషా ప్రవక్త ఏ నదిలో స్నానం చేయమని నయమానుతో చెప్పాడు?", a: ["నైలు", "యొర్దాను", "యూఫ్రటీస్", "అబానా"], c: 1, level: "hard" },
-    { q: "బైబిల్లో కుక్కలు రక్తాన్ని నాకిన రాజు ఎవరు?", a: ["ఆహాబు", "సౌలు", "యెరోబాము", "సిద్కియా"], c: 0, level: "hard" },
-    { q: "సొలొమోను రాసిన గ్రంథాలలో 'వ్యర్థము వ్యర్థము సమస్తము వ్యర్థము' అని ఏ పుస్తకంలో ఉంది?", a: ["సామెతలు", "పరమగీతము", "ప్రసంగి", "కీర్తనలు"], c: 2, level: "hard" },
-            // --- NEW UNIQUE EASY QUESTIONS (మరిన్ని కొత్త సులభమైన ప్రశ్నలు) ---
-    { q: "యోసేపుకు అతని తండ్రి యాకోబు ఇచ్చిన బహుమానం ఏమిటి?", a: ["బంగారు ఉంగరం", "రంగుల చొక్కా", "కత్తి", "రథం"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు పదిమంది కుష్ఠురోగులను బాగుచేస్తే, ఎంతమంది తిరిగి వచ్చి కృతజ్ఞతలు చెప్పారు?", a: ["అందరూ", "ఐదుగురు", "ఒక్కడు", "ఎవరూ రాలేదు"], c: 2, level: "easy" },
-    { q: "బుద్ధిమంతుడు తన ఇంటిని దేని మీద కట్టాడు?", a: ["ఇసుక", "బండ", "మట్టి", "కొండ"], c: 1, level: "easy" },
-    { q: "సమ్సోను రహస్యాన్ని తెలుసుకుని అతన్ని మోసం చేసిన స్త్రీ ఎవరు?", a: ["రూతు", "దెలీలా", "ఎస్తేరు", "యెజెబెలు"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఏ పట్టణంలో వివాహ విందులో నీటిని ద్రాక్షారసంగా మార్చాడు?", a: ["నజరేతు", "కానా", "కపెర్నహూము", "బెత్లెహేము"], c: 1, level: "easy" },
-    { q: "దానియేలు సింహాల గుహలో ఉన్నప్పుడు రాజు అతన్ని చూడడానికి ఎప్పుడు వెళ్ళాడు?", a: ["మరుసటి ఉదయం", "ఆ రాత్రే", "మూడు రోజుల తర్వాత", "మధ్యాహ్నం"], c: 0, level: "easy" },
-    { q: "మరియ మరియు మార్తల సోదరుడు ఎవరు?", a: ["లాజరు", "సీమోను", "యూదా", "ఫిలిప్పు"], c: 0, level: "easy" },
-    { q: "తప్పిపోయిన కుమారుడు ఆకలితో ఏ జంతువుల ఆహారం తినాలనుకున్నాడు?", a: ["గొర్రెల", "పందుల", "కుక్కల", "ఆవుల"], c: 1, level: "easy" },
-    { q: "మోషేను నదిలో వదిలేసినప్పుడు, అతనిని ఎవరు కాపాడారు?", a: ["ఫరో కుమార్తె", "ప్రధాన యాజకుడు", "గొర్రెల కాపరి", "దూత"], c: 0, level: "easy" },
-    { q: "యేసుక్రీస్తు ఎవరి చెట్టు ఇంటికి వెళ్ళాడు?", a: ["నీకోదేము", "జక్కయ్య", "మత్తయి", "సమరయ స్త్రీ"], c: 1, level: "easy" },
-
-    // --- NEW UNIQUE HARD QUESTIONS (మరిన్ని కొత్త కఠినమైన ప్రశ్నలు) ---
-    { q: "ఇశ్రాయేలుకు న్యాయాధిపతిగా ఉన్న ఏకైక స్త్రీ ఎవరు?", a: ["యెజెబెలు", "దెబోరా", "ఎస్తేరు", "మిర్యాము"], c: 1, level: "hard" },
-    { q: "గిద్యోను ఎంతమంది సైనికులతో మిద్యానీయులను జయించాడు?", a: ["10,000", "300", "1000", "5000"], c: 1, level: "hard" },
-    { q: "యెరికో యుద్ధంలో దేవుని ఆజ్ఞ మీరి శపితమైన వస్తువులను దొంగిలించినది ఎవరు?", a: ["ఆకాను", "కోరహు", "బాలాము", "గేహజీ"], c: 0, level: "hard" },
-    { q: "వార్త విన్న వెంటనే కుర్చీ మీద నుండి వెనుకకు పడి మెడ విరిగి చనిపోయిన యాజకుడు ఎవరు?", a: ["ఏలీ", "అహరోను", "హొఫ్నీ", "ఫినెహాసు"], c: 0, level: "hard" },
-    { q: "యేసుక్రీస్తు శిష్యులలో సుంకరి (Tax Collector) ఎవరు?", a: ["పేతురు", "మత్తయి", "అందెయ", "యాకోబు"], c: 1, level: "hard" },
-    { q: "బైబిల్లో దయ్యాలు పట్టిన వ్యక్తిని యేసు పేరు అడిగినప్పుడు అతను ఏమని చెప్పాడు?", a: ["సాతాను", "బెయెల్జెబూలు", "లెగియోను (సేన)", "లూసిఫర్"], c: 2, level: "hard" },
-    { q: "ఏలీయా ప్రవక్తకు ఆహారం తెచ్చి ఇచ్చిన పక్షులు ఏవి?", a: ["పావురములు", "కాకోలములు (Ravens)", "గద్దలు", "పిచ్చుకలు"], c: 1, level: "hard" },
-    { q: "తన సహోదరుడైన హేబెలును చంపినది ఎవరు?", a: ["కయీను", "సేతు", "లామెకు", "ఏశావు"], c: 0, level: "hard" },
-    { q: "బైబిల్లో 'అబద్ధానికి తండ్రి' అని ఎవరిని పిలిచారు?", a: ["కయీను", "అపవాది (Devil)", "ఫరో", "యూదా"], c: 1, level: "hard" },
-    { q: "పౌలు మరియు సీలలు చెరసాలలో ఉన్నప్పుడు ఏమి చేశారు?", a: ["ఏడ్చారు", "నిద్రపోయారు", "ప్రార్థించి కీర్తనలు పాడారు", "తప్పించుకున్నారు"], c: 2, level: "hard" },
-    { q: "అబ్షాలోము (దావీదు కుమారుడు) దేనిలో చిక్కుకుని చనిపోయాడు?", a: ["వలలో", "సింహాల గుహలో", "సిందూర వృక్షపు కొమ్మల్లో (జుట్టు చిక్కుకుని)", "గుంతలో"], c: 2, level: "hard" },
-    { q: "బైబిల్లో 'రాజుల గ్రంథాలు' (Kings) ఎన్ని ఉన్నాయి?", a: ["1", "2", "3", "4"], c: 1, level: "hard" },
-    { q: "సొలొమోను రాజు కట్టించిన దేవాలయం ఏ కొండ మీద ఉంది?", a: ["సీనాయి", "మొరీయా", "కర్మెలు", "అరారాతు"], c: 1, level: "hard" },
-    { q: "నయమానుకు కుష్ఠు వ్యాధి పోవడానికి యొర్దాను నదిలో ఎన్నిసార్లు మునగమని ఎలీషా చెప్పాడు?", a: ["3 సార్లు", "7 సార్లు", "10 సార్లు", "12 సార్లు"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు వస్త్రపు చెంగును ముట్టుకుని స్వస్థత పొందిన స్త్రీకి ఎంత కాలం నుండి రక్తస్రావం ఉంది?", a: ["12 ఏళ్లు", "10 ఏళ్లు", "38 ఏళ్లు", "18 ఏళ్లు"], c: 0, level: "hard" },
-            // --- NEW UNIQUE & DIFFICULT QUESTIONS (కొత్త మరియు కఠినమైన ప్రశ్నలు) ---
-
-    // EASY / MEDIUM
-    { q: "దేవుడు ఇశ్రాయేలీయులను అరణ్యంలో పగలు ఎలా నడిపించాడు?", a: ["అగ్ని స్తంభం", "మేఘ స్తంభం", "నక్షత్రం", "దూత"], c: 1, level: "easy" },
-    { q: "లోతు భార్య వెనుకకు తిరిగి చూసినప్పుడు ఏమైపోయింది?", a: ["రాయి", "ఉప్పు స్తంభం", "చెట్టు", "నీరు"], c: 1, level: "easy" },
-    { q: "సమూయేలు తల్లి పేరు ఏమిటి?", a: ["హన్నా", "పెనిన్నా", "మరియ", "ఎలిజబెత్"], c: 0, level: "easy" },
-    { q: "చచ్చిన సింహం కళేబరంలో సంసోనుకు ఏమి దొరికింది?", a: ["మాంసం", "బంగారం", "తేనె", "నీరు"], c: 2, level: "easy" },
-    { q: "యోనా ప్రవక్త దేవుని మాట వినకుండా ఏ పట్టణానికి పారిపోవాలనుకున్నాడు?", a: ["నినెవె", "తార్షీషు", "యొప్పే", "సమరయ"], c: 1, level: "easy" }, // (నినెవెకు వెళ్ళమంటే తార్షీషుకు పారిపోయాడు)
-
-    // HARD / EXPERT
-    { q: "గోడ మీద చేతి వ్రాతను (మేనే మేనే టెకేల్) చూసిన రాజు ఎవరు?", a: ["నెబుకద్నెజరు", "దర్యావేషు", "బేల్షజరు", "సైరస్"], c: 2, level: "hard" },
-    { q: "బైబిల్లో తన తండ్రి అయిన లాబాను విగ్రహాలను దొంగిలించినది ఎవరు?", a: ["లేయా", "రాహేలు", "దీనా", "రిబ్కా"], c: 1, level: "hard" },
-    { q: "ఇశ్రాయేలు గోత్రాలలో ఏ గోత్రానికి భూమి స్వాస్థ్యముగా (Land Inheritance) ఇవ్వబడలేదు?", a: ["యూదా", "బెన్యామీను", "లేవీ", "యోసేపు"], c: 2, level: "hard" },
-    { q: "దేవాలయంలో బాలుడైన యేసును ఎత్తుకొని దేవుని స్తుతించిన వృద్ధుడు ఎవరు?", a: ["జెకర్యా", "సుమెయోను", "గామలియేలు", "నికదేము"], c: 1, level: "hard" },
-    { q: "బైబిల్లో అతి పొడవైన పేరు గల వ్యక్తి ఎవరు?", a: ["నెబుకద్నెజరు", "మహేరు షాలాల్ హష్ బజ్", "మేరోదక్బలదాను", "అర్థహషష్త"], c: 1, level: "hard" },
-    { q: "అహరోను చేతి కర్ర చిగురించి ఏ పండ్లను కాసింది?", a: ["అంజూరపు పండ్లు", "ద్రాక్ష పండ్లు", "బాదము పండ్లు (Almonds)", "దానిమ్మ పండ్లు"], c: 2, level: "hard" },
-    { q: "మోషే సీనాయి కొండ దిగి వచ్చినప్పుడు అతని ముఖం ఎందుకు ప్రకాశించింది?", a: ["దేవునితో మాట్లాడినందున", "ఎండ వలన", "ఉపవాసం వలన", "దూతను చూసినందున"], c: 0, level: "hard" },
-    { q: "బైబిల్లో తన పుట్టిన రోజును శపించుకున్న భక్తుడు ఎవరు?", a: ["దావీదు", "యోబు", "యోనా", "ఏలీయా"], c: 1, level: "hard" },
-    { q: "ధనవంతుడు మరియు లాజరు ఉపమానంలో, ధనవంతుడు దాహం వేసినప్పుడు ఎవరిని పంపమని అడిగాడు?", a: ["అబ్రాహామును", "లాజరును", "దేవదూతను", "మోషేను"], c: 1, level: "hard" },
-    { q: "యెషయా ప్రవక్త దర్శనంలో సెరాపులకు (దూతలకు) ఎన్ని రెక్కలు ఉన్నాయి?", a: ["2", "4", "6", "8"], c: 2, level: "hard" },
-    { q: "గిద్యోను దేవుని చిత్తం తెలుసుకోవడానికి దేనిని గుర్తుగా అడిగాడు?", a: ["గొర్రె బొచ్చు (Fleece)", "కర్ర", "రాయి", "అగ్ని"], c: 0, level: "hard" },
-    { q: "యేసుక్రీస్తు సమాధిని ఎవరు తమ స్వంత తోటలో ఇచ్చారు?", a: ["నికదేము", "అరిమతయియ యోసేపు", "గమలియేలు", "కయప"], c: 1, level: "hard" },
-    { q: "దావీదుకు ఆహారం తీసుకువెళ్ళి అతని ప్రాణాన్ని కాపాడిన బుద్ధిమంతురాలైన స్త్రీ ఎవరు?", a: ["అబీగాయిలు", "బత్షెబ", "మీకా", "రాహేలు"], c: 0, level: "hard" },
-    { q: "సొలొమోను కట్టించిన దేవాలయంలోని 'రాగి సముద్రం' (Molten Sea) దేని మీద నిలబడింది?", a: ["12 రాతి స్తంభాలు", "12 ఇత్తడి ఎద్దులు", "4 సింహాలు", "8 కెరూబులు"], c: 1, level: "hard" },
-    { q: "బైబిల్లో 'దేవుని స్నేహితుడు' అని పిలువబడినది ఎవరు?", a: ["మోషే", "దావీదు", "అబ్రాహాము", "ఏనోకు"], c: 2, level: "hard" },
-            // --- NEW EASY QUESTIONS (సులభమైన ప్రశ్నలు) ---
-    { q: "జక్కయ్య వృత్తి ఏమిటి?", a: ["జాలరి", "సుంకరి (Tax Collector)", "వైద్యుడు", "గొర్రెల కాపరి"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు 5000 మందికి ఆహారం పెట్టినప్పుడు, రొట్టెలు మరియు చేపలు ఇచ్చినది ఎవరు?", a: ["ఒక చిన్న బాలుడు", "పేతురు", "అంద్రెయ", "మరియ"], c: 0, level: "easy" },
-    { q: "గలిలయ సముద్రంలో మునిగిపోతున్న పేతురును ఎవరు కాపాడారు?", a: ["అంద్రెయ", "యాకోబు", "యేసుక్రీస్తు", "దూత"], c: 2, level: "easy" },
-    { q: "దానియేలును సింహాల గుహలో వేసినప్పుడు, సింహాల నోళ్లను ఎవరు మూయించారు?", a: ["రాజు", "దానియేలు", "దేవుని దూత", "కాపలాదారులు"], c: 2, level: "easy" },
-    { q: "బైబిల్లో 'ఆత్మ ఫలములు' ఎన్ని?", a: ["7", "9", "12", "10"], c: 1, level: "easy" },
-    { q: "యూదా ఇస్కరియోతు యేసును పట్టించిన తర్వాత ఏమి చేశాడు?", a: ["పారిపోయాడు", "క్షమాపణ అడిగాడు", "ఉరి వేసుకున్నాడు", "రాజు అయ్యాడు"], c: 2, level: "easy" },
-    { q: "యెరూషలేము దేవాలయంలో యేసు దేనిని తలక్రిందులు చేశాడు?", a: ["బల్లలను", "స్తంభాలను", "దీపస్తంభాలను", "విగ్రహాలను"], c: 0, level: "easy" },
-    { q: "కానా విందులో యేసు నీటిని ద్రాక్షారసంగా మార్చడానికి ఎన్ని రాతి బానలను వాడారు?", a: ["6", "7", "12", "3"], c: 0, level: "easy" },
-    { q: "ఆదాము హవ్వలు దేవునికి దాక్కోవడానికి ఏ ఆకులు కుట్టుకున్నారు?", a: ["అంజూరపు ఆకులు", "ద్రాక్ష ఆకులు", "ఒలీవ ఆకులు", "తాటి ఆకులు"], c: 0, level: "easy" },
-    { q: "దావీదుకు ప్రాణ స్నేహితుడు ఎవరు?", a: ["సౌలు", "యోనాతాను", "శామూయేలు", "అబ్నేరు"], c: 1, level: "easy" },
-
-    // --- NEW HARD QUESTIONS (కఠినమైన ప్రశ్నలు) ---
-    { q: "ఎలీషా ప్రవక్త నీటిలో పడిపోయిన దేనిని తేలేలా చేశాడు?", a: ["గొడ్డలి (Axe head)", "రాయి", "ఉంగరం", "కత్తి"], c: 0, level: "hard" },
-    { q: "మోషే ప్రార్థిస్తున్నప్పుడు అతని చేతులు బరువు ఎక్కితే, వాటిని ఎవరు ఆదుకున్నారు?", a: ["యెహోషువ, కాలేబు", "అహరోను, హూరు", "ఎలియాజరు, ఈతామారు", "నాదాబు, అబీహు"], c: 1, level: "hard" },
-    { q: "ములుకర్రతో 600 మంది ఫిలిష్తీయులను చంపిన న్యాయాధిపతి ఎవరు?", a: ["సమ్సోను", "గిద్యోను", "షంగరు", "యెఫ్తా"], c: 2, level: "hard" },
-    { q: "యెరికో పట్టణంలో వేగులవారిని (Spies) దాచిపెట్టిన స్త్రీ ఎవరు?", a: ["రాహాబు", "రూతు", "ఎస్తేరు", "దెబోరా"], c: 0, level: "hard" },
-    { q: "బైబిల్లో 'బాషాను రాజైన ఓగు' మంచం దేనితో చేయబడింది?", a: ["బంగారం", "ఇనుము (Iron)", "రాగి", "దేవదారు కర్ర"], c: 1, level: "hard" },
-    { q: "యోనాతాను కుమారుడైన మెఫీబోషెతుకు ఉన్న శారీరక లోపం ఏమిటి?", a: ["గుడ్డివాడు", "కుంటివాడు (రెండు కాళ్లు)", "మూగవాడు", "చెవిటివాడు"], c: 1, level: "hard" },
-    { q: "అపోస్తలుడైన పౌలు శిష్యుడైన తిమోతి యొక్క అవ్వ (Grandmother) పేరు ఏమిటి?", a: ["యునీకే", "లోయి", "దొర్కా", "లిదియ"], c: 1, level: "hard" },
-    { q: "ఎలీషా సేవకుడైన గేహజీకి ఎందుకు కుష్ఠు వ్యాధి వచ్చింది?", a: ["అబద్ధం చెప్పి, దురాశ పడినందుకు", "దేవుని దూషించినందుకు", "ప్రార్థన చేయనందుకు", "విగ్రహారాధన చేసినందుకు"], c: 0, level: "hard" },
-    { q: "యాకోబు కుమారులలో ఎవరిని సింహముతో పోల్చారు?", a: ["రూబెను", "యూదా", "లేవి", "దాను"], c: 1, level: "hard" },
-    { q: "పరలోకంలో దేవుని సింహాసనం చుట్టూ ఉన్న పెద్దలు (Elders) ఎంతమంది?", a: ["12", "24", "7", "144"], c: 1, level: "hard" },
-    { q: "బైబిల్లో పేతురును చెరసాల నుండి విడిపించినది ఎవరు?", a: ["పౌలు", "దేవదూత", "భూకంపం", "సైనికుడు"], c: 1, level: "hard" },
-    { q: "సొలొమోను దేవాలయ నిర్మాణం ఎన్ని సంవత్సరాలు జరిగింది?", a: ["3", "7", "13", "40"], c: 1, level: "hard" }, // (రాజనగరు 13 ఏళ్లు, దేవాలయం 7 ఏళ్లు)
-    { q: "ఏలీయా ప్రవక్త దేవుని స్వరమును ఎలా విన్నాడు?", a: ["ఉరుములలో", "మెరుపులలో", "భూకంపంలో", "మెల్లనైన స్వరంలో"], c: 3, level: "hard" },
-    { q: "బైబిల్లో కుడి చేతి కంటే ఎడమ చేతిని ఎక్కువగా వాడే గోత్రం ఏది?", a: ["యూదా", "బెన్యామీను", "లేవి", "మనష్షే"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు పస్కా విందును (Last Supper) ఏ గదిలో ఆచరించాడు?", a: ["నేల మాళిగలో", "మేడ గదిలో (Upper Room)", "దేవాలయంలో", "తోటలో"], c: 1, level: "hard" },
-            // --- NEW UNIQUE EASY QUESTIONS (మరిన్ని కొత్త సులభమైన ప్రశ్నలు) ---
-    { q: "యేసుక్రీస్తు ఎవరి ఇంటికి వెళ్ళినప్పుడు ఆమె 'పనుల తొందరలో' ఉంది?", a: ["మరియ", "మార్త", "ఎలిజబెత్", "సలోమే"], c: 1, level: "easy" },
-    { q: "దావీదు తండ్రి పేరు ఏమిటి?", a: ["సౌలు", "యెష్రయి (Jesse)", "శామూయేలు", "యోనాతాను"], c: 1, level: "easy" },
-    { q: "కొత్త నిబంధనలో మొత్తం ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["39", "27", "66", "12"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఏ వయసులో తన పరిచర్యను ప్రారంభించాడు?", a: ["20 ఏళ్లు", "30 ఏళ్లు", "25 ఏళ్లు", "12 ఏళ్లు"], c: 1, level: "easy" },
-    { q: "దేవుడు ఎవరిని 'నా స్నేహితుడు' అని పిలిచాడు?", a: ["మోషే", "అబ్రాహాము", "దావీదు", "దానియేలు"], c: 1, level: "easy" },
-    { q: "యూదుల రాజుగా పుట్టినవాడు ఎక్కడ ఉన్నాడని ఎవరు అడిగారు?", a: ["గొర్రెల కాపరులు", "తూర్పు దేశపు జ్ఞానులు", "హేరోదు", "ప్రధాన యాజకులు"], c: 1, level: "easy" },
-    { q: "బైబిల్లో 'సముద్రం మీద నడిచిన' శిష్యుడు ఎవరు?", a: ["యోహాను", "పేతురు", "యాకోబు", "తోమా"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఎవరి చెవిని తిరిగి అతికించి స్వస్థపరిచాడు?", a: ["మల్కు", "లాజరు", "బర్తిమయి", "జక్కయ్య"], c: 0, level: "easy" },
-    { q: "పరలోక ప్రార్థనను (Lord's Prayer) నేర్పించింది ఎవరు?", a: ["మోషే", "యేసుక్రీస్తు", "పౌలు", "దావీదు"], c: 1, level: "easy" },
-    { q: "బైబిల్లో 'జ్ఞానము' (Wisdom) గురించి ఎక్కువగా వ్రాయబడిన పుస్తకం ఏది?", a: ["కీర్తనలు", "సామెతలు", "ప్రసంగి", "యోబు"], c: 1, level: "easy" },
-
-    // --- NEW UNIQUE HARD QUESTIONS (మరిన్ని కొత్త కఠినమైన ప్రశ్నలు) ---
-    { q: "బైబిల్లో 'కుక్కలు' ఎవరి మాంసాన్ని తిన్నాయి?", a: ["యెజెబెలు", "దెలీలా", "అతల్యా", "హెరోదియ"], c: 0, level: "hard" },
-    { q: "మోషే మామగారి (భార్య తండ్రి) పేరు ఏమిటి?", a: ["యిర్రో (Jethro)", "లాబాను", "తేరాహు", "నహోరు"], c: 0, level: "hard" },
-    { q: "బైబిల్లో 'నవ్వు' (Laughter) అని అర్థం వచ్చే పేరు ఎవరిది?", a: ["ఇస్సాకు", "యాకోబు", "యోసేపు", "బెన్యామీను"], c: 0, level: "hard" },
-    { q: "యూదా ఇస్కరియోతు స్థానంలో ఎంపిక చేయబడిన శిష్యుడు ఎవరు?", a: ["బర్నబా", "మత్తీయ (Matthias)", "తిమోతి", "సిలాస్"], c: 1, level: "hard" },
-    { q: "బైబిల్లో 'బంగారు దూడ'ను (Golden Calf) ఎవరు తయారు చేశారు?", a: ["మోషే", "అహరోను", "కోరహు", "యెహోషువ"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తుకు బదులుగా విడుదల చేయబడిన ఖైదీ పేరు ఏమిటి?", a: ["బర్నబా", "బరబ్బ", "సింసోను", "గెహజీ"], c: 1, level: "hard" },
-    { q: "బైబిల్లోని ఏ పండుగ రోజున పరిశుద్ధాత్మ దేవుడు శిష్యుల మీదకు దిగివచ్చాడు?", a: ["పస్కా పండుగ", "పెంతెకొస్తు పండుగ", "పర్ణశాలల పండుగ", "ప్యూరీము పండుగ"], c: 1, level: "hard" },
-    { q: "సొలొమోను రాజు ఎవరి దగ్గర నుండి దేవాలయ నిర్మాణానికి కలపను తెప్పించుకున్నాడు?", a: ["హీరాము (Tyre)", "ఫరో", "శేబ రాణి", "సైరస్"], c: 0, level: "hard" },
-    { q: "బైబిల్లో ప్రస్తావించబడిన మొట్టమొదటి హంతకుడు (Murderer) ఎవరు?", a: ["కయీను", "లామెకు", "ఏశావు", "నిమ్రోదు"], c: 0, level: "hard" },
-    { q: "అబ్రాహాము యొక్క ప్రధాన సేవకుడి (దాసుని) పేరు ఏమిటి?", a: ["ఎలియాజరు", "గేహజీ", "ఓబద్యా", "మల్కు"], c: 0, level: "hard" },
-    { q: "దానియేలు గ్రంథంలో గోడ మీద వ్రాయబడిన మాటలు ఏవి?", a: ["ఎలోయీ ఎలోయీ", "మేనే మేనే టెకేల్", "హల్లెలూయా", "మారనాత"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు పునరుత్థానుడైన తర్వాత మొదట ఎవరికి కనిపించాడు?", a: ["పేతురు", "మగ్ధలేనే మరియ", "తోమా", "యాకోబు"], c: 1, level: "hard" },
-    { q: "పౌలు మరియు సీలలు ఏ పట్టణపు చెరసాలలో పాటలు పాడారు?", a: ["రోమా", "ఫిలిప్పీ", "ఎఫెసు", "కొరింథు"], c: 1, level: "hard" },
-    { q: "యోసేపును ఐగుప్తులో కొనుక్కున్న రాజుగారి రక్షకభటుల అధిపతి ఎవరు?", a: ["పోతీఫరు", "ఫరో", "నెబుకద్నెజరు", "పిలాతు"], c: 0, level: "hard" },
-    { q: "బైబిల్లో చేప నోటిలో నాణెం దొరుకుతుందని యేసు ఎవరితో చెప్పాడు?", a: ["యోహాను", "పేతురు", "అంద్రెయ", "మత్తయి"], c: 1, level: "hard" },
-            // --- NEW EXPERT LEVEL / VERY DIFFICULT QUESTIONS (చాలా కఠినమైన ప్రశ్నలు) ---
-
-    { q: "మంచు పడిన దినమున గుహలో సింహమును చంపిన పరాక్రమశాలి ఎవరు?", a: ["బెనాయా", "దావీదు", "సమ్సోను", "యోవాబు"], c: 0, level: "hard" },
-    { q: "ఇశ్రాయేలీయుల మొట్టమొదటి న్యాయాధిపతి (First Judge) ఎవరు?", a: ["గిద్యోను", "ఒత్నీయేలు", "యెఫ్తా", "సమ్సోను"], c: 1, level: "hard" },
-    { q: "యూదా దేశాన్ని పరిపాలించిన ఏకైక రాణి (దుష్టురాలు) ఎవరు?", a: ["యెజెబెలు", "అతల్యా", "ఎస్తేరు", "హెరోదియ"], c: 1, level: "hard" },
-    { q: "అబ్రాహాము యుద్ధం తర్వాత ఎవరికి దశమ భాగము (10వ వంతు) ఇచ్చాడు?", a: ["ఫరో", "మెల్కీసెదెకు", "లోతు", "అబీమెలెకు"], c: 1, level: "hard" },
-    { q: "యెజెబెలు ప్రవక్తలను చంపుతున్నప్పుడు, 100 మంది ప్రవక్తలను గుహలో దాచినది ఎవరు?", a: ["ఏలీయా", "ఓబద్యా", "ఎలీషా", "మీకా"], c: 1, level: "hard" },
-    { q: "సిసెరాను గుడారపు మేకుతో (Tent peg) చంపిన స్త్రీ ఎవరు?", a: ["దెబోరా", "యాయేలు", "దెలీలా", "రాహేలు"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు లాజరును లేపినప్పుడు, అతను చనిపోయి ఎన్ని రోజులు అయ్యింది?", a: ["1 రోజు", "3 రోజులు", "4 రోజులు", "7 రోజులు"], c: 2, level: "hard" },
-    { q: "ఏ రాజుకు దేవుడు ఆయుష్షును 15 సంవత్సరాలు పొడిగించాడు?", a: ["దావీదు", "సొలొమోను", "హిజ్కియా", "యొషీయా"], c: 2, level: "hard" },
-    { q: "దేవుని మందసమును తాకినందువల్ల అక్కడికక్కడే చనిపోయిన వ్యక్తి ఎవరు?", a: ["ఉజ్జా", "అహరోను", "కోరహు", "ఆకాను"], c: 0, level: "hard" },
-    { q: "బైబిల్లో ప్రస్తావించబడిన 'వడగండ్ల వాన' (Hailstones) ద్వారా ఎక్కువ మందిని చంపిన యుద్ధం ఏది?", a: ["యెరికో యుద్ధం", "గిబియోను యుద్ధం", "మిద్యానీయుల యుద్ధం", "అమాలేకీయుల యుద్ధం"], c: 1, level: "hard" }, // (యెహోషువ కాలంలో)
-    { q: "దేవుని మందసము మరియు గుడారము చేయడానికి దేవుడు ఎవరిని పేరు పెట్టి పిలిచాడు?", a: ["బెసలేలు", "హూరాము", "మోషే", "అహరోను"], c: 0, level: "hard" },
-    { q: "మోషే అరణ్యంలో చేసిన ఇత్తడి సర్పమును, ఇశ్రాయేలీయులు విగ్రహంగా మార్చినప్పుడు దానిని పగులగొట్టిన రాజు ఎవరు?", a: ["దావీదు", "యొషీయా", "హిజ్కియా", "ఆసా"], c: 2, level: "hard" },
-    { q: "బైబిల్లో మరణము చూడకుండా పరలోకానికి వెళ్ళిన ఇద్దరు వ్యక్తులు ఎవరు?", a: ["మోషే, ఏలీయా", "ఏనోకు, ఏలీయా", "దావీదు, సొలొమోను", "అబ్రాహాము, ఇస్సాకు"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు సిలువ మీద ఉన్నప్పుడు, ఏ భాషలో 'ఏలోయీ ఏలోయీ లామా సబక్తా list' అని అరిచాడు?", a: ["హీబ్రూ", "అరమాయిక్", "గ్రీకు", "లాటిన్"], c: 1, level: "hard" },
-    { q: "పౌలు ఏ ద్వీపంలో ఉన్నప్పుడు పాము అతని చేతిని కరిచింది?", a: ["సైప్రస్", "క్రేతు", "మెలితే (Malta)", "పత్మసు"], c: 2, level: "hard" },
-            // --- NEW UNIQUE EASY QUESTIONS (మరిన్ని కొత్త సులభమైన ప్రశ్నలు) ---
-    { q: "యాకోబు కలలో భూమి నుండి పరలోకానికి వేయబడి ఉన్నది ఏమిటి?", a: ["తాడు", "నిచ్చెన", "వారధి", "మెట్లు"], c: 1, level: "easy" },
-    { q: "బైబిల్లో 'దేవుని గొర్రెపిల్ల' (Lamb of God) అని ఎవరిని పిలుస్తారు?", a: ["మోషే", "దావీదు", "యేసుక్రీస్తు", "యోహాను"], c: 2, level: "easy" },
-    { q: "దానియేలు సింహాల గుహలో ఉన్నప్పుడు ఆ దేశపు రాజు ఎవరు?", a: ["నెబుకద్నెజరు", "దర్యావేషు", "ఫరో", "హేరోదు"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు నీటి మీద నడిచినప్పుడు ఆయనతో పాటు నడవాలని కోరినది ఎవరు?", a: ["తోమా", "పేతురు", "యూదా", "యాకోబు"], c: 1, level: "easy" },
-    { q: "సమ్సోను సింహాన్ని ఎలా చంపాడు?", a: ["కత్తితో", "ఒట్టి చేతులతో", "బాణంతో", "రాళ్ళతో"], c: 1, level: "easy" },
-    { q: "బైబిల్లో 'ప్రార్థన' నేర్పించమని యేసును ఎవరు అడిగారు?", a: ["పరిసయ్యులు", "శిష్యులు", "శాస్త్రులు", "సైనికులు"], c: 1, level: "easy" },
-    { q: "ఏలీయా పగిలిపోయిన బలిపీఠాన్ని బాగుచేసి ఎన్ని రాళ్లను వాడాడు?", a: ["7", "10", "12", "3"], c: 2, level: "easy" },
-    { q: "బైబిల్లో నపుంసకునికి (Ethiopian Eunuch) బాప్తిస్మం ఇచ్చినది ఎవరు?", a: ["పౌలు", "ఫిలిప్పు", "పేతురు", "స్తెఫను"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు ఏ ఊరిలో పెరిగాడు?", a: ["బెత్లెహేము", "నజరేతు", "కపెర్నహూము", "యెరూషలేము"], c: 1, level: "easy" },
-    { q: "కాకి మరియు పావురాన్ని ఓడలో నుండి పంపినది ఎవరు?", a: ["మోషే", "నోవహు", "అబ్రాహాము", "ఏలీయా"], c: 1, level: "easy" },
-
-    // --- NEW UNIQUE HARD QUESTIONS (మరిన్ని కొత్త కఠినమైన ప్రశ్నలు) ---
-    { q: "బైబిల్లో 'ఏడుస్తూ విత్తువాడు సంతోషగానంతో పంట కోస్తాడు' అని ఏ కీర్తనలో ఉంది?", a: ["కీర్తన 23", "కీర్తన 51", "కీర్తన 126", "కీర్తన 91"], c: 2, level: "hard" },
-    { q: "యెహోషువ తండ్రి పేరు ఏమిటి?", a: ["నూను", "కాలేబు", "అహరోను", "హూరు"], c: 0, level: "hard" },
-    { q: "ఇశ్రాయేలీయులు యొర్దాను నదిని దాటినప్పుడు జ్ఞాపకార్థంగా ఎన్ని రాళ్లను నిలబెట్టారు?", a: ["7", "10", "12", "40"], c: 2, level: "hard" },
-    { q: "వృద్ధాప్యంలో పాదాల జబ్బుతో (Disease in his feet) బాధపడిన రాజు ఎవరు?", a: ["హిజ్కియా", "ఆసా", "ఉజ్జియా", "సౌలు"], c: 1, level: "hard" },
-    { q: "మోషే సీనాయి కొండ మీద ఎన్ని రోజులు ఉపవాసం ఉన్నాడు?", a: ["3 రోజులు", "21 రోజులు", "40 రోజులు", "7 రోజులు"], c: 2, level: "hard" },
-    { q: "ఎడమ చేతి వాటం గల ఏహూదు ఏ 'లావుపాటి రాజు'ను చంపాడు?", a: ["సిహోను", "ఓగు", "ఎగ్లోను", "బాలాకు"], c: 2, level: "hard" },
-    { q: "బైబిల్లో 'ఇమ్మానుయేలు' అనగా అర్థం ఏమిటి?", a: ["దేవుడు ప్రేమ", "దేవుడు మనకు తోడు", "దేవుడు గొప్పవాడు", "రక్షకుడు"], c: 1, level: "hard" },
-    { q: "యాకోబు దేవునితో పోరాడిన స్థలము పేరు ఏమిటి?", a: ["బేతేలు", "పెనుయేలు", "మహనాయిము", "సుక్కోతు"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు సిలువ వేయబడినప్పుడు ప్రధాన యాజకుడు ఎవరు?", a: ["అన్న", "కయప", "గమలియేలు", "నికోదేము"], c: 1, level: "hard" },
-    { q: "పౌలు దమస్కులో ఉన్నప్పుడు ఏ వీధిలో బస చేశాడు?", a: ["యూదా వీధి", "తిన్నని వీధి (Street called Straight)", "రాజ వీధి", "దేవాలయ వీధి"], c: 1, level: "hard" },
-    { q: "సొలొమోనుకు మొత్తం ఎంతమంది భార్యలు మరియు ఉపపత్నులు ఉన్నారు?", a: ["300", "700", "1000", "500"], c: 2, level: "hard" }, // (700 భార్యలు + 300 ఉపపత్నులు)
-    { q: "బైబిల్లో 'దుప్పి నీటి వాగుల కొరకు ఆశపడునట్లు...' అని పాడినది ఎవరు?", a: ["కోరహు కుమారులు", "మోషే", "ఆసాపు", "ఏతాను"], c: 0, level: "hard" }, // (కీర్తన 42 - కోరహు కుమారులు రాశారు)
-    { q: "అబ్షాలోము (దావీదు కుమారుడు) ఎవరిని చంపి పారిపోయాడు?", a: ["అమ్నోను", "అదోనియా", "యోవాబు", "షిమీ"], c: 0, level: "hard" },
-    { q: "బైబిల్లో 'యెహోవా ఈరే' (Jehovah Jireh) అనగా అర్థం ఏమిటి?", a: ["యెహోవా చూచుకొనును", "యెహోవా స్వస్థపరచును", "యెహోవా నా కాపరి", "యెహోవా శాంతి"], c: 0, level: "hard" },
-    { q: "యేసుక్రీస్తు పునరుత్థానాన్ని నమ్మని శిష్యుడు ఎవరు?", a: ["పేతురు", "తోమా", "యూదా", "ఫిలిప్పు"], c: 1, level: "hard" },
-            // --- NEW UNIQUE EASY QUESTIONS (మరిన్ని కొత్త సులభమైన ప్రశ్నలు) ---
-    { q: "దేవుడు మనుషుల భాషలను ఎక్కడ తారుమారు చేశాడు?", a: ["ఏదేను తోటలో", "బాబెలు గోపురం వద్ద", "సీనాయి కొండ మీద", "యెరికోలో"], c: 1, level: "easy" },
-    { q: "మోషేకు దేవుడు మొదట ఎక్కడ కనిపించాడు?", a: ["మేఘములో", "మండుచున్న పొదలో", "దేవాలయంలో", "నదిలో"], c: 1, level: "easy" },
-    { q: "బైబిల్లో 'మంచి సమరయుడు' (Good Samaritan) ఉపమానం ఎవరు చెప్పారు?", a: ["యేసుక్రీస్తు", "పౌలు", "పేతురు", "యోహాను"], c: 0, level: "easy" },
-    { q: "యేసుక్రీస్తు యెరూషలేములోకి దేని మీద ఊరేగింపుగా వచ్చాడు?", a: ["గుర్రం", "ఒంటె", "గాడిద పిల్ల", "ఏనుగు"], c: 2, level: "easy" },
-    { q: "దానియేలు ముగ్గురు స్నేహితులను (షద్రకు, మేషెకు, అబెద్నెగో) ఎందులో పడేశారు?", a: ["సింహాల గుహలో", "అగ్ని గుండంలో", "చెరసాలలో", "బావిలో"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు దేవాలయంలో ఉన్నప్పుడు పేద విధవరాలు ఎంత కానుక వేసింది?", a: ["రెండు కాసులు", "వంద కాసులు", "బంగారు నాణెం", "వెండి నాణెం"], c: 0, level: "easy" },
-    { q: "యూదా ఇస్కరియోతు యేసును అప్పగించడానికి ఏ గుర్తును వాడాడు?", a: ["కరచాలనం (Shake hand)", "ముద్దు", "నమస్కారం", "కౌగిలింత"], c: 1, level: "easy" },
-    { q: "తప్పిపోయిన కుమారుడు తిరిగి వచ్చినప్పుడు అతని తండ్రి ఏమి చేశాడు?", a: ["కోప్పడ్డాడు", "వెళ్ళగొట్టాడు", "పరుగెత్తుకెళ్లి ముద్దుపెట్టుకున్నాడు", "పని మనిషిగా చేర్చుకున్నాడు"], c: 2, level: "easy" },
-    { q: "బైబిల్లో 'జ్ఞానోక్తులు' (Proverbs) గ్రంథాన్ని ఎక్కువగా రాసింది ఎవరు?", a: ["దావీదు", "సొలొమోను", "మోషే", "యెషయా"], c: 1, level: "easy" },
-    { q: "యేసుక్రీస్తు పుట్టిన ఊరు ఏది?", a: ["నజరేతు", "బెత్లెహేము", "యెరూషలేము", "కపెర్నహూము"], c: 1, level: "easy" }, // (Note: పెరిగింది నజరేతులో, పుట్టింది బెత్లెహేములో)
-
-    // --- NEW UNIQUE HARD QUESTIONS (మరిన్ని కొత్త కఠినమైన ప్రశ్నలు) ---
-    { q: "బైబిల్లో 'ఎండిన ఎముకల లోయ' దర్శనం ఏ ప్రవక్తకు వచ్చింది?", a: ["యిర్మీయా", "యెహెజ్కేలు", "దానియేలు", "యెషయా"], c: 1, level: "hard" },
-    { q: "నిబంధన మందసము (Ark of the Covenant) ఏ చెక్కతో చేయబడింది?", a: ["దేవదారు కర్ర", "తుమ్మ కర్ర (Acacia)", "ఒలీవ కర్ర", "గంధపు చెక్క"], c: 1, level: "hard" },
-    { q: "దావీదు చేసిన పాపాన్ని (బత్షెబ విషయంలో) గద్దించిన ప్రవక్త ఎవరు?", a: ["శామూయేలు", "నాతాను", "గాదు", "అహీయా"], c: 1, level: "hard" },
-    { q: "అపోస్తలుడైన పౌలు యొక్క గురువు (Teacher) పేరు ఏమిటి?", a: ["నికదేము", "గమలియేలు", "కయప", "అన్న"], c: 1, level: "hard" },
-    { q: "బైబిల్లో కుర్చీ మీద నుండి వెనుకకు పడి మెడ విరిగి చనిపోయిన యాజకుడు ఎవరు?", a: ["ఏలీ", "అహరోను", "హొఫ్నీ", "ఫినెహాసు"], c: 0, level: "hard" },
-    { q: "గిద్యోను 300 మంది సైనికులతో యుద్ధానికి వెళ్ళినప్పుడు చేతిలో ఏమి పట్టుకున్నారు?", a: ["కత్తులు, డాలులు", "బూరలు, కుండలు (కాగడాలు)", "విల్లులు, బాణాలు", "రాళ్లు, వడిసెలలు"], c: 1, level: "hard" },
-    { q: "అబ్రాహాముకు 'సాలేము రాజు' అయిన మెల్కీసెదెకు ఏమి ఇచ్చాడు?", a: ["బంగారం, వెండి", "రొట్టె, ద్రాక్షారసం", "గొర్రెలు, ఎద్దులు", "నీళ్ళు"], c: 1, level: "hard" },
-    { q: "బైబిల్లో చిట్టచివరి మాట (Last word) ఏమిటి?", a: ["ఆమెన్", "హల్లెలూయ", "యేసు", "కృప"], c: 0, level: "hard" }, // (ప్రకటన 22:21 - ఆమెన్)
-    { q: "యెహోషువ గ్రంథంలో సూర్యుడు ఏ లోయలో ఆగిపోయాడు?", a: ["యెజ్రయేలు లోయ", "అయ్యాలోను లోయ", "కిద్రోను లోయ", "యొర్దాను లోయ"], c: 1, level: "hard" },
-    { q: "ఫిలిష్తీయులు మందసమును తిరిగి పంపినప్పుడు అది ఎవరి ఇంటికి చేరింది?", a: ["అబీనదాబు", "ఓబేదెదోము", "సౌలు", "సమూయేలు"], c: 0, level: "hard" },
-    { q: "బైబిల్లోని ఏ పుస్తకం తర్వాత 'కీర్తనల గ్రంథం' వస్తుంది?", a: ["యెషయా", "యోబు", "సామెతలు", "దినవృత్తాంతములు"], c: 1, level: "hard" },
-    { q: "యేసుక్రీస్తు రూపాంతరము చెందినప్పుడు (Transfiguration) ఆయనతో మాట్లాడినది ఎవరు?", a: ["అబ్రాహాము, దావీదు", "మోషే, ఏలీయా", "ఏనోకు, ఏలీయా", "దావీదు, సొలొమోను"], c: 1, level: "hard" },
-    { q: "బైబిల్లోని ఏ పుస్తకంలో దేవుని పేరు ఒక్కసారి కూడా కనబడదు?", a: ["రూతు", "ఎస్తేరు", "పరమగీతము", "విలాపవాక్యములు"], c: 1, level: "hard" },
-    { q: "బైబిల్లోని ఏ రాజుకు 'చర్మవ్యాధి' (Leprosy) సోకి అతను చనిపోయేవరకు వేరుగా నివసించాడు?", a: ["ఉజ్జియా", "హిజ్కియా", "మొనష్షే", "యెహోషాపాతు"], c: 0, level: "hard" },
-    { q: "యేసుక్రీస్తు సిలువ వేయబడినప్పుడు ఆయన తలపైన పెట్టిన బోర్డు మీద ఎన్ని భాషలలో రాశారు?", a: ["1", "2", "3", "4"], c: 2, level: "hard" } // (హీబ్రూ, లాటిన్, గ్రీకు)
-            ];
-
-        let quizSet = [];
-        let currentQ = 0;
-        let score = 0;
-        let timer;
-        let timeLimit = 15;
-        let userAnswers = [];
-        let gameLevel = "";
-
-        function setupGame(level, time) {
-            gameLevel = level;
-            timeLimit = time;
-            const filtered = masterQuestionBank.filter(q => q.level === level);
-            for (let i = filtered.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
-            }
-            quizSet = filtered.slice(0, 5);
-            document.getElementById('q-dots').innerHTML = quizSet.map(() => '<div class="dot"></div>').join('');
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('game-ui').classList.remove('hidden');
-            loadQuestion();
+    function setupGame(level, time) {
+        gameLevel = level;
+        timeLimit = time;
+        const filtered = masterQuestionBank.filter(q => q.level === level);
+        for (let i = filtered.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
         }
+        quizSet = filtered.slice(0, 5);
+        document.getElementById('q-dots').innerHTML = quizSet.map(() => '<div class="dot"></div>').join('');
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-ui').classList.remove('hidden');
+        loadQuestion();
+    }
 
-        function loadQuestion() {
-            if (currentQ >= quizSet.length) return finishGame();
-            
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((d, i) => {
-                d.classList.remove('active');
-                if(i < currentQ) d.classList.add('completed');
-                if(i === currentQ) d.classList.add('active');
-            });
+    function loadQuestion() {
+        if (currentQ >= quizSet.length) return finishGame();
+        
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((d, i) => {
+            d.classList.remove('active');
+            if(i < currentQ) d.classList.add('completed');
+            if(i === currentQ) d.classList.add('active');
+        });
 
-            const qData = quizSet[currentQ];
-            document.getElementById('question-text').innerText = qData.q;
-            const optionsBox = document.getElementById('options-list');
-            optionsBox.innerHTML = '';
-            
-            qData.a.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                btn.style.animationDelay = (i * 0.1) + 's';
-                btn.classList.add('reveal');
-                btn.onclick = () => selectOption(btn, i);
-                optionsBox.appendChild(btn);
-            });
-            startTimer();
-        }
+        const qData = quizSet[currentQ];
+        document.getElementById('question-text').innerText = qData.q;
+        const optionsBox = document.getElementById('options-list');
+        optionsBox.innerHTML = '';
+        
+        qData.a.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.style.animationDelay = (i * 0.1) + 's';
+            btn.classList.add('reveal');
+            btn.onclick = () => selectOption(btn, i);
+            optionsBox.appendChild(btn);
+        });
+        startTimer();
+    }
 
-        function startTimer() {
-            let timeLeft = timeLimit;
-            const timerElem = document.getElementById('timer-text');
+    function startTimer() {
+        let timeLeft = timeLimit;
+        const timerElem = document.getElementById('timer-text');
+        timerElem.innerText = timeLeft;
+        timerElem.classList.remove('danger');
+        clearInterval(timer);
+        timer = setInterval(() => {
+            timeLeft--;
             timerElem.innerText = timeLeft;
-            timerElem.classList.remove('danger');
-            clearInterval(timer);
-            timer = setInterval(() => {
-                timeLeft--;
-                timerElem.innerText = timeLeft;
-                if (timeLeft <= 5) timerElem.classList.add('danger');
-                if (timeLeft <= 0) { clearInterval(timer); selectOption(null, -1); }
-            }, 1000);
+            if (timeLeft <= 5) timerElem.classList.add('danger');
+            if (timeLeft <= 0) { clearInterval(timer); selectOption(null, -1); }
+        }, 1000);
+    }
+
+    function selectOption(btn, idx) {
+        clearInterval(timer);
+        const correctIdx = quizSet[currentQ].c;
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach(b => b.style.pointerEvents = 'none');
+        
+        const userSel = idx === -1 ? "Time Up" : quizSet[currentQ].a[idx];
+        userAnswers.push({ q: quizSet[currentQ].q, selected: userSel, isCorrect: idx === correctIdx });
+
+        if (btn) {
+            btn.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                if (idx === correctIdx) { btn.classList.add('selected-correct'); score++; } 
+                else { btn.classList.add('selected-wrong'); }
+                btn.style.transform = "scale(1)";
+            }, 150);
         }
+        currentQ++;
+        setTimeout(loadQuestion, 1200);
+    }
 
-        function selectOption(btn, idx) {
-            clearInterval(timer);
-            const correctIdx = quizSet[currentQ].c;
-            const allBtns = document.querySelectorAll('.option-btn');
-            allBtns.forEach(b => b.style.pointerEvents = 'none'); 
-            
-            const userSel = idx === -1 ? "Time Up" : quizSet[currentQ].a[idx];
-            userAnswers.push({ 
-                q: quizSet[currentQ].q, 
-                selected: userSel, 
-                isCorrect: idx === correctIdx 
-            });
+    function finishGame() {
+        document.getElementById('game-ui').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+        document.getElementById('final-score').innerText = `${score} / 5`;
+        
+        const medal = document.getElementById('medal-icon');
+        const congrats = document.getElementById('congrats-text');
+        const suggest = document.getElementById('suggestion-box');
 
-            if (btn) {
-                btn.style.transform = "scale(0.95)";
-                setTimeout(() => {
-                    if (idx === correctIdx) { 
-                        btn.classList.add('selected-correct'); 
-                        score++; 
-                    } else { 
-                        btn.classList.add('selected-wrong'); 
-                    }
-                    btn.style.transform = "scale(1)";
-                }, 150);
-            }
-            
-            currentQ++;
-            setTimeout(loadQuestion, 1200);
-        }
+        if (score === 5) { medal.innerText = "🥇"; congrats.innerText = "అద్భుతం! శభాష్!"; suggest.innerHTML = "<b>చాలా సంతోషం!</b> దేవుని వాక్యం మీలో సమృద్ధిగా ఉంది."; } 
+        else if (score >= 3) { medal.innerText = "🥈"; congrats.innerText = "చాలా మంచి ప్రయత్నం!"; suggest.innerHTML = "<b>బాగా ఆడారు!</b> వాక్యం చదవడం కొనసాగించండి."; } 
+        else { medal.innerText = "📖"; congrats.innerText = "మంచి ప్రారంభం!"; suggest.innerHTML = "<b>నిరుత్సాహపడకండి!</b> ప్రతిరోజూ బైబిల్ చదవడం అలవాటు చేసుకోండి."; }
 
-        function finishGame() {
-            document.getElementById('game-ui').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            document.getElementById('final-score').innerText = `${score} / 5`;
-            
-            const medal = document.getElementById('medal-icon');
-            const congrats = document.getElementById('congrats-text');
-            const suggest = document.getElementById('suggestion-box');
+        const shareMsg = `నేను Christ Mandir బైబిల్ క్విజ్ లో ${score}/5 సాధించాను! మీరు పాల్గొనండి!`;
+        document.getElementById('share-btn').href = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
+        
+        const reviewBox = document.getElementById('review-area');
+        reviewBox.innerHTML = '';
+        userAnswers.forEach((item, i) => {
+            const div = document.createElement('div');
+            div.className = `review-item ${item.isCorrect ? 'correct' : 'wrong'}`;
+            div.style.animationDelay = `${i * 0.1}s`;
+            div.innerHTML = `<span style="font-weight:bold;">${i+1}. ${item.q}</span><br><div style="margin-top:5px;">మీరు ఎంచుకున్నది: <b style="color:${item.isCorrect ? '#27ae60' : '#e74c3c'}">${item.selected} ${item.isCorrect ? '✅' : '❌'}</b></div>`;
+            reviewBox.appendChild(div);
+        });
+    }
+</script>
 
-            if (score === 5) {
-                medal.innerText = "🥇"; congrats.innerText = "అద్భుతం! శభాష్!";
-                suggest.innerHTML = "<b>చాలా సంతోషం!</b> దేవుని వాక్యం మీలో సమృద్ధిగా ఉంది.";
-            } else if (score >= 3) {
-                medal.innerText = "🥈"; congrats.innerText = "చాలా మంచి ప్రయత్నం!";
-                suggest.innerHTML = "<b>బాగా ఆడారు!</b> వాక్యం చదవడం కొనసాగించండి.";
-            } else {
-                medal.innerText = "📖"; congrats.innerText = "మంచి ప్రారంభం!";
-                suggest.innerHTML = "<b>నిరుత్సాహపడకండి!</b> ప్రతిరోజూ బైబిల్ చదవడం అలవాటు చేసుకోండి.";
-            }
-
-            const shareMsg = `నేను Christ Mandir బైబిల్ క్విజ్ లో ${score}/5 సాధించాను! మీరు పాల్గొనండి!`;
-            document.getElementById('share-btn').href = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
-            
-            const reviewBox = document.getElementById('review-area');
-            reviewBox.innerHTML = '';
-            
-            userAnswers.forEach((item, i) => {
-                const div = document.createElement('div');
-                div.className = `review-item ${item.isCorrect ? 'correct' : 'wrong'}`;
-                div.style.animationDelay = `${i * 0.1}s`;
-                
-                div.innerHTML = `
-                    <span style="font-weight:bold;">${i+1}. ${item.q}</span><br>
-                    <div style="margin-top:5px;">
-                        మీరు ఎంచుకున్నది: 
-                        <b style="color:${item.isCorrect ? '#27ae60' : '#e74c3c'}">
-                            ${item.selected} ${item.isCorrect ? '✅' : '❌'}
-                        </b>
-                    </div>
-                `;
-                reviewBox.appendChild(div);
-            });
-        }
-    </script>
 </body>
-
 </html>
