@@ -27,15 +27,15 @@
 
         /* --- 1. DESKTOP HEADER --- */
         .app-header {
-            display: none; height: 60px; width: 100%; background: #fff;
+            display: none; height: 65px; width: 100%; background: #fff;
             align-items: center; justify-content: space-between; padding: 0 40px;
             border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 100; flex-shrink: 0;
         }
-        .logo { font-weight: 800; font-size: 18px; color: var(--dark); text-transform: uppercase; letter-spacing: -0.5px; }
+        .logo { font-weight: 800; font-size: 20px; color: var(--dark); text-transform: uppercase; letter-spacing: -0.5px; }
         .logo span { color: var(--gold); }
         .dt-nav { display: flex; gap: 20px; }
         .dt-link { 
-            text-decoration: none; color: #666; font-size: 12px; font-weight: 700; 
+            text-decoration: none; color: #666; font-size: 13px; font-weight: 700; 
             transition: 0.3s; text-transform: uppercase;
         }
         .dt-link:hover, .dt-link.active { color: var(--gold); }
@@ -52,46 +52,45 @@
             display: flex; flex-direction: column; 
         }
 
-        /* --- 3. PREVIEW ZONE (Mobile: 35%) --- */
+        /* --- 3. PREVIEW ZONE (Mobile: 38%) --- */
         .preview-zone {
-            height: 35vh; /* Reduced size */
+            height: 38%; 
             width: 100%;
             background: #eef2f5; 
             display: flex; justify-content: center; align-items: center;
             overflow: hidden; position: relative;
             padding: 10px; cursor: zoom-in;
-            flex-shrink: 0; 
+            flex-shrink: 0;
         }
 
-        /* Particles */
+        /* Animated Particles */
         .particles { display: none; position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; }
         .particle { position: absolute; background: var(--gold); border-radius: 50%; opacity: 0.3; animation: float 10s infinite linear; }
         @keyframes float { 0% { transform: translateY(100vh); opacity:0; } 50%{ opacity:0.5; } 100% { transform: translateY(-10vh); opacity:0; } }
 
         #card-scaler {
             transform-origin: center center; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15); border-radius: 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15); border-radius: 30px; 
             pointer-events: none; z-index: 10; position: relative;
         }
         .verse-card { pointer-events: auto; width: 380px; height: 506px; position: relative; overflow: hidden; border-radius: 30px; background: #000; }
 
-        /* --- 4. CONTROLS ZONE (Mobile: 65%) --- */
-        /* Flex container to separate Tabs, Content, and Save Button */
+        /* --- 4. CONTROLS ZONE (Mobile: 62%) --- */
         .controls-zone {
-            height: 65vh; /* Fills remaining space */
+            height: 62%; 
             width: 100%; 
             background: #fff;
             display: flex; flex-direction: column;
             border-top: 1px solid #eee;
             z-index: 20;
-            border-radius: 20px 20px 0 0;
+            border-radius: 25px 25px 0 0;
             box-shadow: 0 -5px 30px rgba(0,0,0,0.05);
             position: relative;
         }
 
-        /* Tabs (Top) */
+        /* Tabs */
         .ctrl-tabs {
-            display: flex; height: 45px; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; padding: 0 5px;
+            display: flex; height: 45px; border-bottom: 1px solid #f8f8f8; flex-shrink: 0; padding: 0 5px;
         }
         .tab-btn {
             flex: 1; border: none; background: transparent; 
@@ -101,33 +100,34 @@
         .tab-btn.active { color: var(--dark); }
         .tab-btn.active::after { content:''; position: absolute; bottom: 0; left: 35%; width: 30%; height: 3px; background: var(--gold); border-radius: 10px; }
 
-        /* Content (Scrollable Middle) */
+        /* Scrollable Content */
         .ctrl-content {
-            flex: 1; overflow-y: auto; padding: 15px;
-            display: none; flex-direction: column; gap: 10px;
-            /* Padding bottom ensures content doesn't hit the save button immediately */
-            padding-bottom: 10px; 
+            flex: 1; overflow-y: auto; padding: 20px;
+            display: none; flex-direction: column; gap: 12px;
+            padding-bottom: 100px; /* Space for Save Button */
         }
         .ctrl-content.active { display: flex; }
 
-        /* Save Button Area (Fixed Bottom of Panel) */
+        /* SAVE BUTTON CONTAINER (Fixed at bottom of panel, Above Menu) */
         .panel-footer {
-            flex-shrink: 0;
-            padding: 10px 15px;
-            /* Ensure it sits above the navigation bar area */
-            padding-bottom: 90px; 
-            background: #fff;
-            border-top: 1px solid #f8f8f8;
+            position: absolute; 
+            bottom: 0; left: 0; width: 100%;
+            padding: 15px 20px;
+            /* 70px (Nav) + 15px (Padding) = 85px from bottom */
+            padding-bottom: 85px; 
+            background: linear-gradient(to top, #fff 90%, rgba(255,255,255,0));
+            z-index: 50; pointer-events: none; /* Let clicks pass through gradient area */
         }
+        .panel-footer button { pointer-events: auto; } /* Re-enable clicks on button */
 
-        /* --- 5. MOBILE BOTTOM NAV --- */
+        /* --- 5. MOBILE NAV (Floating Pill) --- */
         .bottom-nav {
             position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
             width: 95%; max-width: 400px; height: 60px;
             background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.8);
             display: flex; justify-content: space-evenly; align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); 
             border-radius: 40px; z-index: 1000;
         }
         .nav-item {
@@ -145,53 +145,79 @@
             .bottom-nav { display: none; } 
             
             main { 
-                flex-direction: row; 
-                max-width: 1200px; margin: 20px auto; 
+                flex-direction: row; /* Force Row */
+                max-width: 1400px; margin: 20px auto; 
                 height: calc(100vh - 100px); 
-                box-shadow: 0 0 60px rgba(0,0,0,0.05);
-                border-radius: 20px; overflow: hidden;
+                box-shadow: 0 0 80px rgba(0,0,0,0.08);
+                border-radius: 24px; overflow: hidden;
                 border: 1px solid #fff;
             }
             
-            .preview-zone { flex: 1.5; height: 100%; border-right: 1px solid #f0f0f0; background: #fafafa; }
+            .app-shell { flex-direction: row; width: 100%; height: 100%; }
+
+            /* LEFT: PREVIEW */
+            .preview-zone { 
+                flex: 1.6; /* 60-65% Width */
+                height: 100%; 
+                border-right: 1px solid #f0f0f0; background: #fafafa;
+                padding: 40px; /* More padding on desktop */
+            }
             .particles { display: block; }
 
+            /* RIGHT: CONTROLS */
             .controls-zone { 
-                width: 400px; height: 100%; flex: none;
+                width: 400px; /* Fixed width sidebar */
+                height: 100%; flex: none;
                 border-radius: 0; box-shadow: none; border-top: none;
             }
             
-            .panel-footer { padding-bottom: 20px; } /* Normal padding on desktop */
-            .ctrl-content { padding: 25px; }
+            .ctrl-tabs { display: none; } /* Hide tabs on desktop */
+            .ctrl-content { 
+                display: flex !important; /* Show all sections */
+                padding: 30px; padding-bottom: 20px;
+                border-bottom: 1px solid #f5f5f5;
+            }
+            
+            /* Reset Footer for Desktop */
+            .panel-footer { 
+                position: static; padding: 20px 30px; 
+                margin-top: auto; background: #fff; 
+            }
+            
+            /* Desktop Labels */
+            .d-label { 
+                display: block; font-size: 11px; font-weight: 800; 
+                color: var(--gold); text-transform: uppercase; letter-spacing: 1px;
+                border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; margin-bottom: 8px;
+            }
         }
+        
+        .d-label { display: none; } /* Hidden on mobile */
 
-        /* --- UI COMPONENTS (Compact) --- */
+        /* --- UI COMPONENTS --- */
         label { font-size: 9px; font-weight: 800; color: #888; text-transform: uppercase; margin-bottom: 3px; display: block; letter-spacing: 0.5px; }
         
         textarea {
             width: 100%; padding: 10px; border: 2px solid #f0f0f0; border-radius: 12px;
-            font-family: 'Hind Guntur', sans-serif; font-size: 13px; 
-            background: #fff; resize: none; min-height: 60px; transition: 0.3s;
+            font-family: 'Hind Guntur', sans-serif; font-size: 14px; 
+            background: #fff; resize: none; min-height: 70px; transition: 0.3s;
         }
         textarea:focus { border-color: var(--gold); outline: none; }
 
-        /* Compact Single Line Reference */
+        /* ONE LINE REFERENCE */
         .ref-input {
-            width: 100%; height: 35px; padding: 0 10px;
+            width: 100%; height: 38px; padding: 0 10px;
             border: 2px solid #f0f0f0; border-radius: 8px;
-            font-size: 11px; font-weight: 600; background: #fff;
+            font-size: 12px; font-weight: 600; background: #fff;
             font-family: 'Hind Guntur', sans-serif;
         }
         .ref-input:focus { border-color: var(--gold); outline: none; }
 
-        .row { display: flex; gap: 8px; align-items: center; }
-        
-        /* 4-Column Grid for Typography (Single Line) */
+        /* ONE LINE TYPOGRAPHY GRID */
         .grid-4 { 
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; 
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; 
         }
         
-        /* Standard 2-Column Grid */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
         /* BUTTONS */
@@ -203,16 +229,15 @@
         }
         .btn:hover { border-color: var(--dark); }
         .btn:active { transform: scale(0.97); }
-        
         .btn-dark { background: var(--dark); color: #fff; border: none; }
         
-        /* Download Button */
+        /* DOWNLOAD BUTTON */
         .btn-gold { 
             background: linear-gradient(135deg, #D4AF37, #c5a028); 
-            color: #fff; width: 100%; height: 45px; border: none;
-            font-size: 12px; border-radius: 50px; 
-            box-shadow: 0 5px 20px rgba(212,175,55,0.25);
-            letter-spacing: 1px; cursor: pointer; text-transform: uppercase; font-weight: 800;
+            color: #fff; width: 100%; height: 50px; border: none;
+            font-size: 13px; border-radius: 50px; 
+            box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+            letter-spacing: 1px; cursor: pointer; font-weight: 700;
         }
 
         input[type=range] { width: 100%; accent-color: var(--gold); margin: 5px 0; }
@@ -299,19 +324,19 @@
 
             <div class="controls-zone">
                 <div class="ctrl-tabs">
-                    <button class="tab-btn active" onclick="switchTab('design', this)">✍️ Design</button>
+                    <button class="tab-btn active" onclick="switchTab('design', this)">✏️ Design</button>
                     <button class="tab-btn" onclick="switchTab('media', this)">🖼️ Media</button>
                     <button class="tab-btn" onclick="switchTab('style', this)">🎨 Style</button>
                 </div>
 
                 <div id="tab-design" class="ctrl-content active">
-                    <label>Verse Content</label>
+                    <label class="d-label">Verse Content</label>
                     <textarea id="inputVerse" placeholder="Type Verse Here..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
                     
-                    <label>Reference</label>
-                    <input type="text" class="ref-input" id="inputRef" placeholder="Ref (e.g. Psalm 23)" value="యెషయా 54:17" oninput="updateText()">
+                    <label class="d-label">Reference</label>
+                    <input type="text" class="ref-input" id="inputRef" placeholder="Ref" value="యెషయా 54:17" oninput="updateText()">
                     
-                    <label>Typography</label>
+                    <label class="d-label">Typography</label>
                     <div class="grid-4">
                         <button class="btn" onclick="adjustFontSize(-2)">A-</button>
                         <button class="btn" onclick="adjustFontSize(2)">A+</button>
@@ -321,7 +346,7 @@
                 </div>
 
                 <div id="tab-media" class="ctrl-content">
-                    <label>Background</label>
+                    <label class="d-label">Background</label>
                     <div class="grid-2">
                         <button class="btn" onclick="document.getElementById('bgUpload').click()">📂 Upload</button>
                         <button class="btn btn-dark" onclick="refreshBackground()">🖼 Shuffle</button>
@@ -331,7 +356,7 @@
                     <label style="margin-top:10px">Overlay</label>
                     <input type="range" min="0" max="90" value="40" oninput="setOverlay(this.value)">
                     
-                    <label>Frame</label>
+                    <label class="d-label">Frame</label>
                     <div class="grid-2">
                         <button class="btn" onclick="setFrame(0)">Glass</button>
                         <button class="btn" onclick="setFrame(1)">Gold</button>
@@ -341,7 +366,7 @@
                 </div>
 
                 <div id="tab-style" class="ctrl-content">
-                    <label>Visuals</label>
+                    <label class="d-label">Visuals</label>
                     <div class="grid-2">
                         <button class="btn btn-dark" onclick="refreshStyle()">🎨 Remix</button>
                         <button class="btn" onclick="setRandomFont()">🅰 Fonts</button>
@@ -383,7 +408,7 @@
 
     <script>
     /* --- ASSETS --- */
-    const backgrounds = ["https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1000", "https://images.unsplash.com/photo-1493246507139-91e8bef99c02?w=1000", "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000", "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000"];
+    const backgrounds = ["https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1000", "https://images.unsplash.com/photo-1493246507139-91e8bef99c02?w=1000", "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000", "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000", "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=1000", "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1000", "https://images.unsplash.com/photo-1518098268026-4e187743369b?w=1000"];
     const fontList = ['Hind Guntur', 'Tenali Ramakrishna', 'Suranna', 'Ramabhadra', 'Mallanna', 'Mandali', 'NTR', 'Peddana', 'Timmana', 'Gurajada', 'Poppins'];
     const frames = ['border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);', 'border: 2px solid #D4AF3733; box-shadow: inset 0 0 40px rgba(0,0,0,0.5);', 'border: 0.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);', 'border: none;'];
     let currentFontSize = 28;
