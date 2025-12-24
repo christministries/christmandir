@@ -1,25 +1,50 @@
 :root {
+    /* Color Palette from Quiz Page */
     --primary: #00897b;
     --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
+    --secondary: #00bcd4;
+    --correct: #43a047;
+    --wrong: #e53935;
+    --bg-color: #f0f2f5;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --glass-nav: rgba(255, 255, 255, 0.85);
+    --text-main: #2d3436;
+    --text-light: #636e72;
+    
+    /* Additional Home Vars */
     --primary-dark: #004d40;
     --gold: #cfa76e;
-    --dark: #1a1a1a;
-    --light: #f9f9f9;
-    --glass-nav: rgba(255, 255, 255, 0.85);
     
+    /* Fonts */
     --font-head: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: var(--font-body); color: var(--dark); overflow-x: hidden; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-/* --- NAVIGATION (EXACT QUIZ STYLE) --- */
-header { position: fixed; z-index: 1000; transition: all 0.4s; }
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* --- ANIMATED BACKGROUND (Matched to Quiz) --- */
+.background-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none; }
+.shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: floatShape 25s infinite alternate ease-in-out; }
+.shape-1 { width: 500px; height: 500px; background: #b2dfdb; top: -150px; left: -150px; }
+.shape-2 { width: 400px; height: 400px; background: #ffe082; bottom: -100px; right: -100px; animation-delay: -5s; }
+.shape-3 { width: 300px; height: 300px; background: #80deea; bottom: 30%; left: 20%; animation-delay: -10s; opacity: 0.4; }
+@keyframes floatShape { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(40px, 60px) rotate(10deg); } }
+
+/* =========================================
+   NAVIGATION (EXACT COPY FROM QUIZ PAGE) 
+   ========================================= */
+header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
 .nav-links { list-style: none; padding: 0; margin: 0; display: flex; }
 .nav-links li a { text-decoration: none; font-family: var(--font-head); font-weight: 600; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
 
-/* MOBILE NAV (Floating Pill) */
+/* MOBILE NAV */
 @media (max-width: 767px) {
     header {
         bottom: 20px; left: 50%; transform: translateX(-50%);
@@ -29,20 +54,23 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
         border-radius: 40px;
         box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
         border: 1px solid rgba(255,255,255,0.6);
-        top: auto; /* Reset top */
+        top: auto; /* Ensure top is auto for bottom placement */
     }
     .logo { display: none; }
     .nav-links { height: 100%; justify-content: space-evenly; padding: 0 10px; }
-    .nav-links li a { flex-direction: column; font-size: 0.7rem; color: #666; gap: 4px; padding: 5px 10px; }
-    .nav-links li a span { font-size: 1.5rem; transition: 0.3s; }
+    .nav-links li { position: relative; }
+    .nav-links li a { flex-direction: column; font-size: 0.7rem; color: var(--text-light); gap: 4px; padding: 5px 10px; }
+    .nav-links li a span { font-size: 1.5rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    
+    /* Active State Animation */
     .nav-links li a.active { color: var(--primary); }
     .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
     
-    /* Body padding for mobile */
+    /* Body padding for mobile nav space */
     body { padding-bottom: 100px; padding-top: 0; }
 }
 
-/* DESKTOP NAV (Top Bar) */
+/* DESKTOP NAV */
 @media (min-width: 768px) {
     header {
         top: 0; left: 0; width: 100%; height: 80px;
@@ -52,49 +80,44 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
     }
     .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
     .nav-links { gap: 30px; }
-    .nav-links li a { font-size: 1rem; color: #555; gap: 8px; padding: 10px 20px; border-radius: 25px; flex-direction: row; }
+    .nav-links li a { font-size: 1rem; color: var(--text-light); gap: 8px; padding: 10px 20px; border-radius: 25px; flex-direction: row; }
     .nav-links li a:hover { background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); }
     .nav-links li a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); }
     
-    body { padding-top: 80px; }
+    body { padding-top: 90px; }
 }
 
-/* --- 1. HERO SECTION --- */
+/* =========================================
+   HOME PAGE SPECIFIC CONTENT STYLES
+   ========================================= */
+
+/* --- HERO SECTION --- */
 .hero-split {
     display: flex;
-    height: 100vh; /* Full Screen Desktop */
+    height: 100vh;
     width: 100%;
     position: relative;
     padding-top: 0;
 }
 
-/* LEFT SIDE (TEXT) */
 .hero-text-side {
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 50px;
-    background: white;
+    display: flex; align-items: center; justify-content: center;
+    padding: 50px; background: rgba(255,255,255,0.7); /* Light transparent for background blending */
 }
 .text-wrapper { max-width: 500px; animation: fadeInUp 1s ease-out; text-align: left; }
 
-/* MINI IMAGE (Circle above text) */
+/* MINI IMAGE (On top of Welcome text) */
 .mini-profile-wrapper { display: flex; justify-content: flex-start; margin-bottom: 25px; }
 .hero-mini-img {
-    width: 130px; height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
+    border: 4px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 .sub-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); font-weight: 600; font-family: var(--font-head); }
 .hero-split h1 {
-    font-family: var(--font-head);
-    font-size: 4rem;
-    line-height: 1.1;
-    color: var(--primary-dark);
+    font-family: var(--font-head); font-size: 4rem; line-height: 1.1;
+    background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin: 10px 0;
 }
 .gold-line { width: 80px; height: 4px; background: var(--gold); margin-bottom: 25px; }
@@ -111,25 +134,17 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .btn-text { text-decoration: none; color: var(--primary); font-weight: 600; border-bottom: 2px solid transparent; transition: 0.3s; }
 .btn-text:hover { border-bottom-color: var(--primary); }
 
-/* RIGHT SIDE (IMAGE) */
-.hero-img-side {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
-.hero-img-side img {
-    width: 100%; height: 100%; object-fit: cover;
-    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-}
+/* HERO IMAGE SIDE (Desktop Only) */
+.hero-img-side { flex: 1; position: relative; overflow: hidden; }
+.hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); }
 
-/* --- MOBILE HERO ADJUSTMENTS --- */
+/* MOBILE HERO ADJUSTMENTS */
 @media (max-width: 768px) {
     .hero-split { display: block; height: auto; padding-top: 40px; }
-    .hero-img-side { display: none; } /* HIDE BIG IMAGE ON MOBILE */
-    
-    .hero-text-side { padding: 40px 20px 100px; text-align: center; }
+    .hero-img-side { display: none; } /* Hide big image */
+    .hero-text-side { padding: 40px 20px 50px; text-align: center; }
     .text-wrapper { text-align: center; margin: 0 auto; }
-    .mini-profile-wrapper { justify-content: center; } /* Center the mini image on mobile */
+    .mini-profile-wrapper { justify-content: center; }
     .hero-split h1 { font-size: 3rem; }
     .gold-line { margin: 15px auto 25px; }
     .btn-row { justify-content: center; }
@@ -137,19 +152,11 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 
 /* --- 2. PARALLAX SECTIONS --- */
 .parallax-section {
-    min-height: 60vh;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-    text-align: center;
+    min-height: 60vh; background-attachment: fixed; background-position: center;
+    background-repeat: no-repeat; background-size: cover; position: relative;
+    display: flex; align-items: center; justify-content: center; text-align: center;
 }
-.overlay-dark {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-}
+.overlay-dark { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
 .content-center { position: relative; z-index: 2; max-width: 800px; padding: 40px; color: white; }
 .content-center h2 { font-family: var(--font-head); font-size: 3rem; margin-bottom: 20px; }
 .big-text { font-size: 1.2rem; line-height: 1.6; opacity: 0.9; margin-bottom: 30px; font-weight: 300; }
@@ -159,8 +166,8 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 }
 .quote-minimal span { display: block; font-size: 0.9rem; font-family: var(--font-body); margin-top: 10px; color: var(--gold); font-style: normal; }
 
-/* --- 3. SERVICES (CLEAN) --- */
-.clean-section { padding: 80px 20px; background: white; }
+/* --- 3. SERVICES --- */
+.clean-section { padding: 80px 20px; background: rgba(255,255,255,0.8); }
 .container { max-width: 1000px; margin: 0 auto; }
 .section-title { text-align: center; margin-bottom: 60px; }
 .section-title h2 { font-family: var(--font-head); font-size: 2.5rem; color: var(--primary-dark); }
@@ -173,28 +180,19 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .svc-item h3 { font-family: var(--font-head); margin-bottom: 5px; font-size: 1.5rem; }
 .svc-item p { color: #666; }
 
-/* --- 4. ROADMAP (ZIG ZAG) --- */
-.roadmap-section { padding: 80px 20px; background: #f9f9f9; }
+/* --- 4. ROADMAP --- */
+.roadmap-section { padding: 80px 20px; background: rgba(249,249,249,0.5); }
 .timeline { position: relative; max-width: 800px; margin: 0 auto; }
-/* The Vertical Line */
-.timeline::after {
-    content: ''; position: absolute; width: 2px; background: var(--gold);
-    top: 0; bottom: 0; left: 50%; margin-left: -1px;
-}
-.timeline-row { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; cursor: pointer; }
+.timeline::after { content: ''; position: absolute; width: 2px; background: var(--gold); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+.timeline-row { padding: 10px 40px; position: relative; width: 50%; cursor: pointer; }
 .timeline-row.left { left: 0; text-align: right; }
 .timeline-row.right { left: 50%; text-align: left; }
-
-/* The Dots */
 .timeline-row::after {
-    content: ''; position: absolute; width: 20px; height: 20px;
-    right: -10px; background: white; border: 4px solid var(--primary);
-    top: 15px; border-radius: 50%; z-index: 1; transition: 0.3s;
+    content: ''; position: absolute; width: 20px; height: 20px; right: -10px;
+    background: white; border: 4px solid var(--primary); top: 15px; border-radius: 50%; z-index: 1; transition: 0.3s;
 }
 .timeline-row.right::after { left: -10px; }
 .timeline-row:hover::after { background: var(--primary); transform: scale(1.3); }
-
-/* The Content Box */
 .timeline-content {
     padding: 20px 30px; background: white; position: relative; border-radius: 6px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s;
@@ -204,15 +202,15 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .timeline-row.left .year { right: 20px; }
 .timeline-row.right .year { left: 20px; }
 
-/* Mobile Roadmap */
+/* Roadmap Mobile */
 @media (max-width: 768px) {
     .timeline::after { left: 31px; }
     .timeline-row { width: 100%; padding-left: 70px; padding-right: 25px; }
     .timeline-row.left, .timeline-row.right { text-align: left; }
     .timeline-row.left::after, .timeline-row.right::after { left: 21px; }
     .year { display: none; }
-    .timeline-row.left { left: 0; } /* Reset */
-    .timeline-row.right { left: 0; } /* Reset */
+    .timeline-row.left { left: 0; } 
+    .timeline-row.right { left: 0; } 
 }
 
 /* --- 5. FOOTER --- */
@@ -226,15 +224,13 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .social-icons a:hover { background: var(--gold); border-color: var(--gold); }
 .copyright { font-size: 0.8rem; opacity: 0.5; margin-top: auto; }
 
-/* --- MODAL --- */
+/* --- MODAL & ANIMATIONS --- */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
 .modal-content { background: white; width: 90%; max-width: 500px; border-radius: 20px; overflow: hidden; animation: zoomIn 0.3s; }
 #modal-img { width: 100%; height: 250px; object-fit: cover; }
 .modal-text { padding: 30px; text-align: center; }
 .close-modal { position: absolute; top: 15px; right: 20px; font-size: 30px; color: white; cursor: pointer; text-shadow: 0 2px 5px black; }
 @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-/* --- ANIMATIONS --- */
 .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
