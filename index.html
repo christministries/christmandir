@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Christ Mandir</title>
+    <title>Home - Christ Mandir Christmas Special</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,8 +27,13 @@
         </nav>
     </header>
 
-    <div id="snow-container"></div>
+    <div id="fireworks-container"></div>
 
+    <div id="santa-container">
+        <img src="https://cdn.pixabay.com/photo/2017/01/31/14/42/santa-claus-2024746_960_720.png" alt="Santa Flying">
+    </div>
+
+    <div id="snow-container"></div>
     <div class="background-shapes">
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
@@ -37,6 +42,8 @@
 
     <main>
         <section class="hero-split">
+            <img class="xmas-deco tree-left reveal" src="https://cdn.pixabay.com/photo/2018/11/15/15/44/christmas-3817509_960_720.png" alt="Christmas Tree">
+            
             <div class="hero-text-side">
                 <div class="text-wrapper reveal">
                     
@@ -53,7 +60,7 @@
                     
                     <div class="btn-row">
                         <a href="dailyverse.html" class="btn-main">Daily Verse <i class="fas fa-arrow-right"></i></a>
-                        <a href="#mission" class="btn-text">Read Vision</a>
+                        <a href="#nativity" class="btn-text">The Nativity Story</a>
                     </div>
                 </div>
             </div>
@@ -64,14 +71,39 @@
             </div>
         </section>
 
-        <section id="mission" class="parallax-section" style="background-image: url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1600');">
-            <div class="overlay-dark">
+        <section id="nativity" class="nativity-section reveal">
+            <div class="container">
+                <div class="section-title">
+                    <h2>The Greatest Gift</h2>
+                    <p>The Birth of our Savior, Jesus Christ</p>
+                </div>
+                <div class="nativity-grid">
+                    <div class="nativity-card">
+                        <img src="https://images.unsplash.com/photo-1512593620833-62e1826b2493?w=600" alt="Nativity Scene">
+                        <h3>The Manger</h3>
+                        <p>"And she brought forth her firstborn Son, and wrapped Him in swaddling cloths, and laid Him in a manger." - Luke 2:7</p>
+                    </div>
+                    <div class="nativity-card highlight">
+                        <img src="https://images.unsplash.com/photo-1576015681933-703501791093?w=600" alt="Star of Bethlehem">
+                        <h3>The Star</h3>
+                        <p>"We have seen His star in the East and have come to worship Him." - Matthew 2:2</p>
+                    </div>
+                    <div class="nativity-card">
+                        <img src="https://images.unsplash.com/photo-1604508488583-068d0d194092?w=600" alt="Joy to the World">
+                        <h3>Good Tidings</h3>
+                        <p>"I bring you good tidings of great joy which will be to all people. For there is born to you this day a Savior." - Luke 2:10-11</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mission" class="parallax-section" style="background-image: url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1600');">
+            <div class="overlay-dark xmas-overlay">
                 <div class="content-center reveal">
                     <h2>In Christ, For Christ</h2>
                     <p class="big-text">
-                        The Bible says we shall be like Christ. We are part of His body; Jesus Christ's ministry is our ministry. We are in Him to preach the gospel to all nations.
+                        The Bible says we shall be like Christ. We are part of His body; Jesus Christ's ministry is our ministry.
                     </p>
-                    
                     <div class="quote-minimal">
                         "The Spirit of the Lord is upon Me, because He has anointed Me to preach the gospel to the poor..."
                         <span>— Luke 4:18-19</span>
@@ -80,31 +112,29 @@
             </div>
         </section>
 
-        <section class="clean-section">
-            <div class="container">
+        <section class="clean-section" style="position: relative;">
+            <img class="xmas-deco gifts-right reveal" src="https://cdn.pixabay.com/photo/2016/12/12/20/34/xmas-1902555_960_720.png" alt="Christmas Gifts">
+            
+            <div class="container" style="position: relative; z-index: 2;">
                 <div class="section-title reveal">
                     <h2>Our Services</h2>
                     <p>Join us in worship and fellowship</p>
                 </div>
-                
                 <div class="service-row">
                     <div class="svc-item reveal">
                         <span class="svc-icon">☀️</span>
                         <h3>Sunday Service</h3>
                         <p class="time">10:00 AM - 12:30 PM</p>
-                        <p class="desc">A time of joyful worship, deep biblical teaching, and communion. Come experience the presence of God.</p>
                     </div>
                     <div class="svc-item reveal" style="transition-delay: 0.1s;">
                         <span class="svc-icon">🔥</span>
                         <h3>Friday Fasting</h3>
                         <p class="time">6:00 PM - 8:00 PM</p>
-                        <p class="desc">Dedicated time for intercessory prayer, spiritual warfare, and seeking God's face for our families and nation.</p>
                     </div>
                     <div class="svc-item reveal" style="transition-delay: 0.2s;">
                         <span class="svc-icon">🎸</span>
                         <h3>Youth Meeting</h3>
                         <p class="time">Saturday 5:00 PM</p>
-                        <p class="desc">Empowering the next generation with music, activities, and the Word of God to stand strong in faith.</p>
                     </div>
                 </div>
             </div>
@@ -141,34 +171,33 @@
                 <div class="section-title reveal">
                     <h2>Our Journey</h2>
                 </div>
-
                 <div class="timeline">
                     <div class="timeline-row left reveal" onclick="openRoadmapModal('The Vision', 'God gave a vision to establish a place of worship.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
                         <div class="timeline-content">
                             <div class="year">2020</div>
                             <h3>The Vision</h3>
-                            <p>The foundation was laid in prayer. God spoke clearly about establishing a sanctuary for the brokenhearted.</p>
+                            <p>The foundation was laid in prayer.</p>
                         </div>
                     </div>
-
                     <div class="timeline-row right reveal" onclick="openRoadmapModal('First Gathering', 'We started with a small house church gathering.', 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800')">
                         <div class="timeline-content">
                             <div class="year">2021</div>
                             <h3>First Gathering</h3>
-                            <p>Starting with just a few families, faith grew, and the congregation multiplied rapidly through miracles.</p>
+                            <p>Faith grew, and the congregation multiplied.</p>
                         </div>
                     </div>
-
                     <div class="timeline-row left reveal" onclick="openRoadmapModal('Establishment', 'Moved into our current location in Yernagudem.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
                         <div class="timeline-content">
                             <div class="year">2023</div>
                             <h3>Establishment</h3>
-                            <p>Christ Mandir established as a beacon of hope in Yernagudem, expanding our reach to the community.</p>
+                            <p>Christ Mandir established as a beacon of hope.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <div id="snow-pile"></div>
 
         <footer class="modern-footer">
             <div class="footer-map">
@@ -177,13 +206,11 @@
             <div class="footer-info">
                 <div class="footer-logo">Christ Mandir</div>
                 <p>In Christ, From Christ, For Christ.</p>
-                
                 <div class="contact-details">
                     <div class="c-item"><i class="fas fa-map-marker-alt"></i> Yernagudem-Chinnayagudem Road, AP</div>
                     <div class="c-item"><i class="fas fa-phone"></i> +91 98765 43210</div>
                     <div class="c-item"><i class="fas fa-envelope"></i> contact@christmandir.com</div>
                 </div>
-
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
