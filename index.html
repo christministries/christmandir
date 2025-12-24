@@ -1,442 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Christ Mandir | Christmas Special</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christ Mandir | Christmas Celebration</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;700;800&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* =========================================
+           1. CORE STYLES & VARIABLES
+           ========================================= */
+        :root {
+            --primary: #00897b;
+            --primary-dark: #004d40;
+            --gold: #cfa76e;
+            --xmas-red: #d42426;
+            --xmas-green: #165b33;
+            --bg-light: #fdfdfd;
+            --text-dark: #2d3436;
+            --glass-nav: rgba(255, 255, 255, 0.95);
+            
+            --font-head: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-xmas: 'Mountains of Christmas', cursive;
+        }
 
-<style>
-:root {
-    --primary:#00897b;
-    --primary-dark:#004d40;
-    --gold:#cfa76e;
-    --xmas-red:#d42426;
-    --xmas-green:#165b33;
-    --bg-light:#fdfdfd;
-    --text-dark:#2d3436;
-    --font-head:'Poppins',sans-serif;
-    --font-body:'Inter',sans-serif;
-    --font-xmas:'Mountains of Christmas',cursive;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); color: var(--text-dark); background-color: var(--bg-light); overflow-x: hidden; }
 
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-    font-family:var(--font-body);
-    background:var(--bg-light);
-    color:var(--text-dark);
-    overflow-x:hidden;
-}
-html{scroll-behavior:smooth}
+        /* =========================================
+           2. NAVIGATION (QUIZ STYLE)
+           ========================================= */
+        header {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            background: var(--glass-nav); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .logo { font-family: var(--font-head); font-weight: 800; font-size: 1.6rem; color: var(--primary-dark); }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; padding: 10px 20px; border-radius: 50px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .nav-links a:hover { color: var(--primary); background: rgba(0,137,123,0.05); }
+        .nav-links a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.2); }
 
-/* ================= NAV ================= */
-header{
-    position:fixed;
-    top:0;
-    width:100%;
-    height:80px;
-    background:rgba(255,255,255,0.95);
-    backdrop-filter:blur(10px);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 5%;
-    z-index:1000;
-}
-.logo{font-family:var(--font-head);font-weight:800;font-size:1.6rem}
-.nav-links{display:flex;gap:20px;list-style:none}
-.nav-links a{
-    text-decoration:none;
-    color:#333;
-    padding:10px 18px;
-    border-radius:40px;
-    font-weight:600;
-    transition:.3s;
-}
-.nav-links a.active,
-.nav-links a:hover{
-    background:var(--primary);
-    color:#fff;
-}
+        /* MOBILE NAV (Floating Pill) */
+        @media (max-width: 768px) {
+            header {
+                top: auto; bottom: 20px; left: 50%; transform: translateX(-50%);
+                width: 92%; max-width: 380px; height: 70px;
+                border: 1px solid rgba(255,255,255,0.5); border-radius: 40px; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 0 10px;
+            }
+            .logo { display: none; }
+            .nav-links { width: 100%; justify-content: space-evenly; }
+            .nav-links a { flex-direction: column; font-size: 0.7rem; padding: 5px; gap: 2px; background: none !important; color: #666; }
+            .nav-links a span { font-size: 1.4rem; transition: 0.3s; }
+            .nav-links a.active { color: var(--primary); box-shadow: none; }
+            .nav-links a.active span { transform: translateY(-5px); }
+            body { padding-bottom: 100px; }
+        }
 
-/* MOBILE NAV */
-@media(max-width:768px){
-header{
-    top:auto;
-    bottom:20px;
-    width:92%;
-    left:50%;
-    transform:translateX(-50%);
-    border-radius:40px;
-    height:70px;
-}
-.logo{display:none}
-.nav-links{
-    width:100%;
-    justify-content:space-evenly;
-}
-.nav-links a{
-    flex-direction:column;
-    font-size:.7rem;
-    background:none!important;
-    color:#666;
-}
-.nav-links a.active{color:var(--primary)}
-body{padding-bottom:110px}
-}
+        /* =========================================
+           3. CHRISTMAS ANIMATIONS
+           ========================================= */
+        #fireworks-canvas, #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 997; }
+        .snowflake { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: snow linear infinite; }
+        @keyframes snow { to { transform: translateY(105vh); } }
 
-/* ================= HERO ================= */
-.hero-split{
-    display:flex;
-    min-height:100vh;
-    margin-top:80px;
-}
-.hero-text-side{
-    flex:1.2;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:100px 40px;
-}
-.hero-feature-img{
-    height:160px;
-    margin-bottom:20px;
-    animation:floatSoft 6s ease-in-out infinite;
-}
-.xmas-title{
-    font-family:var(--font-xmas);
-    font-size:3.8rem;
-    color:var(--xmas-green);
-}
-.tagline{margin:20px 0;line-height:1.6}
-.btn-row{display:flex;gap:15px;justify-content:center}
-.btn-main{
-    background:linear-gradient(135deg,var(--xmas-red),var(--xmas-green));
-    color:#fff;
-    padding:14px 30px;
-    border-radius:50px;
-    text-decoration:none;
-    transition:.3s;
-}
-.btn-main:hover{
-    transform:translateY(-3px) scale(1.03);
-}
-.btn-text{
-    border-bottom:2px solid var(--gold);
-    padding:14px;
-    text-decoration:none;
-}
+        /* Flying Santa (Clean - No Box) */
+        #santa-container {
+            position: fixed; top: 15%; left: -600px;
+            z-index: 998; pointer-events: none;
+            animation: flyAcross 25s linear infinite;
+        }
+        .santa-img {
+            width: 250px; height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            /* Ensure NO background or box */
+            background: transparent; border: none; box-shadow: none;
+        }
+        @keyframes flyAcross {
+            0% { left: -600px; transform: translateY(0) rotate(-2deg); }
+            25% { transform: translateY(-30px) rotate(0deg); }
+            50% { transform: translateY(0) rotate(2deg); }
+            75% { transform: translateY(20px) rotate(0deg); }
+            100% { left: 120vw; transform: translateY(0) rotate(-2deg); }
+        }
 
-/* HERO IMAGE */
-.hero-img-side{flex:1}
-.hero-img-side img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
+        /* =========================================
+           4. SECTIONS & LAYOUT
+           ========================================= */
+        /* Reveal Animation (From your code) */
+        .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: 0.9s cubic-bezier(0.19, 1, 0.22, 1); }
+        .reveal.active { opacity: 1; transform: none; }
 
-/* MOBILE HERO */
-@media(max-width:768px){
-.hero-split{flex-direction:column}
-.hero-img-side{display:none}
-.hero-text-side{padding:120px 20px 60px}
-.btn-row{flex-direction:column}
-.btn-main,.btn-text{width:100%;text-align:center}
-.xmas-title{font-size:3rem}
-}
+        /* Hero Split */
+        .hero-split { display: flex; min-height: 90vh; position: relative; overflow: hidden; background: #fff; }
+        .hero-text-side { 
+            flex: 1.2; display: flex; align-items: center; justify-content: center; 
+            padding: 100px 40px 60px; text-align: center; z-index: 2; 
+            background: radial-gradient(circle at center, rgba(255,255,255,0.95), rgba(240,248,255,0.85));
+        }
+        
+        /* Welcome Image (Perfect Fit, No Box) */
+        .hero-feature-img { 
+            height: 160px; object-fit: contain; margin-bottom: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15)); /* Soft shadow only */
+            border: none; background: transparent;
+        }
 
-/* ================= SECTIONS ================= */
-.section-clean{
-    padding:80px 5%;
-    text-align:center;
-}
-.section-title h2{
-    font-size:2.5rem;
-    margin-bottom:10px;
-}
-.card-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-    max-width:1200px;
-    margin:auto;
-}
-.card{
-    background:#fff;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.05);
-    transition:.4s;
-}
-@media(hover:hover){
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 15px 40px rgba(0,137,123,.2);
-}
-}
-.card img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-    border-radius:15px;
-}
+        .xmas-title { font-family: var(--font-xmas); font-size: 3.8rem; color: var(--xmas-green); line-height: 1.1; margin: 10px 0; }
+        .tagline { font-size: 1.1rem; color: #555; margin-bottom: 30px; line-height: 1.6; }
+        
+        .btn-row { display: flex; gap: 15px; justify-content: center; }
+        .btn-main { background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn-text { color: var(--primary-dark); padding: 14px 20px; text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--gold); }
 
-/* TEAM */
-.team-img{
-    width:120px!important;
-    height:120px!important;
-    border-radius:50%;
-    border:3px solid var(--primary);
-    animation:floatSoft 7s ease-in-out infinite;
-}
+        .hero-img-side { flex: 1; overflow: hidden; }
+        .hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); }
 
-/* ================= PARALLAX ================= */
-.parallax-section{
-    min-height:60vh;
-    background:url('https://images.unsplash.com/photo-1513297887119-d46091b24bfa?w=1600') center/cover fixed;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    position:relative;
-}
-.overlay-dark{
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,.5);
-}
-.content-center{position:relative;z-index:2}
+        /* General Sections */
+        .section-clean { padding: 80px 5%; background: var(--bg-light); text-align: center; }
+        .section-title h2 { font-family: var(--font-head); font-size: 2.5rem; color: var(--primary-dark); margin-bottom: 40px; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,137,123,0.15); }
+        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
+        
+        .team-img { width: 120px !important; height: 120px !important; border-radius: 50% !important; margin: 0 auto 15px; border: 3px solid var(--primary); }
 
-/* ================= ROADMAP ================= */
-.roadmap-section{
-    padding:80px 5%;
-    background:#0a0a0a url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5980?w=1600') center/cover;
-    color:#fff;
-}
-.timeline{
-    max-width:700px;
-    margin:auto;
-    border-left:2px solid var(--gold);
-    padding-left:30px;
-}
-.timeline-row{
-    margin-bottom:40px;
-    cursor:pointer;
-    position:relative;
-}
-.timeline-row::before{
-    content:'❄️';
-    position:absolute;
-    left:-42px;
-}
-.timeline-content{
-    background:rgba(255,255,255,.12);
-    padding:20px;
-    border-radius:15px;
-    backdrop-filter:blur(10px);
-}
+        /* Roadmap (Night Sky) */
+        .roadmap-section { padding: 80px 5%; background: #0a0a0a url('https://i.imgur.com/9c4b7a.png') center/cover; color: white; }
+        .timeline { max-width: 700px; margin: 0 auto; border-left: 2px solid var(--gold); padding-left: 30px; }
+        .timeline-row { margin-bottom: 40px; cursor: pointer; position: relative; }
+        .timeline-content { background: rgba(255,255,255,0.12); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .timeline-row::before { content: '❄️'; position: absolute; left: -42px; top: 10px; font-size: 1.2rem; }
 
-/* ================= FOOTER ================= */
-.main-footer{
-    background:#001f1b;
-    color:#fff;
-    padding-top:50px;
-}
-.footer-content{
-    display:flex;
-    flex-wrap:wrap;
-}
-.footer-map{
-    flex:1;
-    min-width:300px;
-    height:350px;
-}
-.footer-info{
-    flex:1;
-    padding:50px;
-    text-align:center;
-}
+        /* Footer & Map */
+        .main-footer { background: #001f1b; color: white; padding-top: 50px; position: relative; z-index: 20; }
+        #snow-pile { position: absolute; top: -60px; left: 0; width: 100%; height: 80px; pointer-events: none; z-index: 10; }
+        #snow-pile img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .footer-content { display: flex; flex-wrap: wrap; }
+        .footer-map { flex: 1; min-width: 300px; height: 350px; }
+        .footer-map iframe { width: 100%; height: 100%; border: 0; }
+        .footer-info { flex: 1; padding: 50px; text-align: center; }
+        .footer-logo { font-family: var(--font-xmas); font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
+        .contact-list p { margin: 10px 0; font-size: 1rem; color: #ddd; }
+        .socials a { color: white; font-size: 1.5rem; margin: 0 10px; transition: 0.3s; }
+        .socials a:hover { color: var(--gold); }
 
-/* ================= ANIMATIONS ================= */
-.reveal{
-    opacity:0;
-    transform:translateY(40px) scale(.95);
-    transition:.9s cubic-bezier(.19,1,.22,1);
-}
-.reveal.active{
-    opacity:1;
-    transform:none;
-}
-@keyframes floatSoft{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
-
-/* ================= CANVAS ================= */
-#fireworks-canvas,#snow-container{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:999;
-}
-.snowflake{
-    position:absolute;
-    background:#fff;
-    border-radius:50%;
-    opacity:.8;
-    animation:snow linear infinite;
-}
-@keyframes snow{
-    to{transform:translateY(105vh)}
-}
-</style>
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .hero-split { flex-direction: column; height: auto; }
+            .hero-img-side { display: none; }
+            .hero-text-side { padding: 120px 20px 40px; }
+            .xmas-title { font-size: 3rem; }
+            .santa-img { width: 150px; } /* Smaller Santa */
+            .btn-row { flex-direction: column; }
+            .btn-main, .btn-text { width: 100%; text-align: center; }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-<div class="logo">Christ Mandir</div>
-<ul class="nav-links">
-<li><a href="#" class="active">🏠 Home</a></li>
-<li><a href="bible.html">📖 Bible</a></li>
-<li><a href="quiz.html">🧩 Quiz</a></li>
-<li><a href="dailyverse.html">✨ Verse</a></li>
-</ul>
-</header>
+    <header>
+        <div class="logo">Christ Mandir</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><span>🏠</span> Home</a></li>
+                <li><a href="bible.html"><span>📖</span> Bible</a></li>
+                <li><a href="quiz.html"><span>🧩</span> Quiz</a></li>
+                <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<canvas id="fireworks-canvas"></canvas>
-<div id="snow-container"></div>
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <div id="santa-container">
+        <img src="https://static.wixstatic.com/media/be4f11_6e0a5d13aff544498ef571e2f20751d3~mv2.png" alt="Flying Santa" class="santa-img">
+    </div>
 
-<section class="hero-split">
-<div class="hero-text-side">
-<div class="reveal">
-<img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="hero-feature-img">
-<h1 class="xmas-title">Christ<br>Ministries</h1>
-<p class="tagline">Warm welcome to Christ Ministries in India</p>
-<div class="btn-row">
-<a class="btn-main" href="dailyverse.html">Daily Verse</a>
-<a class="btn-text" href="#nativity">Nativity Story</a>
-</div>
-</div>
-</div>
-<div class="hero-img-side">
-<img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png">
-</div>
-</section>
+    <div id="snow-container"></div>
 
-<section id="nativity" class="section-clean">
-<div class="section-title reveal">
-<h2>The Greatest Gift</h2>
-</div>
-<div class="card-grid">
-<div class="card reveal"><h3>The Manger</h3></div>
-<div class="card reveal"><h3>The Star</h3></div>
-<div class="card reveal"><h3>Good Tidings</h3></div>
-</div>
-</section>
+    <main>
+        <section class="hero-split">
+            <div class="hero-text-side">
+                <div class="reveal">
+                    <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="hero-feature-img">
+                    
+                    <span style="color:var(--gold); font-weight:700; letter-spacing:2px;">WELCOME TO</span>
+                    <h1 class="xmas-title">Christ <br>Ministries</h1>
+                    <p class="tagline">Warm and heartily welcome to you to Christ Ministries in the different culture and religious land of India.</p>
+                    
+                    <div class="btn-row">
+                        <a href="dailyverse.html" class="btn-main">Daily Verse</a>
+                        <a href="#nativity" class="btn-text">Nativity Story</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-img-side">
+                <img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png">
+            </div>
+        </section>
 
-<footer class="main-footer">
-<div class="footer-content">
-<div class="footer-map">
-<iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem&t=&z=15&output=embed"></iframe>
-</div>
-<div class="footer-info">
-<h2>Christ Mandir</h2>
-<p>📍 Yernagudem, AP</p>
-<p>📞 +91 9533723237</p>
-<p>✉️ contact@christmandir.com</p>
-<p style="opacity:.6;margin-top:15px">© <span id="year"></span></p>
-</div>
-</div>
-</footer>
+        <section id="nativity" class="section-clean">
+            <div class="section-title reveal">
+                <h2>The Greatest Gift</h2>
+                <p>Celebrating the Birth of Jesus</p>
+            </div>
+            <div class="card-grid">
+                <div class="card reveal">
+                    <img src="https://i.imgur.com/0Y1x9yS.png" alt="Manger">
+                    <h3>The Manger</h3>
+                    <p>"And she brought forth her firstborn Son..."</p>
+                </div>
+                <div class="card reveal" style="transition-delay: 0.1s;">
+                    <img src="https://i.imgur.com/4g8g9xS.png" alt="Star">
+                    <h3>The Star</h3>
+                    <p>"We have seen His star in the East..."</p>
+                </div>
+                <div class="card reveal" style="transition-delay: 0.2s;">
+                    <img src="https://i.imgur.com/2e5f6hS.png" alt="Tidings">
+                    <h3>Good Tidings</h3>
+                    <p>"I bring you good tidings of great joy..."</p>
+                </div>
+            </div>
+        </section>
 
-<script>
-/* REVEAL */
-function reveal(){
-document.querySelectorAll('.reveal').forEach(el=>{
-if(el.getBoundingClientRect().top < window.innerHeight-100){
-el.classList.add('active')
-}
-})
-}
-window.addEventListener('scroll',reveal);
-reveal();
+        <section class="section-clean" style="background: white;">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Pastoral Team</h2>
+                </div>
+                <div class="card-grid">
+                    <div class="card reveal">
+                        <img src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" class="team-img" style="object-fit:cover;">
+                        <h3>Rev. A Daniel Paul</h3>
+                        <p style="color:var(--gold); font-weight:700;">Senior Pastor</p>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.1s;">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400" class="team-img">
+                        <h3>Ministry Team</h3>
+                        <p style="color:var(--gold); font-weight:700;">Worship & Prayer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-/* SNOW */
-const snowContainer=document.getElementById('snow-container');
-const snowInterval=window.innerWidth<768?250:100;
-setInterval(()=>{
-const s=document.createElement('div');
-s.className='snowflake';
-s.style.left=Math.random()*innerWidth+'px';
-s.style.width=s.style.height=Math.random()*4+2+'px';
-s.style.animationDuration=Math.random()*3+3+'s';
-snowContainer.appendChild(s);
-setTimeout(()=>s.remove(),6000);
-},snowInterval);
+        <section class="roadmap-section">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2 style="color:white;">Our Journey</h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2020', 'The vision was established.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
+                        <div class="timeline-content">
+                            <h3>2020 - The Vision</h3>
+                            <p>God gave a clear mission to reach the brokenhearted.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2023', 'Established in Yernagudem.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
+                        <div class="timeline-content">
+                            <h3>2023 - Establishment</h3>
+                            <p>A beacon of hope in Andhra Pradesh.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-/* FIREWORKS */
-const canvas=document.getElementById('fireworks-canvas');
-const ctx=canvas.getContext('2d');
-canvas.width=innerWidth;canvas.height=innerHeight;
-let fireworks=[];
-class Firework{
-constructor(){
-this.x=Math.random()*canvas.width;
-this.y=canvas.height;
-this.sy=Math.random()*-3-4;
-this.exploded=false;
-this.parts=[];
-}
-update(){
-this.y+=this.sy;
-if(this.y<canvas.height*.3&&!this.exploded)this.explode();
-this.parts.forEach(p=>p.update());
-}
-draw(){
-ctx.fillStyle='white';
-ctx.fillRect(this.x,this.y,2,2);
-this.parts.forEach(p=>p.draw());
-}
-explode(){
-this.exploded=true;
-for(let i=0;i<20;i++)this.parts.push(new Particle(this.x,this.y));
-}
-}
-class Particle{
-constructor(x,y){
-this.x=x;this.y=y;
-this.sx=Math.random()*6-3;
-this.sy=Math.random()*6-3;
-this.alpha=1;
-}
-update(){
-this.x+=this.sx;
-this.y+=this.sy;
-this.alpha-=.02;
-}
-draw(){
-ctx.globalAlpha=this.alpha;
-ctx.fillRect(this.x,this.y,2,2);
-ctx.globalAlpha=1;
-}
-}
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-if(Math.random()<.015)fireworks.push(new Firework());
-fireworks.forEach(f=>{f.update();f.draw()});
-fireworks=fireworks.filter(f=>f.parts.length>0);
-requestAnimationFrame(animate);
-}
-animate();
+        <footer class="main-footer">
+            <div id="snow-pile">
+                <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow pile">
+            </div>
+            
+            <div class="footer-content">
+                <div class="footer-map">
+                    <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="footer-info">
+                    <div class="footer-logo">Christ Mandir</div>
+                    <div class="contact-list">
+                        <p>📍 Yernagudem-Chinnayagudem Rd, AP</p>
+                        <p>📞 +91 98765 43210</p>
+                        <p>✉️ contact@christmandir.com</p>
+                    </div>
+                    <div class="socials">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
+                </div>
+            </div>
+        </footer>
+    </main>
 
-document.getElementById('year').innerText=new Date().getFullYear();
-</script>
+    <div id="roadmap-modal" class="modal" onclick="closeRoadmapModal()">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeRoadmapModal()">×</span>
+            <img id="modal-img" src="" style="width:100%; height:200px; object-fit:cover; border-radius:10px;">
+            <div class="modal-text" style="padding:20px;">
+                <h3 id="modal-title" style="color:var(--primary-dark);">Title</h3>
+                <p id="modal-desc" style="color:#666;">Description</p>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        // 1. Reveal Animation
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // 2. Snow Logic (Optimized)
+        const snowContainer = document.getElementById('snow-container');
+        const snowInterval = window.innerWidth < 768 ? 250 : 100;
+        setInterval(() => {
+            const s = document.createElement('div');
+            s.className = 'snowflake';
+            s.style.left = Math.random() * window.innerWidth + 'px';
+            s.style.width = s.style.height = Math.random() * 4 + 2 + 'px';
+            s.style.animationDuration = Math.random() * 3 + 3 + 's';
+            snowContainer.appendChild(s);
+            setTimeout(() => s.remove(), 6000);
+        }, snowInterval);
+
+        // 3. Fireworks Logic (Colorful)
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let fireworks = [];
+        const colors = ['#d4af37', '#d42426', '#165b33', '#ffffff', '#00e5ff'];
+
+        class Firework {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height;
+                this.sy = Math.random() * -3 - 4;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.exploded = false;
+                this.parts = [];
+            }
+            update() {
+                this.y += this.sy;
+                if (this.y < canvas.height * 0.3 && !this.exploded) this.explode();
+                this.parts.forEach(p => p.update());
+            }
+            draw() {
+                if (!this.exploded) {
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(this.x, this.y, 3, 3);
+                }
+                this.parts.forEach(p => p.draw());
+            }
+            explode() {
+                this.exploded = true;
+                for (let i = 0; i < 30; i++) this.parts.push(new Particle(this.x, this.y, this.color));
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x; this.y = y; this.color = color;
+                this.sx = Math.random() * 6 - 3;
+                this.sy = Math.random() * 6 - 3;
+                this.alpha = 1;
+            }
+            update() {
+                this.x += this.sx;
+                this.y += this.sy;
+                this.alpha -= 0.02;
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (Math.random() < 0.02) fireworks.push(new Firework());
+            fireworks.forEach(f => { f.update(); f.draw() });
+            fireworks = fireworks.filter(f => !f.exploded || f.parts.length > 0);
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // 4. Modal Logic
+        function openRoadmapModal(title, desc, imgSrc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('roadmap-modal').style.display = 'flex';
+        }
+        function closeRoadmapModal() { document.getElementById('roadmap-modal').style.display = 'none'; }
+        
+        document.getElementById('year').innerText = new Date().getFullYear();
+    </script>
 </body>
 </html>
