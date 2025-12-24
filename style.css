@@ -14,9 +14,11 @@
     /* Home Specifics */
     --primary-dark: #004d40;
     --gold: #cfa76e;
+    --xmas-red: #c0392b;
     
     --font-head: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
+    --font-xmas: 'Mountains of Christmas', cursive;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -26,6 +28,26 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     overflow-x: hidden;
+}
+
+/* --- CHRISTMAS SNOW --- */
+#snow-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999;
+}
+.snowflake {
+    position: absolute; top: -10px; background: white; border-radius: 50%; opacity: 0.8;
+    animation: snowfall linear infinite;
+}
+@keyframes snowfall {
+    to { transform: translateY(100vh); }
+}
+
+.xmas-badge {
+    font-family: var(--font-xmas);
+    font-size: 1.5rem; color: var(--xmas-red); margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.8); padding: 5px 15px; border-radius: 20px;
+    display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    animation: floatShape 3s ease-in-out infinite;
 }
 
 /* --- ANIMATED BACKGROUND --- */
@@ -96,27 +118,27 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
 
 .hero-text-side {
     flex: 1;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 50px; background: rgba(255,255,255,0.7);
 }
-.text-wrapper { max-width: 500px; animation: fadeInUp 1s ease-out; text-align: left; width: 100%; }
+.text-wrapper { max-width: 500px; animation: fadeInUp 1s ease-out; text-align: center; width: 100%; }
 
-/* --- UPDATED IMAGE STYLE (UNCROPPED & SMALLER) --- */
-.feature-img-wrapper { 
-    display: block; 
-    width: fit-content;
-    margin: 0 auto 20px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+/* --- UPDATED IMAGE STYLE (CENTERED) --- */
+.mini-profile-wrapper { 
+    display: flex; 
+    justify-content: center; /* PERFECTLY CENTERED */
+    width: 100%;
+    margin-bottom: 20px;
 }
 .hero-feature-img {
     display: block;
-    width: auto; /* Allow natural width */
+    width: auto; 
     height: auto; 
     max-width: 100%;
-    max-height: 200px; /* Limits height to make it "some small" */
-    object-fit: contain; /* ESSENTIAL: Prevents cropping */
+    max-height: 200px; 
+    object-fit: contain; 
     border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .sub-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); font-weight: 600; font-family: var(--font-head); }
@@ -125,10 +147,10 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
     background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin: 10px 0;
 }
-.gold-line { width: 80px; height: 4px; background: var(--gold); margin-bottom: 25px; }
+.gold-line { width: 80px; height: 4px; background: var(--gold); margin: 0 auto 25px; }
 .tagline { font-size: 1.1rem; line-height: 1.6; color: #666; margin-bottom: 40px; }
 
-.btn-row { display: flex; gap: 20px; align-items: center; }
+.btn-row { display: flex; gap: 20px; align-items: center; justify-content: center; }
 .btn-main {
     padding: 15px 35px; background: var(--primary-gradient); color: white;
     text-decoration: none; border-radius: 50px; font-weight: 600;
@@ -146,13 +168,10 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
 /* MOBILE HERO ADJUSTMENTS */
 @media (max-width: 768px) {
     .hero-split { display: block; height: auto; padding-top: 40px; }
-    .hero-img-side { display: none; } /* Hide the side split image */
+    .hero-img-side { display: none; } 
     .hero-text-side { padding: 40px 20px 50px; text-align: center; }
     .text-wrapper { text-align: center; margin: 0 auto; }
-    
     .hero-split h1 { font-size: 2.8rem; }
-    .gold-line { margin: 15px auto 25px; }
-    .btn-row { justify-content: center; }
 }
 
 /* --- 2. PARALLAX SECTIONS --- */
@@ -171,7 +190,7 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
 }
 .quote-minimal span { display: block; font-size: 0.9rem; font-family: var(--font-body); margin-top: 10px; color: var(--gold); font-style: normal; }
 
-/* --- 3. SERVICES --- */
+/* --- 3. SERVICES (More Details) --- */
 .clean-section { padding: 80px 20px; background: rgba(255,255,255,0.8); }
 .container { max-width: 1000px; margin: 0 auto; }
 .section-title { text-align: center; margin-bottom: 60px; }
@@ -179,13 +198,23 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
 .section-title p { color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-top: 10px; }
 
 .service-row { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px; }
-.svc-item { text-align: center; padding: 20px; transition: 0.3s; }
-.svc-item:hover { transform: translateY(-10px); }
+.svc-item { text-align: center; padding: 30px; transition: 0.3s; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); flex: 1; min-width: 250px; }
+.svc-item:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
 .svc-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
 .svc-item h3 { font-family: var(--font-head); margin-bottom: 5px; font-size: 1.5rem; }
-.svc-item p { color: #666; }
+.svc-item .time { color: var(--primary); font-weight: 700; margin-bottom: 10px; display: block; }
+.svc-item .desc { color: #666; font-size: 0.9rem; line-height: 1.6; }
 
-/* --- 4. ROADMAP --- */
+/* --- 4. TEAM SECTION --- */
+.team-section { padding: 80px 20px; background: rgba(255,255,255,0.6); }
+.team-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+.team-card { text-align: center; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; width: 250px; }
+.team-card:hover { transform: translateY(-5px); }
+.team-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--primary); }
+.team-card h3 { font-family: var(--font-head); font-size: 1.2rem; margin-bottom: 5px; color: var(--primary-dark); }
+.team-card .role { font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+
+/* --- 5. ROADMAP --- */
 .roadmap-section { padding: 80px 20px; background: rgba(249,249,249,0.5); }
 .timeline { position: relative; max-width: 800px; margin: 0 auto; }
 .timeline::after { content: ''; position: absolute; width: 2px; background: var(--gold); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
@@ -199,7 +228,7 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
 .timeline-row.right::after { left: -10px; }
 .timeline-row:hover::after { background: var(--primary); transform: scale(1.3); }
 .timeline-content {
-    padding: 20px 30px; background: white; position: relative; border-radius: 6px;
+    padding: 25px; background: white; position: relative; border-radius: 6px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s;
 }
 .timeline-row:hover .timeline-content { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
@@ -218,15 +247,16 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
     .timeline-row.right { left: 0; } 
 }
 
-/* --- 5. FOOTER (Colorful Map) --- */
+/* --- 6. FOOTER --- */
 .modern-footer { background: var(--primary-dark); color: white; display: flex; flex-wrap: wrap; }
 .footer-map { flex: 1; min-width: 300px; height: 350px; }
-/* REMOVED FILTER FOR COLORFUL MAP */
 .footer-map iframe { width: 100%; height: 100%; border: 0; } 
 .footer-info { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; min-width: 300px; }
 .footer-logo { font-family: var(--font-head); font-size: 2rem; margin-bottom: 10px; color: var(--gold); }
+.contact-details { margin: 20px 0; font-size: 0.95rem; line-height: 2; opacity: 0.9; }
+.contact-details i { width: 25px; color: var(--gold); }
 .social-icons { margin: 20px 0; display: flex; gap: 15px; }
-.social-icons a { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; border-radius: 50%; color: white; transition: 0.3s; }
+.social-icons a { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; border-radius: 50%; color: white; transition: 0.3s; text-decoration: none; }
 .social-icons a:hover { background: var(--gold); border-color: var(--gold); }
 .copyright { font-size: 0.8rem; opacity: 0.5; margin-top: auto; }
 
