@@ -103,3 +103,35 @@ window.onclick = function(event) {
 
 // Set Year
 document.getElementById('year').textContent = new Date().getFullYear();
+/* --- SCROLL REVEAL ANIMATION --- */
+function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+    for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+        }
+    }
+}
+window.addEventListener("scroll", reveal);
+// Trigger once on load
+reveal();
+
+/* --- MODAL LOGIC (Keep existing) --- */
+function openRoadmapModal(title, desc, imgSrc) {
+    const modal = document.getElementById('roadmap-modal');
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-desc').innerText = desc;
+    document.getElementById('modal-img').src = imgSrc;
+    modal.style.display = 'flex';
+}
+function closeRoadmapModal() {
+    document.getElementById('roadmap-modal').style.display = 'none';
+}
+window.onclick = function(e) {
+    if(e.target == document.getElementById('roadmap-modal')) closeRoadmapModal();
+}
+// Year
+document.getElementById('year').innerText = new Date().getFullYear();
