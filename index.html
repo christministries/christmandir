@@ -21,7 +21,7 @@
             --gold: #cfa76e;
             --xmas-red: #d42426;
             --xmas-green: #165b33;
-            --bg-light: #fdfdfd;
+            --bg-light: #f8ffff;
             --text-dark: #2d3436;
             --glass-nav: rgba(255, 255, 255, 0.95);
             
@@ -31,11 +31,22 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--font-body); color: var(--text-dark); background-color: var(--bg-light); overflow-x: hidden; }
+        html { scroll-behavior: smooth; height: 100%; }
+        body { 
+            font-family: var(--font-body); 
+            color: var(--text-dark); 
+            /* Subtle overall holiday texture background */
+            background-color: var(--bg-light);
+            background-image: url('https://www.transparenttextures.com/patterns/snow.png');
+            overflow-x: hidden; 
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        main { flex: 1; }
 
         /* =========================================
-           2. NAVIGATION (QUIZ STYLE)
+           2. NAVIGATION
            ========================================= */
         header {
             position: fixed; top: 0; width: 100%; height: 80px;
@@ -64,17 +75,19 @@
             .nav-links a span { font-size: 1.4rem; transition: 0.3s; }
             .nav-links a.active { color: var(--primary); box-shadow: none; }
             .nav-links a.active span { transform: translateY(-5px); }
-            body { padding-bottom: 100px; }
+            /* Padding to ensure nav doesn't cover footer content on mobile */
+            body { padding-bottom: 100px; } 
         }
 
         /* =========================================
            3. CHRISTMAS ANIMATIONS
            ========================================= */
-        #fireworks-canvas, #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 997; }
-        .snowflake { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: snow linear infinite; }
+        #fireworks-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 997; }
+        #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+        .snowflake { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: snow linear infinite; pointer-events: none; }
         @keyframes snow { to { transform: translateY(105vh); } }
 
-        /* Flying Santa (Clean - No Box) */
+        /* Flying Santa */
         #santa-container {
             position: fixed; top: 15%; left: -600px;
             z-index: 998; pointer-events: none;
@@ -83,7 +96,6 @@
         .santa-img {
             width: 250px; height: auto;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
-            /* Ensure NO background or box */
             background: transparent; border: none; box-shadow: none;
         }
         @keyframes flyAcross {
@@ -97,7 +109,6 @@
         /* =========================================
            4. SECTIONS & LAYOUT
            ========================================= */
-        /* Reveal Animation (From your code) */
         .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: 0.9s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: none; }
 
@@ -106,14 +117,15 @@
         .hero-text-side { 
             flex: 1.2; display: flex; align-items: center; justify-content: center; 
             padding: 100px 40px 60px; text-align: center; z-index: 2; 
-            background: radial-gradient(circle at center, rgba(255,255,255,0.95), rgba(240,248,255,0.85));
+            /* New Warm Bokeh Background with Overlay */
+            background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('https://images.unsplash.com/photo-1576692155415-95f820a2c4c1?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
         }
         
-        /* Welcome Image (Perfect Fit, No Box) */
         .hero-feature-img { 
             height: 160px; object-fit: contain; margin-bottom: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15)); /* Soft shadow only */
-            border: none; background: transparent;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15)); border: none; background: transparent;
         }
 
         .xmas-title { font-family: var(--font-xmas); font-size: 3.8rem; color: var(--xmas-green); line-height: 1.1; margin: 10px 0; }
@@ -127,26 +139,32 @@
         .hero-img-side { flex: 1; overflow: hidden; }
         .hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); }
 
-        /* General Sections */
-        .section-clean { padding: 80px 5%; background: var(--bg-light); text-align: center; }
+        /* General Sections (Nativity/Team) */
+        .section-clean { 
+            padding: 80px 5%; 
+            text-align: center;
+            /* Subtle festive pattern background */
+            background-color: #f8fff8;
+            background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
+        }
         .section-title h2 { font-family: var(--font-head); font-size: 2.5rem; color: var(--primary-dark); margin-bottom: 40px; }
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
         
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; }
+        .card { background: rgba(255,255,255,0.9); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.5); }
         .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,137,123,0.15); }
         .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
         
         .team-img { width: 120px !important; height: 120px !important; border-radius: 50% !important; margin: 0 auto 15px; border: 3px solid var(--primary); }
 
         /* Roadmap (Night Sky) */
-        .roadmap-section { padding: 80px 5%; background: #0a0a0a url('https://i.imgur.com/9c4b7a.png') center/cover; color: white; }
+        .roadmap-section { padding: 80px 5%; background: #0a0a0a url('https://i.imgur.com/9c4b7a.png') center/cover fixed; color: white; }
         .timeline { max-width: 700px; margin: 0 auto; border-left: 2px solid var(--gold); padding-left: 30px; }
         .timeline-row { margin-bottom: 40px; cursor: pointer; position: relative; }
         .timeline-content { background: rgba(255,255,255,0.12); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .timeline-row::before { content: '❄️'; position: absolute; left: -42px; top: 10px; font-size: 1.2rem; }
 
         /* Footer & Map */
-        .main-footer { background: #001f1b; color: white; padding-top: 50px; position: relative; z-index: 20; }
+        .main-footer { background: #001f1b; color: white; padding-top: 50px; position: relative; z-index: 20; margin-top: auto; }
         #snow-pile { position: absolute; top: -60px; left: 0; width: 100%; height: 80px; pointer-events: none; z-index: 10; }
         #snow-pile img { width: 100%; height: 100%; object-fit: cover; }
         
@@ -165,9 +183,10 @@
             .hero-img-side { display: none; }
             .hero-text-side { padding: 120px 20px 40px; }
             .xmas-title { font-size: 3rem; }
-            .santa-img { width: 150px; } /* Smaller Santa */
+            .santa-img { width: 150px; }
             .btn-row { flex-direction: column; }
             .btn-main, .btn-text { width: 100%; text-align: center; }
+            .roadmap-section { background-attachment: scroll; } /* Better mobile performance */
         }
     </style>
 </head>
@@ -238,7 +257,7 @@
             </div>
         </section>
 
-        <section class="section-clean" style="background: white;">
+        <section class="section-clean" style="background-color: #ffffb3; background-image: url('https://www.transparenttextures.com/patterns/snow.png');">
             <div class="container">
                 <div class="section-title reveal">
                     <h2>Pastoral Team</h2>
@@ -279,33 +298,33 @@
                 </div>
             </div>
         </section>
-
-        <footer class="main-footer">
-            <div id="snow-pile">
-                <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow pile">
-            </div>
-            
-            <div class="footer-content">
-                <div class="footer-map">
-                    <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-                <div class="footer-info">
-                    <div class="footer-logo">Christ Mandir</div>
-                    <div class="contact-list">
-                        <p>📍 Yernagudem-Chinnayagudem Rd, AP</p>
-                        <p>📞 +91 98765 43210</p>
-                        <p>✉️ contact@christmandir.com</p>
-                    </div>
-                    <div class="socials">
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
-                </div>
-            </div>
-        </footer>
     </main>
+
+    <footer class="main-footer">
+        <div id="snow-pile">
+            <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow pile">
+        </div>
+        
+        <div class="footer-content">
+            <div class="footer-map">
+                <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="footer-info">
+                <div class="footer-logo">Christ Mandir</div>
+                <div class="contact-list">
+                    <p>📍 Yernagudem-Chinnayagudem Rd, AP</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ contact@christmandir.com</p>
+                </div>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
+            </div>
+        </div>
+    </footer>
 
     <div id="roadmap-modal" class="modal" onclick="closeRoadmapModal()">
         <div class="modal-content">
@@ -328,66 +347,99 @@
         window.addEventListener("scroll", reveal);
         reveal();
 
-        // 2. Snow Logic (Optimized)
+        // 2. Optimized Snow Logic
         const snowContainer = document.getElementById('snow-container');
-        const snowInterval = window.innerWidth < 768 ? 250 : 100;
-        setInterval(() => {
+        // Less snow on mobile for performance
+        const snowInterval = window.innerWidth < 768 ? 300 : 150; 
+
+        function createSnowflake() {
             const s = document.createElement('div');
             s.className = 'snowflake';
-            s.style.left = Math.random() * window.innerWidth + 'px';
-            s.style.width = s.style.height = Math.random() * 4 + 2 + 'px';
-            s.style.animationDuration = Math.random() * 3 + 3 + 's';
+            // Random horizontal position
+            s.style.left = Math.random() * 100 + 'vw';
+            // Random size between 2px and 6px
+            const size = Math.random() * 4 + 2;
+            s.style.width = size + 'px';
+            s.style.height = size + 'px';
+            // Random fall duration between 5s and 10s
+            s.style.animationDuration = Math.random() * 5 + 5 + 's';
+            // Random opacity
+            s.style.opacity = Math.random() * 0.6 + 0.4;
+            
             snowContainer.appendChild(s);
-            setTimeout(() => s.remove(), 6000);
-        }, snowInterval);
+            
+            // Remove after animation finishes to prevent memory leak
+            setTimeout(() => {
+                if (s && s.parentNode) s.parentNode.removeChild(s);
+            }, 10000);
+        }
+        setInterval(createSnowflake, snowInterval);
 
-        // 3. Fireworks Logic (Colorful)
+
+        // 3. Improved Fireworks Logic (Christmas Colors)
         const canvas = document.getElementById('fireworks-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
         
         let fireworks = [];
-        const colors = ['#d4af37', '#d42426', '#165b33', '#ffffff', '#00e5ff'];
+        // Christmas color palette
+        const colors = ['#d42426', '#165b33', '#cfa76e', '#ffffff', '#FFD700']; 
 
         class Firework {
             constructor() {
                 this.x = Math.random() * canvas.width;
+                // Start from bottom
                 this.y = canvas.height;
-                this.sy = Math.random() * -3 - 4;
+                // Upward velocity
+                this.sy = Math.random() * -4 - 4; 
                 this.color = colors[Math.floor(Math.random() * colors.length)];
                 this.exploded = false;
                 this.parts = [];
             }
             update() {
                 this.y += this.sy;
+                // Explode higher up
                 if (this.y < canvas.height * 0.3 && !this.exploded) this.explode();
                 this.parts.forEach(p => p.update());
             }
             draw() {
                 if (!this.exploded) {
                     ctx.fillStyle = this.color;
-                    ctx.fillRect(this.x, this.y, 3, 3);
+                    // Draw rising rocket
+                    ctx.fillRect(this.x, this.y, 3, 8); 
                 }
                 this.parts.forEach(p => p.draw());
             }
             explode() {
                 this.exploded = true;
-                for (let i = 0; i < 30; i++) this.parts.push(new Particle(this.x, this.y, this.color));
+                // More particles for bigger boom
+                for (let i = 0; i < 50; i++) this.parts.push(new Particle(this.x, this.y, this.color));
             }
         }
 
         class Particle {
             constructor(x, y, color) {
                 this.x = x; this.y = y; this.color = color;
-                this.sx = Math.random() * 6 - 3;
-                this.sy = Math.random() * 6 - 3;
+                // Spread out in circle
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 5 + 2;
+                this.sx = Math.cos(angle) * speed;
+                this.sy = Math.sin(angle) * speed;
                 this.alpha = 1;
+                // Gravity effect
+                this.gravity = 0.1; 
             }
             update() {
                 this.x += this.sx;
                 this.y += this.sy;
-                this.alpha -= 0.02;
+                this.sy += this.gravity; // Apply gravity
+                this.alpha -= 0.015; // Fade out
             }
             draw() {
                 ctx.globalAlpha = this.alpha;
@@ -399,14 +451,20 @@
             }
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function animateFireworks() {
+            // Clear canvas with slight trail effect
+            ctx.fillStyle = 'rgba(0,0,0,0.1)'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Random chance to launch firework
             if (Math.random() < 0.02) fireworks.push(new Firework());
+            
             fireworks.forEach(f => { f.update(); f.draw() });
-            fireworks = fireworks.filter(f => !f.exploded || f.parts.length > 0);
-            requestAnimationFrame(animate);
+            // Remove finished fireworks
+            fireworks = fireworks.filter(f => !f.exploded || f.parts.some(p => p.alpha > 0));
+            requestAnimationFrame(animateFireworks);
         }
-        animate();
+        animateFireworks();
 
         // 4. Modal Logic
         function openRoadmapModal(title, desc, imgSrc) {
