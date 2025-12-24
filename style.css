@@ -29,20 +29,61 @@ body { font-family: var(--font-body); background-color: var(--bg-color); color: 
 }
 #snow-pile img { width: 100%; height: auto; max-height: 120px; object-fit: cover; }
 
+/* --- UPDATED SANTA WITH BANNER --- */
 #santa-container {
-    position: fixed; top: 10%; left: -300px; width: 200px; z-index: 998; pointer-events: none;
-    animation: flyAcross 25s linear infinite; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+    position: fixed; top: 10%; left: -600px; /* Start further left due to banner width */
+    display: flex; align-items: center;
+    z-index: 998; pointer-events: none;
+    animation: flyAcross 22s linear infinite; 
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
 }
-#santa-container img { width: 100%; transform: rotate(-5deg); }
+#santa-container img { width: 200px; transform: rotate(-5deg); position: relative; z-index: 2; }
+
+.santa-banner {
+    background: var(--xmas-red);
+    color: white;
+    padding: 8px 20px 8px 30px; /* Extra left padding for overlap */
+    border-radius: 0 30px 30px 0;
+    font-family: var(--font-xmas);
+    font-size: 1.3rem;
+    border: 2px solid var(--gold);
+    border-left: none;
+    white-space: nowrap;
+    position: relative;
+    left: -25px; /* Overlap with sleigh */
+    z-index: 1;
+}
+
 @keyframes flyAcross {
-    0% { left: -300px; transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-30px) rotate(0deg); }
-    100% { left: 110vw; transform: translateY(0) rotate(5deg); }
+    0% { left: -600px; transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-40px) rotate(0deg); }
+    100% { left: 110vw; transform: translateY(0) rotate(2deg); }
 }
 
 #fireworks-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 997; }
 .firework-particle { position: absolute; width: 6px; height: 6px; border-radius: 50%; animation: explode 1s ease-out forwards; }
 @keyframes explode { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
+
+/* --- NEW: HANGING HEADER LIGHTS --- */
+.christmas-lights {
+    position: absolute; top: -5px; left: 0; width: 100%; height: 20px; pointer-events: none; z-index: 1002;
+    background-image: 
+        radial-gradient(circle at 5% 60%, var(--xmas-red) 3px, transparent 4px),
+        radial-gradient(circle at 15% 60%, var(--gold) 3px, transparent 4px),
+        radial-gradient(circle at 25% 60%, var(--xmas-green) 3px, transparent 4px),
+        radial-gradient(circle at 35% 60%, var(--xmas-red) 3px, transparent 4px),
+        radial-gradient(circle at 45% 60%, var(--gold) 3px, transparent 4px),
+        radial-gradient(circle at 55% 60%, var(--xmas-green) 3px, transparent 4px),
+        radial-gradient(circle at 65% 60%, var(--xmas-red) 3px, transparent 4px),
+        radial-gradient(circle at 75% 60%, var(--gold) 3px, transparent 4px),
+        radial-gradient(circle at 85% 60%, var(--xmas-green) 3px, transparent 4px),
+        radial-gradient(circle at 95% 60%, var(--xmas-red) 3px, transparent 4px);
+    background-repeat: repeat-x;
+    background-size: 200px 20px;
+    animation: twinkle 2s infinite alternate;
+    filter: drop-shadow(0 2px 5px rgba(255,255,255,0.5));
+}
+@keyframes twinkle { 0% { opacity: 0.6; filter: brightness(1); } 100% { opacity: 1; filter: brightness(1.3); } }
 
 /* --- BACKGROUNDS --- */
 .background-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; }
@@ -68,7 +109,7 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
     body { padding-top: 80px; }
 }
 
-/* MOBILE NAV - MATCHING QUIZ EXACTLY */
+/* MOBILE NAV */
 @media (max-width: 767px) {
     header {
         bottom: 20px; left: 50%; transform: translateX(-50%); top: auto;
@@ -86,6 +127,7 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
     .nav-links li a.active { color: var(--primary); }
     .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
     body { padding-top: 0; padding-bottom: 100px; }
+    .christmas-lights { display: none; } /* Hide lights on mobile pill */
 }
 
 /* --- HERO SECTION --- */
@@ -97,7 +139,6 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .mini-profile-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
 .hero-feature-img { width: auto; height: 160px; object-fit: contain; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 3px solid white; }
 
-.xmas-badge { font-family: var(--font-xmas); font-size: 1.5rem; color: var(--xmas-red); margin-bottom: 15px; background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 30px; display: inline-block; box-shadow: 0 5px 20px rgba(212, 36, 38, 0.2); border: 2px solid var(--gold); }
 .sub-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); font-weight: 700; }
 .hero-split h1 { font-family: var(--font-xmas), var(--font-head); font-size: 4rem; line-height: 1.1; color: var(--xmas-green); margin: 10px 0; text-shadow: 2px 2px 0px white; }
 .gold-line { width: 100px; height: 4px; background: var(--gold); margin: 0 auto 25px; }
@@ -109,21 +150,30 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .hero-img-side { flex: 1; position: relative; overflow: hidden; z-index: 1; }
 .hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); }
 
-/* Decor */
+/* Decor & Animations */
 .xmas-deco { position: absolute; z-index: 10; pointer-events: none; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); }
 .tree-left { bottom: -50px; left: -80px; width: 250px; }
 .gifts-right { top: -80px; right: -50px; width: 220px; }
+.pulse-anim { animation: pulseGifts 3s ease-in-out infinite; }
+@keyframes pulseGifts { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-/* MOBILE HERO OPTIMIZATION */
+/* MOBILE HERO OPTIMIZATION & SANTA FIX */
 @media (max-width: 768px) {
     .hero-split { display: block; height: auto; }
     .hero-img-side { display: none; }
     .hero-text-side { padding: 40px 20px; }
     .hero-feature-img { height: 140px; }
     .hero-split h1 { font-size: 2.8rem; }
-    .xmas-badge { font-size: 1.2rem; }
-    .tree-left, .gifts-right { display: none; } /* Hide large decor on mobile */
-    #santa-container { width: 150px; top: 10%; } /* Smaller Santa */
+    .tree-left, .gifts-right { display: none; }
+    
+    /* MOBILE SANTA OPTIMIZATION */
+    #santa-container { top: 8%; left: -450px; }
+    #santa-container img { width: 80px; } /* Smaller Santa image */
+    .santa-banner { font-size: 0.8rem; padding: 5px 10px 5px 20px; left: -15px; } /* Smaller banner text */
+    @keyframes flyAcross {
+        0% { left: -450px; }
+        100% { left: 110vw; }
+    }
 }
 
 /* NATIVITY */
@@ -140,9 +190,7 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .overlay-dark { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
 .xmas-overlay { background: linear-gradient(rgba(22, 91, 51, 0.7), rgba(212, 36, 38, 0.4)); }
 .content-center { position: relative; z-index: 2; padding: 20px; max-width: 800px; }
-@media (max-width: 768px) {
-    .parallax-section { background-attachment: scroll; } /* Fix mobile jitter */
-}
+@media (max-width: 768px) { .parallax-section { background-attachment: scroll; } }
 
 /* SERVICES & TEAM */
 .clean-section, .team-section { padding: 60px 20px; background: rgba(255,255,255,0.9); }
@@ -151,7 +199,7 @@ header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .svc-icon { font-size: 2.5rem; color: var(--gold); display: block; margin-bottom: 10px; }
 .team-card img { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 10px; display: block; border: 3px solid var(--primary); }
 
-/* ROADMAP (Optimized for Mobile) */
+/* ROADMAP */
 .roadmap-section { padding: 60px 20px; background-image: url('https://i.imgur.com/9c4b7a.png'); background-size: cover; color: white; }
 .timeline { position: relative; max-width: 800px; margin: 0 auto; }
 .timeline::after { content: ''; position: absolute; width: 2px; background: var(--gold); top: 0; bottom: 0; left: 50%; }
