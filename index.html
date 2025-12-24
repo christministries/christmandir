@@ -7,19 +7,13 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="background-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
 
     <header>
         <div class="logo">Christ Mandir</div>
@@ -34,142 +28,119 @@
     </header>
 
     <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <div class="hero-img-container">
-                    <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" alt="Christ Ministries" class="profile-img">
-                    <div class="est-badge">Est. 2020</div>
-                </div>
-
-                <h1 class="hero-title">Christ Ministries</h1>
-                <p class="hero-tagline">"Warm and heartily welcome to you to Christ Ministries in the different culture and religious land of India."</p>
-                
-                <div class="hero-buttons">
-                    <a href="dailyverse.html" class="cta-button primary">
-                        <i class="fas fa-book-open"></i> Daily Verse
-                    </a>
-                    <a href="#mission" class="cta-button secondary">
-                        <i class="fas fa-eye"></i> Our Vision
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="mission" class="section-container">
-            <div class="glass-card">
-                <div class="section-header">
-                    <h2>In Christ, For Christ</h2>
-                    <div class="divider"></div>
-                </div>
-
-                <p class="lead-text">
-                    The Bible says we shall be like Christ. We are part of His body; Jesus Christ's ministry is our ministry. We are in Him to preach the gospel to all nations.
-                </p>
-
-                <div class="scripture-grid">
-                    <div class="scripture-box">
-                        <div class="quote-icon">“</div>
-                        <p class="verse-text">
-                            "The Spirit of the Lord is upon Me, because He has anointed Me to preach the gospel to the poor. He has sent Me to heal the brokenhearted..."
-                        </p>
-                        <p class="verse-ref">— Luke 4:18-19</p>
-                    </div>
-
-                    <div class="scripture-box highlight">
-                        <p class="verse-text">
-                            Then Jesus came and spoke to them, saying, <strong>"All authority has been given to Me in heaven and on earth."</strong>
-                        </p>
-                        <p class="verse-ref">— Matthew 28:18</p>
+        <section class="hero-split">
+            <div class="hero-text-side">
+                <div class="text-wrapper reveal">
+                    <span class="sub-title">Welcome to</span>
+                    <h1>Christ <br>Ministries</h1>
+                    <div class="gold-line"></div>
+                    <p class="tagline">"Warm and heartily welcome to you to Christ Ministries in the different culture and religious land of India."</p>
+                    
+                    <div class="btn-row">
+                        <a href="dailyverse.html" class="btn-main">Daily Verse <i class="fas fa-arrow-right"></i></a>
+                        <a href="#mission" class="btn-text">Read Vision</a>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="section-container">
-            <div class="section-header">
-                <h2>Our Worship Services</h2>
             </div>
             
-            <div class="service-grid">
-                <div class="service-card">
-                    <div class="icon-circle">☀️</div>
-                    <h3>Sunday Service</h3>
-                    <p class="time">10:00 AM - 12:30 PM</p>
-                    <p class="details">Main worship and sermon.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon-circle">🔥</div>
-                    <h3>Friday Fasting</h3>
-                    <p class="time">6:00 PM - 8:00 PM</p>
-                    <p class="details">Prayer and intercession.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon-circle">🎸</div>
-                    <h3>Youth Meeting</h3>
-                    <p class="time">Saturday 5:00 PM</p>
-                    <p class="details">Music, fun, and word.</p>
-                </div>
+            <div class="hero-img-side">
+                <div class="img-overlay"></div>
+                <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" alt="Christ Ministries">
             </div>
         </section>
 
-        <section class="section-container">
-            <div class="glass-card">
-                <div class="section-header">
-                    <h2>Our Journey</h2>
-                    <div class="divider"></div>
-                </div>
-
-                <div class="roadmap">
-                    <div class="timeline-item" onclick="openRoadmapModal('The Vision', 'God gave a vision to establish a place of worship to preach the Gospel to the poor.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="date">2020</span>
-                            <h3>The Vision</h3>
-                            <p>Click to view <i class="fas fa-arrow-right"></i></p>
-                        </div>
-                    </div>
-                    <div class="timeline-item" onclick="openRoadmapModal('First Gathering', 'We started with a small house church gathering. Faith grew, and the congregation multiplied.', 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800')">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="date">2021</span>
-                            <h3>First Gathering</h3>
-                            <p>Click to view <i class="fas fa-arrow-right"></i></p>
-                        </div>
-                    </div>
-                    <div class="timeline-item" onclick="openRoadmapModal('Establishment', 'By Gods grace, we moved into our current location in Yernagudem.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="date">2023</span>
-                            <h3>Establishment</h3>
-                            <p>Click to view <i class="fas fa-arrow-right"></i></p>
-                        </div>
+        <section id="mission" class="parallax-section" style="background-image: url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1600');">
+            <div class="overlay-dark">
+                <div class="content-center reveal">
+                    <h2>In Christ, For Christ</h2>
+                    <p class="big-text">
+                        The Bible says we shall be like Christ. We are part of His body; Jesus Christ's ministry is our ministry.
+                    </p>
+                    
+                    <div class="quote-minimal">
+                        "The Spirit of the Lord is upon Me, because He has anointed Me to preach the gospel to the poor..."
+                        <span>— Luke 4:18-19</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-container" style="margin-bottom: 100px;">
-            <div class="glass-card contact-card">
-                <div class="section-header">
-                    <h2>Visit Us</h2>
-                    <p>Yernagudem-Chinnayagudem Road, AP</p>
+        <section class="clean-section">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Our Services</h2>
+                    <p>Join us in worship</p>
                 </div>
                 
-                <div class="map-wrapper">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
-                </div>
-
-                <div class="social-row">
-                    <a href="#" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="soc-btn"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+                <div class="service-row">
+                    <div class="svc-item reveal">
+                        <span class="svc-icon">☀️</span>
+                        <h3>Sunday</h3>
+                        <p>10:00 AM - 12:30 PM</p>
+                    </div>
+                    <div class="svc-item reveal" style="transition-delay: 0.1s;">
+                        <span class="svc-icon">🔥</span>
+                        <h3>Friday</h3>
+                        <p>6:00 PM - 8:00 PM</p>
+                    </div>
+                    <div class="svc-item reveal" style="transition-delay: 0.2s;">
+                        <span class="svc-icon">🎸</span>
+                        <h3>Saturday</h3>
+                        <p>5:00 PM (Youth)</p>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <section class="roadmap-section">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Our Journey</h2>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-row left reveal" onclick="openRoadmapModal('The Vision', 'God gave a vision to establish a place of worship.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
+                        <div class="timeline-content">
+                            <div class="year">2020</div>
+                            <h3>The Vision</h3>
+                            <p>The foundation was laid in prayer.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-row right reveal" onclick="openRoadmapModal('First Gathering', 'We started with a small house church gathering.', 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800')">
+                        <div class="timeline-content">
+                            <div class="year">2021</div>
+                            <h3>First Gathering</h3>
+                            <p>Faith grew, and the congregation multiplied.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-row left reveal" onclick="openRoadmapModal('Establishment', 'Moved into our current location in Yernagudem.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
+                        <div class="timeline-content">
+                            <div class="year">2023</div>
+                            <h3>Establishment</h3>
+                            <p>Christ Mandir established as a beacon of hope.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="modern-footer">
+            <div class="footer-map">
+                <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="footer-info">
+                <div class="footer-logo">Christ Mandir</div>
+                <p>Yernagudem-Chinnayagudem Road, AP</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <p class="copyright">© <span id="year"></span> Christ Ministries</p>
+            </div>
+        </footer>
 
     </main>
 
