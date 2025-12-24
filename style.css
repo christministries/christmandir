@@ -1,5 +1,5 @@
 :root {
-    /* Color Palette from Quiz Page */
+    /* Exact Quiz Palette */
     --primary: #00897b;
     --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
     --secondary: #00bcd4;
@@ -11,11 +11,10 @@
     --text-main: #2d3436;
     --text-light: #636e72;
     
-    /* Additional Home Vars */
+    /* Home Specifics */
     --primary-dark: #004d40;
     --gold: #cfa76e;
     
-    /* Fonts */
     --font-head: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
 }
@@ -29,7 +28,7 @@ body {
     overflow-x: hidden;
 }
 
-/* --- ANIMATED BACKGROUND (Matched to Quiz) --- */
+/* --- ANIMATED BACKGROUND --- */
 .background-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none; }
 .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: floatShape 25s infinite alternate ease-in-out; }
 .shape-1 { width: 500px; height: 500px; background: #b2dfdb; top: -150px; left: -150px; }
@@ -54,19 +53,15 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
         border-radius: 40px;
         box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
         border: 1px solid rgba(255,255,255,0.6);
-        top: auto; /* Ensure top is auto for bottom placement */
+        top: auto; 
     }
     .logo { display: none; }
     .nav-links { height: 100%; justify-content: space-evenly; padding: 0 10px; }
     .nav-links li { position: relative; }
     .nav-links li a { flex-direction: column; font-size: 0.7rem; color: var(--text-light); gap: 4px; padding: 5px 10px; }
     .nav-links li a span { font-size: 1.5rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    
-    /* Active State Animation */
     .nav-links li a.active { color: var(--primary); }
     .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
-    
-    /* Body padding for mobile nav space */
     body { padding-bottom: 100px; padding-top: 0; }
 }
 
@@ -83,12 +78,11 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
     .nav-links li a { font-size: 1rem; color: var(--text-light); gap: 8px; padding: 10px 20px; border-radius: 25px; flex-direction: row; }
     .nav-links li a:hover { background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); }
     .nav-links li a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); }
-    
     body { padding-top: 90px; }
 }
 
 /* =========================================
-   HOME PAGE SPECIFIC CONTENT STYLES
+   HOME PAGE CONTENT STYLES
    ========================================= */
 
 /* --- HERO SECTION --- */
@@ -103,15 +97,26 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
 .hero-text-side {
     flex: 1;
     display: flex; align-items: center; justify-content: center;
-    padding: 50px; background: rgba(255,255,255,0.7); /* Light transparent for background blending */
+    padding: 50px; background: rgba(255,255,255,0.7);
 }
-.text-wrapper { max-width: 500px; animation: fadeInUp 1s ease-out; text-align: left; }
+.text-wrapper { max-width: 500px; animation: fadeInUp 1s ease-out; text-align: left; width: 100%; }
 
-/* MINI IMAGE (On top of Welcome text) */
-.mini-profile-wrapper { display: flex; justify-content: flex-start; margin-bottom: 25px; }
-.hero-mini-img {
-    width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
-    border: 4px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+/* --- UPDATED IMAGE STYLE (Full Size Feature) --- */
+.feature-img-wrapper { 
+    display: block; 
+    width: 100%; 
+    margin-bottom: 30px;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    border: 4px solid white;
+}
+.hero-feature-img {
+    width: 100%; 
+    height: auto; 
+    display: block;
+    object-fit: cover;
+    max-height: 400px; /* Limits height on desktop so it doesn't get too huge */
 }
 
 .sub-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); font-weight: 600; font-family: var(--font-head); }
@@ -141,13 +146,19 @@ header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25,
 /* MOBILE HERO ADJUSTMENTS */
 @media (max-width: 768px) {
     .hero-split { display: block; height: auto; padding-top: 40px; }
-    .hero-img-side { display: none; } /* Hide big image */
+    .hero-img-side { display: none; } /* Hide the side split image */
     .hero-text-side { padding: 40px 20px 50px; text-align: center; }
     .text-wrapper { text-align: center; margin: 0 auto; }
-    .mini-profile-wrapper { justify-content: center; }
-    .hero-split h1 { font-size: 3rem; }
+    
+    .hero-split h1 { font-size: 2.8rem; }
     .gold-line { margin: 15px auto 25px; }
     .btn-row { justify-content: center; }
+    
+    /* Make the top image look great on mobile */
+    .feature-img-wrapper { 
+        margin-bottom: 25px; 
+        max-height: 300px; /* Don't take up whole phone screen */
+    }
 }
 
 /* --- 2. PARALLAX SECTIONS --- */
