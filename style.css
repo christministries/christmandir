@@ -1,15 +1,13 @@
 :root {
     --primary: #00897b;
     --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
-    --primary-dark: #004d40;
     --gold: #cfa76e;
     --xmas-red: #d42426;
     --xmas-green: #165b33;
     --bg-color: #f0f2f5;
-    --glass-nav: rgba(255, 255, 255, 0.90);
     --text-main: #2d3436;
     --text-light: #636e72;
-    
+    --glass-nav: rgba(255, 255, 255, 0.90);
     --font-head: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-xmas: 'Mountains of Christmas', cursive;
@@ -18,220 +16,122 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { font-family: var(--font-body); background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; }
 
-/* --- EXTREME CHRISTMAS ELEMENTS --- */
-#snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
-.snowflake { position: absolute; top: -10px; background: white; border-radius: 50%; opacity: 0.9; animation: snowfall linear infinite; box-shadow: 0 0 5px white; }
-@keyframes snowfall { to { transform: translateY(105vh); } }
+/* --- OPTIMIZED CHRISTMAS EFFECTS --- */
 
-#snow-pile {
-    position: absolute; bottom: 0; left: 0; width: 100%; z-index: 20; pointer-events: none;
-    display: flex; justify-content: center; align-items: flex-end; transform: translateY(10px);
+/* Twinkling Header Lights */
+.christmas-lights {
+    position: absolute; top: 0; left: 0; width: 100%; height: 12px; pointer-events: none; z-index: 1002;
+    background-image: radial-gradient(circle at 10px 5px, var(--xmas-red) 3px, transparent 4px),
+                      radial-gradient(circle at 40px 5px, var(--gold) 3px, transparent 4px),
+                      radial-gradient(circle at 70px 5px, var(--xmas-green) 3px, transparent 4px);
+    background-repeat: repeat-x; background-size: 90px 100%;
+    animation: twinkle 1s infinite alternate;
 }
-#snow-pile img { width: 100%; height: auto; max-height: 120px; object-fit: cover; }
+@keyframes twinkle { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
-/* --- UPDATED SANTA WITH BANNER --- */
+/* Santa & Trailing Banner */
 #santa-container {
-    position: fixed; top: 10%; left: -600px; /* Start further left due to banner width */
-    display: flex; align-items: center;
-    z-index: 998; pointer-events: none;
-    animation: flyAcross 22s linear infinite; 
-    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+    position: fixed; top: 12%; left: -800px;
+    display: flex; align-items: center; z-index: 998; pointer-events: none;
+    animation: flyAcross 20s linear infinite;
 }
-#santa-container img { width: 200px; transform: rotate(-5deg); position: relative; z-index: 2; }
+#santa-container img { width: 160px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); }
 
 .santa-banner {
-    background: var(--xmas-red);
-    color: white;
-    padding: 8px 20px 8px 30px; /* Extra left padding for overlap */
-    border-radius: 0 30px 30px 0;
-    font-family: var(--font-xmas);
-    font-size: 1.3rem;
-    border: 2px solid var(--gold);
-    border-left: none;
-    white-space: nowrap;
-    position: relative;
-    left: -25px; /* Overlap with sleigh */
-    z-index: 1;
+    background: var(--xmas-red); color: white;
+    padding: 6px 15px 6px 25px; border-radius: 0 50px 50px 0;
+    font-family: var(--font-xmas); font-size: 1.2rem;
+    border: 2px solid var(--gold); border-left: none;
+    white-space: nowrap; margin-left: -20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 @keyframes flyAcross {
-    0% { left: -600px; transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(-40px) rotate(0deg); }
-    100% { left: 110vw; transform: translateY(0) rotate(2deg); }
+    0% { left: -800px; transform: rotate(-2deg); }
+    100% { left: 120vw; transform: rotate(2deg); }
 }
 
-#fireworks-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 997; }
-.firework-particle { position: absolute; width: 6px; height: 6px; border-radius: 50%; animation: explode 1s ease-out forwards; }
-@keyframes explode { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
+/* Heavy Snow */
+#snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+.snowflake { position: absolute; top: -10px; background: white; border-radius: 50%; opacity: 0.8; animation: snowfall linear infinite; }
+@keyframes snowfall { to { transform: translateY(105vh); } }
 
-/* --- NEW: HANGING HEADER LIGHTS --- */
-.christmas-lights {
-    position: absolute; top: -5px; left: 0; width: 100%; height: 20px; pointer-events: none; z-index: 1002;
-    background-image: 
-        radial-gradient(circle at 5% 60%, var(--xmas-red) 3px, transparent 4px),
-        radial-gradient(circle at 15% 60%, var(--gold) 3px, transparent 4px),
-        radial-gradient(circle at 25% 60%, var(--xmas-green) 3px, transparent 4px),
-        radial-gradient(circle at 35% 60%, var(--xmas-red) 3px, transparent 4px),
-        radial-gradient(circle at 45% 60%, var(--gold) 3px, transparent 4px),
-        radial-gradient(circle at 55% 60%, var(--xmas-green) 3px, transparent 4px),
-        radial-gradient(circle at 65% 60%, var(--xmas-red) 3px, transparent 4px),
-        radial-gradient(circle at 75% 60%, var(--gold) 3px, transparent 4px),
-        radial-gradient(circle at 85% 60%, var(--xmas-green) 3px, transparent 4px),
-        radial-gradient(circle at 95% 60%, var(--xmas-red) 3px, transparent 4px);
-    background-repeat: repeat-x;
-    background-size: 200px 20px;
-    animation: twinkle 2s infinite alternate;
-    filter: drop-shadow(0 2px 5px rgba(255,255,255,0.5));
-}
-@keyframes twinkle { 0% { opacity: 0.6; filter: brightness(1); } 100% { opacity: 1; filter: brightness(1.3); } }
+#snow-pile { position: absolute; bottom: 0; left: 0; width: 100%; z-index: 20; pointer-events: none; transform: translateY(15px); }
+#snow-pile img { width: 100%; height: auto; max-height: 100px; object-fit: cover; }
 
-/* --- BACKGROUNDS --- */
-.background-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; }
-.shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: floatShape 25s infinite alternate ease-in-out; }
-.shape-1 { width: 500px; height: 500px; background: #b2dfdb; top: -150px; left: -150px; }
-.shape-2 { background: #ffe082; bottom: -100px; right: -100px; width: 400px; height: 400px; }
-.shape-3 { background: #80deea; bottom: 30%; left: 20%; width: 300px; height: 300px; opacity: 0.4; }
-@keyframes floatShape { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(40px, 60px) rotate(10deg); } }
-
-/* --- NAVIGATION --- */
+/* --- SHARED NAVIGATION (EXACT QUIZ STYLE) --- */
 header { position: fixed; z-index: 1000; transition: all 0.4s; }
 .nav-links { list-style: none; padding: 0; margin: 0; display: flex; }
 .nav-links li a { text-decoration: none; font-family: var(--font-head); font-weight: 600; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
 
-/* DESKTOP NAV */
-@media (min-width: 768px) {
-    header { top: 0; left: 0; width: 100%; height: 80px; background: rgba(255,255,255,0.9); backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; padding: 0 60px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
-    .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; color: var(--primary-dark); }
-    .nav-links { gap: 30px; }
-    .nav-links li a { font-size: 1rem; color: #555; gap: 8px; padding: 10px 20px; border-radius: 25px; flex-direction: row; }
-    .nav-links li a:hover { background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); }
-    .nav-links li a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); }
-    body { padding-top: 80px; }
-}
-
-/* MOBILE NAV */
 @media (max-width: 767px) {
     header {
         bottom: 20px; left: 50%; transform: translateX(-50%); top: auto;
-        width: 90%; max-width: 380px; height: 70px;
-        background: var(--glass-nav);
-        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-        border-radius: 40px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
-        border: 1px solid rgba(255,255,255,0.6);
+        width: 90%; max-width: 380px; height: 65px;
+        background: var(--glass-nav); backdrop-filter: blur(20px); border-radius: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.5);
     }
     .logo { display: none; }
-    .nav-links { height: 100%; justify-content: space-evenly; padding: 0 5px; }
-    .nav-links li a { flex-direction: column; font-size: 0.7rem; color: #666; gap: 4px; padding: 5px; background: none !important; }
-    .nav-links li a span { font-size: 1.4rem; transition: 0.3s; }
+    .nav-links { height: 100%; justify-content: space-evenly; width: 100%; }
+    .nav-links li a { flex-direction: column; font-size: 0.65rem; color: #555; gap: 2px; }
+    .nav-links li a span { font-size: 1.3rem; }
     .nav-links li a.active { color: var(--primary); }
-    .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
-    body { padding-top: 0; padding-bottom: 100px; }
-    .christmas-lights { display: none; } /* Hide lights on mobile pill */
+    .nav-links li a.active span { transform: translateY(-5px); }
+    body { padding-bottom: 90px; }
+    
+    /* Santa Mobile Scaling */
+    #santa-container img { width: 80px; }
+    .santa-banner { font-size: 0.75rem; padding: 4px 10px 4px 15px; margin-left: -10px; }
+    @keyframes flyAcross { 0% { left: -400px; } 100% { left: 120vw; } }
+}
+
+@media (min-width: 768px) {
+    header { top: 0; left: 0; width: 100%; height: 80px; background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; padding: 0 60px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+    .logo { font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: var(--primary-dark); }
+    .nav-links { gap: 25px; }
+    .nav-links li a { font-size: 0.95rem; color: #444; padding: 10px 18px; border-radius: 25px; }
+    .nav-links li a.active { background: var(--primary); color: white; }
+    body { padding-top: 80px; }
 }
 
 /* --- HERO SECTION --- */
-.hero-split { display: flex; min-height: 90vh; position: relative; overflow: hidden; }
-.hero-text-side { flex: 1; display: flex; align-items: center; justify-content: center; padding: 50px; background: rgba(255,255,255,0.7); position: relative; z-index: 2; }
-.text-wrapper { max-width: 550px; text-align: center; }
+.hero-split { display: flex; min-height: 85vh; position: relative; overflow: hidden; }
+.hero-text-side { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; background: rgba(255,255,255,0.6); z-index: 2; }
+.text-wrapper { max-width: 500px; text-align: center; }
 
-/* Mini Profile Image */
 .mini-profile-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
-.hero-feature-img { width: auto; height: 160px; object-fit: contain; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 3px solid white; }
+.hero-feature-img { height: 150px; border-radius: 15px; border: 3px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
-.sub-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); font-weight: 700; }
-.hero-split h1 { font-family: var(--font-xmas), var(--font-head); font-size: 4rem; line-height: 1.1; color: var(--xmas-green); margin: 10px 0; text-shadow: 2px 2px 0px white; }
-.gold-line { width: 100px; height: 4px; background: var(--gold); margin: 0 auto 25px; }
-.tagline { font-size: 1.1rem; line-height: 1.6; color: #555; margin-bottom: 30px; }
-.btn-row { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-.btn-main { padding: 12px 30px; background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-.btn-text { text-decoration: none; color: var(--primary-dark); font-weight: 600; border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+.xmas-font { font-family: var(--font-xmas); color: var(--xmas-red); }
+.hero-split h1 { font-family: var(--font-xmas); font-size: 3.5rem; line-height: 1; color: var(--xmas-green); margin: 10px 0; }
+.gold-line { width: 80px; height: 3px; background: var(--gold); margin: 0 auto 20px; }
+.btn-main { padding: 12px 25px; background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; display: inline-block; margin: 10px; }
 
-.hero-img-side { flex: 1; position: relative; overflow: hidden; z-index: 1; }
-.hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); }
+.hero-img-side { flex: 1; overflow: hidden; }
+.hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%); }
 
-/* Decor & Animations */
-.xmas-deco { position: absolute; z-index: 10; pointer-events: none; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); }
-.tree-left { bottom: -50px; left: -80px; width: 250px; }
-.gifts-right { top: -80px; right: -50px; width: 220px; }
-.pulse-anim { animation: pulseGifts 3s ease-in-out infinite; }
-@keyframes pulseGifts { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-/* MOBILE HERO OPTIMIZATION & SANTA FIX */
 @media (max-width: 768px) {
-    .hero-split { display: block; height: auto; }
+    .hero-split { display: block; height: auto; text-align: center; }
     .hero-img-side { display: none; }
+    .hero-split h1 { font-size: 2.5rem; }
     .hero-text-side { padding: 40px 20px; }
-    .hero-feature-img { height: 140px; }
-    .hero-split h1 { font-size: 2.8rem; }
-    .tree-left, .gifts-right { display: none; }
-    
-    /* MOBILE SANTA OPTIMIZATION */
-    #santa-container { top: 8%; left: -450px; }
-    #santa-container img { width: 80px; } /* Smaller Santa image */
-    .santa-banner { font-size: 0.8rem; padding: 5px 10px 5px 20px; left: -15px; } /* Smaller banner text */
-    @keyframes flyAcross {
-        0% { left: -450px; }
-        100% { left: 110vw; }
-    }
 }
 
-/* NATIVITY */
-.nativity-section { padding: 60px 20px; background: #fffdf7; }
-.container { max-width: 1100px; margin: 0 auto; }
-.section-title { text-align: center; margin-bottom: 40px; }
-.section-title h2 { font-family: var(--font-head); font-size: 2.2rem; color: var(--primary-dark); }
-.nativity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.nativity-card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
-.nativity-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
+/* --- NATIVITY & ROADMAP --- */
+.nativity-section { padding: 50px 20px; background: #fffdf7; text-align: center; }
+.nativity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+.nativity-card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+.nativity-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; }
 
-/* MISSION PARALLAX */
-.parallax-section { min-height: 50vh; background-attachment: fixed; background-size: cover; background-position: center; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
-.overlay-dark { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
-.xmas-overlay { background: linear-gradient(rgba(22, 91, 51, 0.7), rgba(212, 36, 38, 0.4)); }
-.content-center { position: relative; z-index: 2; padding: 20px; max-width: 800px; }
-@media (max-width: 768px) { .parallax-section { background-attachment: scroll; } }
+.roadmap-section { padding: 50px 20px; background: #1a1a1a; color: white; }
+.timeline { position: relative; max-width: 600px; margin: 0 auto; border-left: 2px solid var(--gold); padding-left: 30px; }
+.timeline-row { margin-bottom: 30px; position: relative; cursor: pointer; }
+.timeline-content { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
+.timeline-row::before { content: '❄️'; position: absolute; left: -42px; top: 5px; background: #1a1a1a; }
 
-/* SERVICES & TEAM */
-.clean-section, .team-section { padding: 60px 20px; background: rgba(255,255,255,0.9); }
-.service-row, .team-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-.svc-item, .team-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); flex: 1; min-width: 260px; text-align: center; }
-.svc-icon { font-size: 2.5rem; color: var(--gold); display: block; margin-bottom: 10px; }
-.team-card img { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 10px; display: block; border: 3px solid var(--primary); }
-
-/* ROADMAP */
-.roadmap-section { padding: 60px 20px; background-image: url('https://i.imgur.com/9c4b7a.png'); background-size: cover; color: white; }
-.timeline { position: relative; max-width: 800px; margin: 0 auto; }
-.timeline::after { content: ''; position: absolute; width: 2px; background: var(--gold); top: 0; bottom: 0; left: 50%; }
-.timeline-row { padding: 15px 30px; position: relative; width: 50%; cursor: pointer; }
-.timeline-row.left { left: 0; text-align: right; }
-.timeline-row.right { left: 50%; text-align: left; }
-.timeline-content { padding: 20px; background: rgba(0,0,0,0.7); border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
-.timeline-content h3 { color: var(--gold); margin: 5px 0; font-size: 1.1rem; }
-.timeline-row::after { content: '🎄'; position: absolute; top: 20px; right: -12px; font-size: 1.5rem; z-index: 2; }
-.timeline-row.right::after { left: -12px; }
-
-/* MOBILE ROADMAP */
-@media (max-width: 768px) {
-    .timeline::after { left: 20px; }
-    .timeline-row { width: 100%; padding-left: 50px; padding-right: 0; text-align: left; margin-bottom: 15px; }
-    .timeline-row.left, .timeline-row.right { left: 0; }
-    .timeline-row::after, .timeline-row.right::after { left: 8px; font-size: 1.2rem; }
-}
-
-/* FOOTER */
-.modern-footer { background: var(--primary-dark); color: white; display: flex; flex-wrap: wrap; position: relative; z-index: 20; padding-bottom: 20px; }
-.footer-map { flex: 1; min-width: 300px; height: 300px; } .footer-map iframe { width: 100%; height: 100%; border: 0; }
-.footer-info { flex: 1; padding: 40px 20px; min-width: 300px; text-align: center; }
-.footer-logo { font-family: var(--font-xmas); font-size: 2rem; color: var(--gold); }
-.contact-details { margin: 20px 0; font-size: 0.9rem; line-height: 2; } .contact-details i { color: var(--gold); margin-right: 8px; }
-.social-icons { margin: 20px 0; display: flex; gap: 15px; justify-content: center; } 
-.social-icons a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; border-radius: 50%; color: white; }
-
-/* MODAL & REVEAL */
-.modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
-.modal-content { background: white; width: 90%; max-width: 400px; border-radius: 20px; overflow: hidden; position: relative; }
-.close-modal { position: absolute; top: 10px; right: 15px; font-size: 30px; color: white; cursor: pointer; text-shadow: 0 2px 5px black; }
-#modal-img { width: 100%; height: 200px; object-fit: cover; }
-.modal-text { padding: 20px; text-align: center; color: #333; }
-.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; } .reveal.active { opacity: 1; transform: translateY(0); }
+/* --- FOOTER --- */
+.modern-footer { background: #002d26; color: white; display: flex; flex-wrap: wrap; z-index: 25; position: relative; }
+.footer-map { flex: 1; min-width: 300px; height: 250px; }
+.footer-map iframe { width: 100%; height: 100%; border: 0; }
+.footer-info { flex: 1; padding: 40px; text-align: center; min-width: 300px; }
+.social-icons a { color: white; font-size: 1.5rem; margin: 0 10px; }
