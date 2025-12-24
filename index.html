@@ -35,7 +35,6 @@
         body { 
             font-family: var(--font-body); 
             color: var(--text-dark); 
-            /* Subtle overall holiday texture background */
             background-color: var(--bg-light);
             background-image: url('https://www.transparenttextures.com/patterns/snow.png');
             overflow-x: hidden; 
@@ -75,7 +74,6 @@
             .nav-links a span { font-size: 1.4rem; transition: 0.3s; }
             .nav-links a.active { color: var(--primary); box-shadow: none; }
             .nav-links a.active span { transform: translateY(-5px); }
-            /* Padding to ensure nav doesn't cover footer content on mobile */
             body { padding-bottom: 100px; } 
         }
 
@@ -112,58 +110,60 @@
         .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: 0.9s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: none; }
 
-        /* Hero Split */
+        /* 1. WELCOME (Hero) */
         .hero-split { display: flex; min-height: 90vh; position: relative; overflow: hidden; background: #fff; }
         .hero-text-side { 
             flex: 1.2; display: flex; align-items: center; justify-content: center; 
             padding: 100px 40px 60px; text-align: center; z-index: 2; 
-            /* New Warm Bokeh Background with Overlay */
             background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('https://images.unsplash.com/photo-1576692155415-95f820a2c4c1?q=80&w=1470&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+            background-size: cover; background-position: center;
         }
-        
         .hero-feature-img { 
             height: 160px; object-fit: contain; margin-bottom: 20px;
             filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15)); border: none; background: transparent;
         }
-
         .xmas-title { font-family: var(--font-xmas); font-size: 3.8rem; color: var(--xmas-green); line-height: 1.1; margin: 10px 0; }
         .tagline { font-size: 1.1rem; color: #555; margin-bottom: 30px; line-height: 1.6; }
-        
         .btn-row { display: flex; gap: 15px; justify-content: center; }
         .btn-main { background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; }
         .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .btn-text { color: var(--primary-dark); padding: 14px 20px; text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--gold); }
-
         .hero-img-side { flex: 1; overflow: hidden; }
         .hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); }
 
-        /* General Sections (Nativity/Team) */
+        /* General Section Styles */
         .section-clean { 
-            padding: 80px 5%; 
-            text-align: center;
-            /* Subtle festive pattern background */
+            padding: 80px 5%; text-align: center;
             background-color: #f8fff8;
             background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
         }
         .section-title h2 { font-family: var(--font-head); font-size: 2.5rem; color: var(--primary-dark); margin-bottom: 40px; }
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
         
-        .card { background: rgba(255,255,255,0.9); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.5); }
+        .card { 
+            background: rgba(255,255,255,0.95); padding: 25px; border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; 
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.6); 
+        }
         .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,137,123,0.15); }
         .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
+        .card h3 { font-size: 1.3rem; margin-bottom: 5px; color: var(--primary-dark); }
         
+        /* 3. Services Specifics */
+        .svc-icon { font-size: 3rem; color: var(--gold); margin-bottom: 15px; display: block; }
+        .svc-time { font-weight: 700; color: var(--xmas-red); font-size: 0.95rem; }
+
+        /* 4. Team Specifics */
         .team-img { width: 120px !important; height: 120px !important; border-radius: 50% !important; margin: 0 auto 15px; border: 3px solid var(--primary); }
 
-        /* Roadmap (Night Sky) */
+        /* 5. Roadmap (Night Sky) */
         .roadmap-section { padding: 80px 5%; background: #0a0a0a url('https://i.imgur.com/9c4b7a.png') center/cover fixed; color: white; }
         .timeline { max-width: 700px; margin: 0 auto; border-left: 2px solid var(--gold); padding-left: 30px; }
         .timeline-row { margin-bottom: 40px; cursor: pointer; position: relative; }
         .timeline-content { background: rgba(255,255,255,0.12); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .timeline-row::before { content: '❄️'; position: absolute; left: -42px; top: 10px; font-size: 1.2rem; }
 
-        /* Footer & Map */
+        /* 6. Footer & Map */
         .main-footer { background: #001f1b; color: white; padding-top: 50px; position: relative; z-index: 20; margin-top: auto; }
         #snow-pile { position: absolute; top: -60px; left: 0; width: 100%; height: 80px; pointer-events: none; z-index: 10; }
         #snow-pile img { width: 100%; height: 100%; object-fit: cover; }
@@ -173,7 +173,7 @@
         .footer-map iframe { width: 100%; height: 100%; border: 0; }
         .footer-info { flex: 1; padding: 50px; text-align: center; }
         .footer-logo { font-family: var(--font-xmas); font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
-        .contact-list p { margin: 10px 0; font-size: 1rem; color: #ddd; }
+        .socials { margin-top: 20px; }
         .socials a { color: white; font-size: 1.5rem; margin: 0 10px; transition: 0.3s; }
         .socials a:hover { color: var(--gold); }
 
@@ -186,8 +186,13 @@
             .santa-img { width: 150px; }
             .btn-row { flex-direction: column; }
             .btn-main, .btn-text { width: 100%; text-align: center; }
-            .roadmap-section { background-attachment: scroll; } /* Better mobile performance */
+            .roadmap-section { background-attachment: scroll; }
         }
+        
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+        .modal-content { background: white; width: 90%; max-width: 400px; border-radius: 20px; overflow: hidden; position: relative; text-align: center; padding-bottom: 20px; }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 30px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -234,25 +239,56 @@
         </section>
 
         <section id="nativity" class="section-clean">
-            <div class="section-title reveal">
-                <h2>The Greatest Gift</h2>
-                <p>Celebrating the Birth of Jesus</p>
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>The Greatest Gift</h2>
+                    <p>Celebrating the Birth of Jesus</p>
+                </div>
+                <div class="card-grid">
+                    <div class="card reveal">
+                        <img src="https://i.imgur.com/0Y1x9yS.png" alt="Manger">
+                        <h3>The Manger</h3>
+                        <p>"And she brought forth her firstborn Son..."</p>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.1s;">
+                        <img src="https://i.imgur.com/4g8g9xS.png" alt="Star">
+                        <h3>The Star</h3>
+                        <p>"We have seen His star in the East..."</p>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.2s;">
+                        <img src="https://i.imgur.com/2e5f6hS.png" alt="Tidings">
+                        <h3>Good Tidings</h3>
+                        <p>"I bring you good tidings of great joy..."</p>
+                    </div>
+                </div>
             </div>
-            <div class="card-grid">
-                <div class="card reveal">
-                    <img src="https://i.imgur.com/0Y1x9yS.png" alt="Manger">
-                    <h3>The Manger</h3>
-                    <p>"And she brought forth her firstborn Son..."</p>
+        </section>
+
+        <section id="services" class="section-clean" style="background-color: #fff;">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Weekly Services</h2>
+                    <p>Join us in worship and fellowship</p>
                 </div>
-                <div class="card reveal" style="transition-delay: 0.1s;">
-                    <img src="https://i.imgur.com/4g8g9xS.png" alt="Star">
-                    <h3>The Star</h3>
-                    <p>"We have seen His star in the East..."</p>
-                </div>
-                <div class="card reveal" style="transition-delay: 0.2s;">
-                    <img src="https://i.imgur.com/2e5f6hS.png" alt="Tidings">
-                    <h3>Good Tidings</h3>
-                    <p>"I bring you good tidings of great joy..."</p>
+                <div class="card-grid">
+                    <div class="card reveal">
+                        <span class="svc-icon">☀️</span>
+                        <h3>Sunday</h3>
+                        <p class="svc-time">10:00 AM - 1:00 PM</p>
+                        <p style="font-size:0.9rem;">Main Service</p>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.1s;">
+                        <span class="svc-icon">🔥</span>
+                        <h3>Friday</h3>
+                        <p class="svc-time">10:30 AM - 2:00 PM</p>
+                        <p style="font-size:0.9rem;">Fasting Prayer</p>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.2s;">
+                        <span class="svc-icon">🎸</span>
+                        <h3>Saturday</h3>
+                        <p class="svc-time">6:00 PM - 8:00 PM</p>
+                        <p style="font-size:0.9rem;">Youth Fellowship</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -298,33 +334,33 @@
                 </div>
             </div>
         </section>
-    </main>
 
-    <footer class="main-footer">
-        <div id="snow-pile">
-            <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow pile">
-        </div>
-        
-        <div class="footer-content">
-            <div class="footer-map">
-                <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        <footer class="main-footer">
+            <div id="snow-pile">
+                <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow pile">
             </div>
-            <div class="footer-info">
-                <div class="footer-logo">Christ Mandir</div>
-                <div class="contact-list">
-                    <p>📍 Yernagudem-Chinnayagudem Rd, AP</p>
-                    <p>📞 +91 98765 43210</p>
-                    <p>✉️ contact@christmandir.com</p>
+            
+            <div class="footer-content">
+                <div class="footer-map">
+                    <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
                 </div>
-                <div class="socials">
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                <div class="footer-info">
+                    <div class="footer-logo">Christ Mandir</div>
+                    <div class="contact-list">
+                        <p>📍 Yernagudem-Chinnayagudem Rd, AP</p>
+                        <p>📞 +91 98765 43210</p>
+                        <p>✉️ contact@christmandir.com</p>
+                    </div>
+                    <div class="socials">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
                 </div>
-                <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </main>
 
     <div id="roadmap-modal" class="modal" onclick="closeRoadmapModal()">
         <div class="modal-content">
@@ -347,34 +383,25 @@
         window.addEventListener("scroll", reveal);
         reveal();
 
-        // 2. Optimized Snow Logic
+        // 2. Snow Logic (Optimized)
         const snowContainer = document.getElementById('snow-container');
-        // Less snow on mobile for performance
         const snowInterval = window.innerWidth < 768 ? 300 : 150; 
 
         function createSnowflake() {
             const s = document.createElement('div');
             s.className = 'snowflake';
-            // Random horizontal position
             s.style.left = Math.random() * 100 + 'vw';
-            // Random size between 2px and 6px
             const size = Math.random() * 4 + 2;
             s.style.width = size + 'px';
             s.style.height = size + 'px';
-            // Random fall duration between 5s and 10s
             s.style.animationDuration = Math.random() * 5 + 5 + 's';
-            // Random opacity
             s.style.opacity = Math.random() * 0.6 + 0.4;
-            
             snowContainer.appendChild(s);
-            
-            // Remove after animation finishes to prevent memory leak
             setTimeout(() => {
                 if (s && s.parentNode) s.parentNode.removeChild(s);
             }, 10000);
         }
         setInterval(createSnowflake, snowInterval);
-
 
         // 3. Improved Fireworks Logic (Christmas Colors)
         const canvas = document.getElementById('fireworks-canvas');
@@ -388,15 +415,12 @@
         resizeCanvas();
         
         let fireworks = [];
-        // Christmas color palette
         const colors = ['#d42426', '#165b33', '#cfa76e', '#ffffff', '#FFD700']; 
 
         class Firework {
             constructor() {
                 this.x = Math.random() * canvas.width;
-                // Start from bottom
                 this.y = canvas.height;
-                // Upward velocity
                 this.sy = Math.random() * -4 - 4; 
                 this.color = colors[Math.floor(Math.random() * colors.length)];
                 this.exploded = false;
@@ -404,21 +428,18 @@
             }
             update() {
                 this.y += this.sy;
-                // Explode higher up
                 if (this.y < canvas.height * 0.3 && !this.exploded) this.explode();
                 this.parts.forEach(p => p.update());
             }
             draw() {
                 if (!this.exploded) {
                     ctx.fillStyle = this.color;
-                    // Draw rising rocket
                     ctx.fillRect(this.x, this.y, 3, 8); 
                 }
                 this.parts.forEach(p => p.draw());
             }
             explode() {
                 this.exploded = true;
-                // More particles for bigger boom
                 for (let i = 0; i < 50; i++) this.parts.push(new Particle(this.x, this.y, this.color));
             }
         }
@@ -426,20 +447,18 @@
         class Particle {
             constructor(x, y, color) {
                 this.x = x; this.y = y; this.color = color;
-                // Spread out in circle
                 const angle = Math.random() * Math.PI * 2;
                 const speed = Math.random() * 5 + 2;
                 this.sx = Math.cos(angle) * speed;
                 this.sy = Math.sin(angle) * speed;
                 this.alpha = 1;
-                // Gravity effect
                 this.gravity = 0.1; 
             }
             update() {
                 this.x += this.sx;
                 this.y += this.sy;
-                this.sy += this.gravity; // Apply gravity
-                this.alpha -= 0.015; // Fade out
+                this.sy += this.gravity;
+                this.alpha -= 0.015;
             }
             draw() {
                 ctx.globalAlpha = this.alpha;
@@ -452,15 +471,10 @@
         }
 
         function animateFireworks() {
-            // Clear canvas with slight trail effect
             ctx.fillStyle = 'rgba(0,0,0,0.1)'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Random chance to launch firework
             if (Math.random() < 0.02) fireworks.push(new Firework());
-            
             fireworks.forEach(f => { f.update(); f.draw() });
-            // Remove finished fireworks
             fireworks = fireworks.filter(f => !f.exploded || f.parts.some(p => p.alpha > 0));
             requestAnimationFrame(animateFireworks);
         }
