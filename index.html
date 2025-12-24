@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Christ Mandir Christmas Special</title>
+    <title>Christ Mandir | Official Home</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;700;800&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,90 +27,68 @@
         </nav>
     </header>
 
-    <div id="fireworks-container"></div>
-    
     <div id="santa-container">
-        <video autoplay muted loop playsinline class="santa-video">
+        <video autoplay muted loop playsinline class="santa-video-clean">
             <source src="https://video.wixstatic.com/video/be4f11_fa2591e3e68b4eb3bb53f105db61691e/720p/mp4/file.mp4" type="video/mp4">
         </video>
-        <div class="santa-banner">Merry Christmas & Happy New Year!</div>
     </div>
 
+    <div id="fireworks-container"></div>
     <div id="snow-container"></div>
-
-    <div class="background-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
 
     <main>
         <section class="hero-split">
             <div class="hero-text-side">
                 <div class="text-wrapper reveal">
-                    <div class="mini-profile-wrapper">
-                        <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" alt="Christ Ministries" class="hero-feature-img">
+                    <div class="profile-frame">
+                        <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" alt="Christ Ministries" class="hero-img-top">
                     </div>
-                    <span class="sub-title">Welcome to</span>
-                    <h1 class="xmas-title">Christ <br>Ministries</h1>
-                    <div class="gold-line"></div>
-                    <p class="tagline">"Warm and heartily welcome to you to Christ Ministries in the different culture and religious land of India."</p>
+                    <span class="sub-heading">Welcome to Christ Ministries</span>
+                    <h1>Healing Hearts, <br>Preaching Hope</h1>
+                    <div class="accent-line"></div>
+                    <p class="tagline">Providing spiritual nourishment through the gospel in the diverse landscape of India.</p>
                     
-                    <div class="btn-row">
-                        <a href="dailyverse.html" class="btn-main">Daily Verse</a>
-                        <a href="#timings" class="btn-text">Service Timings</a>
+                    <div class="hero-actions">
+                        <a href="dailyverse.html" class="btn-primary">Daily Verse</a>
+                        <a href="#timings" class="btn-secondary">Service Timings</a>
                     </div>
                 </div>
             </div>
             <div class="hero-img-side">
-                <img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png" alt="Family">
+                <img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png" alt="Ministry Family">
             </div>
         </section>
 
-        <section id="timings" class="timings-section reveal">
+        <section id="timings" class="section-clean">
             <div class="container">
-                <div class="section-title">
-                    <h2 class="xmas-font">Service Timings</h2>
-                    <p>Join us for Worship & Prayer</p>
+                <div class="section-title reveal">
+                    <h2>Weekly Services</h2>
+                    <div class="divider"></div>
                 </div>
                 <div class="timings-grid">
                     <div class="time-card">
-                        <div class="day">Sunday</div>
-                        <div class="work">Main Service</div>
-                        <div class="hour">10:00 AM - 01:00 PM</div>
+                        <i class="fas fa-sun"></i>
+                        <h3>Sunday</h3>
+                        <p class="service-name">Main Service</p>
+                        <p class="service-time">10:00 AM - 1:00 PM</p>
                     </div>
                     <div class="time-card">
-                        <div class="day">Tuesday</div>
-                        <div class="work">Women's Prayer</div>
-                        <div class="hour">11:00 AM - 01:00 PM</div>
+                        <i class="fas fa-pray"></i>
+                        <h3>Tuesday</h3>
+                        <p class="service-name">Women's Meeting</p>
+                        <p class="service-time">11:00 AM - 1:00 PM</p>
                     </div>
-                    <div class="time-card highlight">
-                        <div class="day">Friday</div>
-                        <div class="work">Fasting Prayer</div>
-                        <div class="hour">10:30 AM - 02:00 PM</div>
+                    <div class="time-card active">
+                        <i class="fas fa-fire"></i>
+                        <h3>Friday</h3>
+                        <p class="service-name">Fasting & Prayer</p>
+                        <p class="service-time">10:30 AM - 2:00 PM</p>
                     </div>
                     <div class="time-card">
-                        <div class="day">Saturday</div>
-                        <div class="work">Youth Meeting</div>
-                        <div class="hour">06:00 PM - 08:00 PM</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="nativity" class="nativity-section reveal">
-            <div class="container">
-                <div class="section-title">
-                    <h2 class="xmas-font">The Greatest Gift</h2>
-                </div>
-                <div class="nativity-grid">
-                    <div class="nativity-card">
-                        <img src="https://i.imgur.com/0Y1x9yS.png" alt="Manger">
-                        <h3>The Manger</h3>
-                    </div>
-                    <div class="nativity-card">
-                        <img src="https://i.imgur.com/4g8g9xS.png" alt="Star">
-                        <h3>The Star</h3>
+                        <i class="fas fa-users"></i>
+                        <h3>Saturday</h3>
+                        <p class="service-name">Youth Fellowship</p>
+                        <p class="service-time">6:00 PM - 8:00 PM</p>
                     </div>
                 </div>
             </div>
@@ -120,17 +97,23 @@
         <section class="roadmap-section">
             <div class="container">
                 <div class="section-title reveal">
-                    <h2 class="xmas-font">Our Journey</h2>
+                    <h2>Our Journey</h2>
                 </div>
                 <div class="timeline">
-                    <div class="timeline-row left reveal" onclick="openRoadmapModal('2020', 'The Vision was started.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2020', 'The vision was established to heal the brokenhearted.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
+                        <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h3>2020 - The Vision</h3>
+                            <span class="year-label">2020</span>
+                            <h3>The Vision</h3>
+                            <p>God gave a clear mission to reach the poor.</p>
                         </div>
                     </div>
-                    <div class="timeline-row left reveal" onclick="openRoadmapModal('2023', 'Established in Yernagudem.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2023', 'Inauguration of the Yernagudem Sanctuary.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
+                        <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h3>2023 - Establishment</h3>
+                            <span class="year-label">2023</span>
+                            <h3>Current Sanctuary</h3>
+                            <p>Establishing a beacon of hope in AP.</p>
                         </div>
                     </div>
                 </div>
@@ -138,30 +121,38 @@
         </section>
 
         <div id="snow-pile">
-            <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow">
+            <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow deco">
         </div>
 
-        <footer class="modern-footer">
-            <div class="footer-info">
-                <div class="footer-logo xmas-font">Christ Mandir</div>
-                <p>Yernagudem-Chinnayagudem Rd, Andhra Pradesh</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+        <footer class="main-footer">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2 class="xmas-logo">Christ Mandir</h2>
+                    <p>In Christ, From Christ, For Christ.</p>
                 </div>
-                <p class="copyright">© <span id="year"></span> Christ Ministries</p>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Yernagudem-Chinnayagudem Rd, AP</p>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Christ Ministries. All rights reserved.</p>
             </div>
         </footer>
     </main>
 
     <div id="roadmap-modal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeRoadmapModal()">×</span>
-            <img id="modal-img" src="" alt="Milestone">
+            <span class="close-modal" onclick="closeRoadmapModal()">&times;</span>
+            <img id="modal-img" src="" alt="History">
             <div class="modal-text">
-                <h3 id="modal-title">Title</h3>
-                <p id="modal-desc">Description</p>
+                <h3 id="modal-title">Year</h3>
+                <p id="modal-desc">Details</p>
             </div>
         </div>
     </div>
