@@ -17,7 +17,6 @@
 
     <header>
         <div class="christmas-lights"></div>
-
         <div class="logo">Christ Mandir</div>
         <nav>
             <ul class="nav-links">
@@ -32,7 +31,9 @@
     <div id="fireworks-container"></div>
     
     <div id="santa-container">
-        <img src="https://i.imgur.com/6X5Q9jS.png" alt="Santa Flying">
+        <video autoplay muted loop playsinline class="santa-video">
+            <source src="https://video.wixstatic.com/video/be4f11_fa2591e3e68b4eb3bb53f105db61691e/720p/mp4/file.mp4" type="video/mp4">
+        </video>
         <div class="santa-banner">Merry Christmas & Happy New Year!</div>
     </div>
 
@@ -46,14 +47,11 @@
 
     <main>
         <section class="hero-split">
-            <img class="xmas-deco tree-left reveal" src="https://cdn.pixabay.com/photo/2018/11/15/15/44/christmas-3817509_960_720.png" alt="Christmas Tree">
-            
             <div class="hero-text-side">
                 <div class="text-wrapper reveal">
                     <div class="mini-profile-wrapper">
                         <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" alt="Christ Ministries" class="hero-feature-img">
                     </div>
-
                     <span class="sub-title">Welcome to</span>
                     <h1 class="xmas-title">Christ <br>Ministries</h1>
                     <div class="gold-line"></div>
@@ -61,14 +59,43 @@
                     
                     <div class="btn-row">
                         <a href="dailyverse.html" class="btn-main">Daily Verse</a>
-                        <a href="#nativity" class="btn-text">Nativity Story</a>
+                        <a href="#timings" class="btn-text">Service Timings</a>
                     </div>
                 </div>
             </div>
-            
             <div class="hero-img-side">
-                <div class="img-overlay"></div>
-                <img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png" alt="Christ Ministries Family">
+                <img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png" alt="Family">
+            </div>
+        </section>
+
+        <section id="timings" class="timings-section reveal">
+            <div class="container">
+                <div class="section-title">
+                    <h2 class="xmas-font">Service Timings</h2>
+                    <p>Join us for Worship & Prayer</p>
+                </div>
+                <div class="timings-grid">
+                    <div class="time-card">
+                        <div class="day">Sunday</div>
+                        <div class="work">Main Service</div>
+                        <div class="hour">10:00 AM - 01:00 PM</div>
+                    </div>
+                    <div class="time-card">
+                        <div class="day">Tuesday</div>
+                        <div class="work">Women's Prayer</div>
+                        <div class="hour">11:00 AM - 01:00 PM</div>
+                    </div>
+                    <div class="time-card highlight">
+                        <div class="day">Friday</div>
+                        <div class="work">Fasting Prayer</div>
+                        <div class="hour">10:30 AM - 02:00 PM</div>
+                    </div>
+                    <div class="time-card">
+                        <div class="day">Saturday</div>
+                        <div class="work">Youth Meeting</div>
+                        <div class="hour">06:00 PM - 08:00 PM</div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -76,58 +103,15 @@
             <div class="container">
                 <div class="section-title">
                     <h2 class="xmas-font">The Greatest Gift</h2>
-                    <p>The Birth of our Savior</p>
                 </div>
                 <div class="nativity-grid">
                     <div class="nativity-card">
-                        <img src="https://i.imgur.com/0Y1x9yS.png" alt="Nativity Scene">
+                        <img src="https://i.imgur.com/0Y1x9yS.png" alt="Manger">
                         <h3>The Manger</h3>
-                        <p>"And she brought forth her firstborn Son..." - Luke 2:7</p>
-                    </div>
-                    <div class="nativity-card highlight">
-                        <img src="https://i.imgur.com/4g8g9xS.png" alt="Star of Bethlehem">
-                        <h3>The Star</h3>
-                        <p>"We have seen His star in the East..." - Matthew 2:2</p>
                     </div>
                     <div class="nativity-card">
-                        <img src="https://i.imgur.com/2e5f6hS.png" alt="Joy to the World">
-                        <h3>Good Tidings</h3>
-                        <p>"I bring you good tidings of great joy..." - Luke 2:10</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="mission" class="parallax-section" style="background-image: url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1600');">
-            <div class="overlay-dark xmas-overlay">
-                <div class="content-center reveal">
-                    <h2 class="xmas-font">In Christ, For Christ</h2>
-                    <p class="big-text">We are part of His body; Jesus Christ's ministry is our ministry.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="clean-section" style="position: relative;">
-            <img class="xmas-deco gifts-right pulse-anim reveal" src="https://cdn.pixabay.com/photo/2016/12/12/20/34/xmas-1902555_960_720.png" alt="Christmas Gifts">
-            <div class="container">
-                <div class="section-title reveal">
-                    <h2 class="xmas-font">Our Services</h2>
-                </div>
-                <div class="service-row">
-                    <div class="svc-item reveal">
-                        <span class="svc-icon">☀️</span>
-                        <h3>Sunday</h3>
-                        <p class="time">10:00 AM - 12:30 PM</p>
-                    </div>
-                    <div class="svc-item reveal">
-                        <span class="svc-icon">🔥</span>
-                        <h3>Friday</h3>
-                        <p class="time">6:00 PM - 8:00 PM</p>
-                    </div>
-                    <div class="svc-item reveal">
-                        <span class="svc-icon">🎸</span>
-                        <h3>Saturday</h3>
-                        <p class="time">5:00 PM (Youth)</p>
+                        <img src="https://i.imgur.com/4g8g9xS.png" alt="Star">
+                        <h3>The Star</h3>
                     </div>
                 </div>
             </div>
@@ -139,18 +123,14 @@
                     <h2 class="xmas-font">Our Journey</h2>
                 </div>
                 <div class="timeline">
-                    <div class="timeline-row left reveal" onclick="openRoadmapModal('The Vision', 'God gave a vision to establish a place of worship.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
+                    <div class="timeline-row left reveal" onclick="openRoadmapModal('2020', 'The Vision was started.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
                         <div class="timeline-content">
-                            <div class="year">2020</div>
-                            <h3>The Vision</h3>
-                            <p>The foundation was laid.</p>
+                            <h3>2020 - The Vision</h3>
                         </div>
                     </div>
-                    <div class="timeline-row right reveal" onclick="openRoadmapModal('Establishment', 'Moved into our current location.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
+                    <div class="timeline-row left reveal" onclick="openRoadmapModal('2023', 'Established in Yernagudem.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
                         <div class="timeline-content">
-                            <div class="year">2023</div>
-                            <h3>Establishment</h3>
-                            <p>A beacon of hope in Yernagudem.</p>
+                            <h3>2023 - Establishment</h3>
                         </div>
                     </div>
                 </div>
@@ -158,19 +138,13 @@
         </section>
 
         <div id="snow-pile">
-            <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow pile">
+            <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow">
         </div>
 
         <footer class="modern-footer">
-            <div class="footer-map">
-                <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
-            </div>
             <div class="footer-info">
                 <div class="footer-logo xmas-font">Christ Mandir</div>
-                <div class="contact-details">
-                    <div class="c-item"><i class="fas fa-map-marker-alt"></i> Yernagudem-Chinnayagudem Rd</div>
-                    <div class="c-item"><i class="fas fa-phone"></i> +91 98765 43210</div>
-                </div>
+                <p>Yernagudem-Chinnayagudem Rd, Andhra Pradesh</p>
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
