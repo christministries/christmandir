@@ -4,18 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Christ Ministries</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
     <header>
-        <div class="logo">Christ Ministries</div>
+        <div class="logo">Christ Mandir</div>
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html" class="active"><span>🏠</span> Home</a></li>
                 <li><a href="bible.html"><span>📖</span> Bible</a></li>
-                <li><a href="quiz.html"><span>❓</span> Quiz</a></li>
+                <li><a href="quiz.html"><span>🧩</span> Quiz</a></li>
                 <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
             </ul>
         </nav>
@@ -23,13 +34,19 @@
 
     <main>
         <section class="hero-section">
-            <div class="hero-overlay">
-                <div class="hero-content">
+            <div class="hero-grid">
+                <div class="hero-text">
                     <h1>Christ Ministries</h1>
                     <p class="tagline">"Warm and heartily welcome to you to Christ Ministries in the different culture and religious land of India."</p>
                     <div class="hero-buttons">
                         <a href="dailyverse.html" class="cta-button primary">Daily Verse</a>
-                        <a href="#mission" class="cta-button secondary">Read Our Vision</a>
+                        <a href="#mission" class="cta-button secondary">Our Vision</a>
+                    </div>
+                </div>
+                <div class="hero-image-box">
+                    <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" alt="Christ Ministries" class="main-hero-img">
+                    <div class="floating-badge">
+                        <i class="fas fa-dove"></i> Est. 2020
                     </div>
                 </div>
             </div>
@@ -43,50 +60,22 @@
 
             <div class="mission-content">
                 <p class="lead-text">
-                    The Bible says we shall be like Christ. We are part of His body; Jesus Christ's ministry is our ministry. We are in Him to preach the gospel to all nations, teaching God's plan and purpose: <strong>In Christ, From Christ, For Christ.</strong>
+                    The Bible says we shall be like Christ. We are part of His body; Jesus Christ's ministry is our ministry. We are in Him to preach the gospel to all nations.
                 </p>
 
                 <div class="scripture-box">
                     <div class="quote-icon">“</div>
                     <p class="verse-text">
-                        The Spirit of the Lord is upon Me, because He has anointed Me to preach the gospel to the poor. He has sent Me to heal the brokenhearted, to preach deliverance to the captives and recovery of sight to the blind, to set at liberty those who are oppressed; to preach the acceptable year of the Lord.
+                        "The Spirit of the Lord is upon Me, because He has anointed Me to preach the gospel to the poor. He has sent Me to heal the brokenhearted..."
                     </p>
                     <p class="verse-ref">— Luke 4:18-19</p>
                 </div>
 
                 <div class="scripture-box gold-bg">
                     <p class="verse-text">
-                        And when He had called His twelve disciples to Him, He gave them power over unclean spirits, to cast them out, and to heal all kinds of sickness and all kinds of disease... <br><br>
-                        Then Jesus came and spoke to them, saying, <strong>"All authority has been given to Me in heaven and on earth."</strong>
+                        And when He had called His twelve disciples to Him, He gave them power over unclean spirits... <strong>"All authority has been given to Me in heaven and on earth."</strong>
                     </p>
-                    <p class="verse-ref">— Matthew 10:1, 28:18</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-container bg-light">
-            <div class="section-header">
-                <h2>Our Worship Services</h2>
-            </div>
-            
-            <div class="service-grid">
-                <div class="service-card">
-                    <div class="icon">☀️</div>
-                    <h3>Sunday Service</h3>
-                    <p class="time">10:00 AM - 12:30 PM</p>
-                    <p class="details">Main worship and sermon.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon">🔥</div>
-                    <h3>Friday Fasting</h3>
-                    <p class="time">6:00 PM - 8:00 PM</p>
-                    <p class="details">Prayer and intercession.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon">🎸</div>
-                    <h3>Youth Meeting</h3>
-                    <p class="time">Saturday 5:00 PM</p>
-                    <p class="details">Music, fun, and word.</p>
+                    <p class="verse-ref" style="color: #d35400;">— Matthew 10:1</p>
                 </div>
             </div>
         </section>
@@ -94,59 +83,93 @@
         <section class="section-container">
             <div class="section-header">
                 <h2>Our Journey</h2>
+                <p>Click on a milestone to see memories</p>
                 <div class="divider"></div>
             </div>
 
             <div class="roadmap">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+                <div class="timeline-item" onclick="openRoadmapModal('The Vision', 'God gave a vision to establish a place of worship to preach the Gospel to the poor.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
+                    <div class="timeline-dot"><i class="fas fa-eye"></i></div>
                     <div class="timeline-content">
-                        <span class="date">The Vision</span>
-                        <h3>Foundations</h3>
-                        <p>God gave a vision to establish a place of worship to preach the Gospel to the poor and heal the brokenhearted.</p>
+                        <span class="date">2020</span>
+                        <h3>The Vision</h3>
+                        <p>Click to view photo <i class="fas fa-arrow-right"></i></p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+
+                <div class="timeline-item" onclick="openRoadmapModal('First Gathering', 'We started with a small house church gathering. Faith grew, and the congregation multiplied.', 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800')">
+                    <div class="timeline-dot"><i class="fas fa-users"></i></div>
                     <div class="timeline-content">
-                        <span class="date">The Mission</span>
-                        <h3>Making Disciples</h3>
-                        <p>Following Matthew 10:1, we empower disciples to cast out fear and heal diseases in Jesus' name.</p>
+                        <span class="date">2021</span>
+                        <h3>First Gathering</h3>
+                        <p>Click to view photo <i class="fas fa-arrow-right"></i></p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+
+                <div class="timeline-item" onclick="openRoadmapModal('Church Establishment', 'By Gods grace, we moved into our current location in Yernagudem.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
+                    <div class="timeline-dot"><i class="fas fa-church"></i></div>
                     <div class="timeline-content">
-                        <span class="date">Present</span>
-                        <h3>Digital Ministry</h3>
-                        <p>We continue to preach the acceptable year of the Lord to all nations through technology and faith.</p>
+                        <span class="date">2023</span>
+                        <h3>Establishment</h3>
+                        <p>Click to view photo <i class="fas fa-arrow-right"></i></p>
                     </div>
                 </div>
             </div>
-    <section class="section-container bg-light">
+        </section>
+
+        <section class="section-container bg-light">
             <div class="section-header">
                 <h2>Visit Us</h2>
-                <p>Yernagudem-Chinnayagudem Road, Andhra Pradesh</p>
             </div>
             <div class="map-container">
                 <iframe 
+                    src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                     width="100%" 
-                    height="300" 
-                    frameborder="0" 
-                    scrolling="no" 
-                    marginheight="0" 
-                    marginwidth="0" 
-                    style="border:0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" 
-                    src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed">
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
                 </iframe>
             </div>
         </section>
 
     </main>
 
-    <footer>
-        <p>© <span id="year"></span> Christ Ministries. All rights reserved.</p>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Christ Mandir</h3>
+                <p>In Christ, From Christ, For Christ.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="contact-list">
+                    <li><i class="fas fa-map-marker-alt"></i> Yernagudem-Chinnayagudem Rd, AP</li>
+                    <li><i class="fas fa-phone-alt"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> contact@christmandir.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="year"></span> Christ Ministries. All rights reserved.</p>
+        </div>
     </footer>
+
+    <div id="roadmap-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeRoadmapModal()">&times;</span>
+            <img id="modal-img" src="" alt="Milestone">
+            <h3 id="modal-title">Title</h3>
+            <p id="modal-desc">Description</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
