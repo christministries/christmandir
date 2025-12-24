@@ -22,7 +22,7 @@
             --gold: #cfa76e;
             --xmas-red: #d42426;
             --xmas-green: #165b33;
-            --bg-light: #f8f9fa;
+            --bg-light: #fdfdfd;
             --text-dark: #2d3436;
             --text-light: #636e72;
             --glass-nav: rgba(255, 255, 255, 0.90);
@@ -34,7 +34,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-body); color: var(--text-dark); background-color: #fff; overflow-x: hidden; }
+        body { font-family: var(--font-body); color: var(--text-dark); background-color: var(--bg-light); overflow-x: hidden; }
 
         /* =========================================
            2. NAVIGATION (QUIZ STYLE)
@@ -67,26 +67,30 @@
             .nav-links a span { font-size: 1.4rem; transition: 0.3s; }
             .nav-links a.active { color: var(--primary); box-shadow: none; }
             .nav-links a.active span { transform: translateY(-5px); }
-            body { padding-bottom: 100px; } /* Space for nav */
+            body { padding-bottom: 100px; }
         }
 
         /* =========================================
            3. CHRISTMAS ANIMATIONS
            ========================================= */
-        /* Flying Santa Video (Clean) */
+        /* Flying Santa Image (Transparent PNG, No Box) */
         #santa-container {
             position: fixed; top: 15%; left: -600px;
             z-index: 998; pointer-events: none;
             animation: flyAcross 25s linear infinite;
         }
-        .santa-video {
-            width: 180px; height: 180px; 
-            border-radius: 50%; object-fit: cover; /* Circular Cutout */
-            /* No background box, just the video */
+        .santa-img {
+            width: 250px; height: auto; 
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            /* Ensure no box or background */
+            background: transparent; border: none; border-radius: 0; box-shadow: none;
         }
         @keyframes flyAcross {
-            0% { left: -600px; transform: rotate(-5deg); }
-            100% { left: 120vw; transform: rotate(5deg); }
+            0% { left: -600px; transform: translateY(0) rotate(-2deg); }
+            25% { transform: translateY(-30px) rotate(0deg); }
+            50% { transform: translateY(0) rotate(2deg); }
+            75% { transform: translateY(20px) rotate(0deg); }
+            100% { left: 120vw; transform: translateY(0) rotate(-2deg); }
         }
 
         /* Fireworks & Snow */
@@ -99,14 +103,19 @@
            4. MAIN SECTIONS
            ========================================= */
         /* Hero Section */
-        .hero-split { display: flex; min-height: 90vh; position: relative; overflow: hidden; }
-        .hero-text-side { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; z-index: 2; background: rgba(255,255,255,0.7); }
+        .hero-split { display: flex; min-height: 90vh; position: relative; overflow: hidden; background: #fff; }
+        .hero-text-side { 
+            flex: 1.2; display: flex; align-items: center; justify-content: center; 
+            padding: 60px 40px; text-align: center; z-index: 2; 
+            background: radial-gradient(circle at center, rgba(255,255,255,0.9), rgba(240,248,255,0.8));
+        }
         .text-wrapper { max-width: 550px; animation: fadeInUp 1s ease-out; }
         
         .mini-profile-wrapper { margin-bottom: 20px; }
-        .hero-feature-img { height: 160px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1)); } /* Clean image, no box */
+        /* Clean image above welcome, no box */
+        .hero-feature-img { height: 160px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15)); border: none; } 
 
-        .xmas-title { font-family: var(--font-xmas); font-size: 3.5rem; color: var(--xmas-green); line-height: 1.1; margin: 10px 0; text-shadow: 2px 2px 0px #fff; }
+        .xmas-title { font-family: var(--font-xmas); font-size: 3.8rem; color: var(--xmas-green); line-height: 1.1; margin: 10px 0; text-shadow: 2px 2px 0px #fff; }
         .sub-title { font-size: 1rem; letter-spacing: 3px; color: var(--gold); font-weight: 700; text-transform: uppercase; }
         .gold-line { width: 80px; height: 3px; background: var(--gold); margin: 0 auto 25px; }
         .tagline { font-size: 1.1rem; color: #555; margin-bottom: 30px; line-height: 1.6; }
@@ -127,23 +136,46 @@
         .card:hover { transform: translateY(-10px); }
         .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
         .card h3 { font-size: 1.3rem; margin-bottom: 5px; color: var(--primary-dark); }
+        
+        /* Team Image Styling */
         .team-img { width: 120px !important; height: 120px !important; border-radius: 50% !important; margin: 0 auto 15px; border: 3px solid var(--primary); }
 
-        /* Roadmap (Night Sky) */
-        .roadmap-section { padding: 80px 5%; background: #0a0a0a url('https://i.imgur.com/9c4b7a.png') center/cover; color: white; }
+        /* Mission Parallax (New Background) */
+        .parallax-section {
+            min-height: 60vh;
+            background-image: url('https://images.unsplash.com/photo-1513297887119-d46091b24bfa?w=1600'); /* Warm Christmas Lights */
+            background-attachment: fixed;
+            background-position: center; background-size: cover; position: relative;
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+        }
+        .overlay-dark { position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+        .content-center { position: relative; z-index: 2; padding: 20px; }
+        .big-text { font-size: 1.5rem; font-weight: 300; }
+
+        /* Roadmap (New Night Sky Background) */
+        .roadmap-section { 
+            padding: 80px 5%; 
+            background: #0a0a0a url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5980?w=1600') center/cover; 
+            color: white; 
+        }
         .timeline { max-width: 700px; margin: 0 auto; border-left: 2px solid var(--gold); padding-left: 30px; }
         .timeline-row { margin-bottom: 40px; cursor: pointer; position: relative; }
-        .timeline-content { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2); }
+        .timeline-content { 
+            background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; 
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); 
+            transition: 0.3s;
+        }
+        .timeline-content:hover { background: rgba(255,255,255,0.2); transform: translateX(5px); }
         .timeline-row::before { content: '❄️'; position: absolute; left: -41px; top: 10px; font-size: 1.2rem; }
 
         /* Footer & Map */
         .main-footer { background: #001f1b; color: white; padding-top: 50px; position: relative; z-index: 20; }
-        #snow-pile { position: absolute; top: -60px; left: 0; width: 100%; height: 80px; pointer-events: none; z-index: 10; }
+        #snow-pile { position: absolute; top: -70px; left: 0; width: 100%; height: 100px; pointer-events: none; z-index: 10; }
         #snow-pile img { width: 100%; height: 100%; object-fit: cover; }
         
         .footer-content { display: flex; flex-wrap: wrap; }
         .footer-map { flex: 1; min-width: 300px; height: 350px; }
-        .footer-map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(20%); }
+        .footer-map iframe { width: 100%; height: 100%; border: 0; filter: contrast(1.1); }
         .footer-info { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         .footer-logo { font-family: var(--font-xmas); font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
         .contact-list p { margin: 10px 0; font-size: 1rem; color: #ddd; }
@@ -166,17 +198,20 @@
             .hero-split { flex-direction: column; height: auto; }
             .hero-img-side { display: none; }
             .hero-text-side { padding: 80px 20px 40px; }
-            .xmas-title { font-size: 2.8rem; }
-            .santa-video { width: 120px; height: 120px; } /* Smaller Santa on mobile */
+            .xmas-title { font-size: 3rem; }
+            .santa-img { width: 150px; } /* Smaller Santa on mobile */
             
             /* Hide decorative trees on mobile to save space */
             .xmas-deco { display: none; }
+            .parallax-section { background-attachment: scroll; } /* Mobile performance */
         }
         
         /* Decorative Images */
         .xmas-deco { position: absolute; z-index: 10; pointer-events: none; }
         .tree-left { bottom: -50px; left: -50px; width: 200px; }
         .gifts-right { top: -50px; right: -50px; width: 200px; }
+        .pulse-anim { animation: pulse 3s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         
     </style>
 </head>
@@ -197,9 +232,7 @@
     <canvas id="fireworks-canvas"></canvas>
     
     <div id="santa-container">
-        <video autoplay muted loop playsinline class="santa-video">
-            <source src="https://video.wixstatic.com/video/be4f11_fa2591e3e68b4eb3bb53f105db61691e/720p/mp4/file.mp4" type="video/mp4">
-        </video>
+        <img src="https://static.wixstatic.com/media/be4f11_6e0a5d13aff544498ef571e2f20751d3~mv2.png" alt="Flying Santa" class="santa-img">
     </div>
 
     <div id="snow-container"></div>
@@ -276,6 +309,15 @@
             </div>
         </section>
 
+        <section class="parallax-section">
+            <div class="overlay-dark">
+                <div class="content-center reveal">
+                    <h2 class="xmas-font" style="font-size:3rem; margin-bottom:15px;">In Christ, For Christ</h2>
+                    <p class="big-text">We are part of His body; Jesus Christ's ministry is our ministry.</p>
+                </div>
+            </div>
+        </section>
+
         <section class="roadmap-section">
             <div class="container">
                 <div class="section-title reveal">
@@ -319,7 +361,7 @@
                         <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
-                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">&copy; <span id="year"></span> Christ Ministries</p>
+                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
                 </div>
             </div>
         </footer>
@@ -327,7 +369,7 @@
 
     <div id="roadmap-modal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeRoadmapModal()">&times;</span>
+            <span class="close-modal" onclick="closeRoadmapModal()">×</span>
             <img id="modal-img" src="" style="width:100%; height:200px; object-fit:cover;">
             <div class="modal-text">
                 <h3 id="modal-title">Title</h3>
