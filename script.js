@@ -1,24 +1,24 @@
-/* --- SCROLL REVEAL --- */
+/* --- SCROLL ANIMATION --- */
 function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
+    const reveals = document.querySelectorAll(".reveal");
+    reveals.forEach(el => {
+        const windowHeight = window.innerHeight;
+        const elementTop = el.getBoundingClientRect().top;
         if (elementTop < windowHeight - 100) {
-            reveals[i].classList.add("active");
+            el.classList.add("active");
         }
-    }
+    });
 }
 window.addEventListener("scroll", reveal);
 reveal();
 
-/* --- SNOW LOGIC --- */
+/* --- SNOWFALL --- */
 if (document.getElementById('snow-container')) {
     function createSnowflake() {
         const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
+        snowflake.className = 'snowflake';
         snowflake.style.left = Math.random() * window.innerWidth + 'px';
-        snowflake.style.animationDuration = Math.random() * 2 + 3 + 's';
+        snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
         snowflake.style.width = snowflake.style.height = Math.random() * 5 + 2 + 'px';
         document.getElementById('snow-container').appendChild(snowflake);
         setTimeout(() => snowflake.remove(), 5000);
@@ -26,10 +26,7 @@ if (document.getElementById('snow-container')) {
     setInterval(createSnowflake, 100);
 }
 
-// Year
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// Modal Roadmap
+/* --- MODAL LOGIC --- */
 function openRoadmapModal(title, desc, imgSrc) {
     const modal = document.getElementById('roadmap-modal');
     document.getElementById('modal-title').innerText = title;
@@ -37,6 +34,11 @@ function openRoadmapModal(title, desc, imgSrc) {
     document.getElementById('modal-img').src = imgSrc;
     modal.style.display = 'flex';
 }
+
 function closeRoadmapModal() {
     document.getElementById('roadmap-modal').style.display = 'none';
 }
+
+// Global Year
+const yearSpan = document.getElementById('year');
+if(yearSpan) yearSpan.innerText = new Date().getFullYear();
