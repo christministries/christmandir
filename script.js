@@ -77,4 +77,29 @@ if (document.getElementById('quiz-box')) {
         score = 0;
         loadQuiz();
     };
+
 }
+/* --- ROADMAP MODAL LOGIC --- */
+function openRoadmapModal(title, desc, imgSrc) {
+    const modal = document.getElementById('roadmap-modal');
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-desc').textContent = desc;
+    document.getElementById('modal-img').src = imgSrc;
+    
+    modal.style.display = 'flex';
+}
+
+function closeRoadmapModal() {
+    document.getElementById('roadmap-modal').style.display = 'none';
+}
+
+// Close modal if clicked outside box
+window.onclick = function(event) {
+    const modal = document.getElementById('roadmap-modal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Set Year
+document.getElementById('year').textContent = new Date().getFullYear();
