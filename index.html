@@ -88,7 +88,7 @@
             background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); 
         }
 
-        /* MOBILE NAV - FIXED JUSTIFICATION */
+        /* MOBILE NAV */
         @media (max-width: 768px) {
             body { padding-top: 0; padding-bottom: 90px; } 
             
@@ -109,9 +109,9 @@
             .nav-links { 
                 width: 100%; height: 100%;
                 display: flex; 
-                justify-content: space-between; 
+                justify-content: space-evenly; 
                 align-items: center;
-                gap: 0; padding: 0 20px; margin: 0;
+                gap: 0; padding: 0; margin: 0;
             }
             
             .nav-links li { position: relative; display: flex; justify-content: center; align-items: center; }
@@ -204,7 +204,7 @@
         }
         .hero-img-side img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 
-        /* NATIVITY SECTION (LOGIC ADDED) */
+        /* NATIVITY SECTION */
         #nativity {
             padding: 50px 5%;
             text-align: center;
@@ -232,26 +232,30 @@
         #nativity .card h3 { color: var(--gold); font-size: 1.3rem; margin: 15px 0 5px;}
         #nativity .card p { color: #ddd; font-size: 0.9rem; margin-bottom: 5px; }
         
-        /* Logic: Hidden Verse */
+        /* Hidden detailed matter - 0 Height by default */
         .verse-hidden {
             max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s ease;
-            background: rgba(0,0,0,0.3); border-radius: 8px; margin-top: 5px;
+            background: rgba(0,0,0,0.3); border-radius: 8px; margin-top: 0; padding: 0; text-align: left;
         }
-        .card.active .verse-hidden { max-height: 150px; opacity: 1; padding: 10px; margin-top: 10px; }
-        .click-hint { font-size: 0.75rem; color: var(--gold); opacity: 0.7; margin-top: 5px; display: block;}
+        .verse-hidden p { padding: 15px; font-size: 0.95rem; line-height: 1.6; color: #f4f4f4; border-left: 3px solid var(--gold); margin: 0; }
+        
+        /* Expand when active */
+        .card.active .verse-hidden { max-height: 500px; opacity: 1; padding: 10px; margin-top: 10px; }
+        
+        .click-hint { font-size: 0.75rem; color: var(--gold); opacity: 0.7; margin-top: 5px; display: block; letter-spacing: 1px; text-transform: uppercase;}
 
-        /* Matter Below Images */
         .nativity-footer-text {
             margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);
             font-family: var(--font-head); color: #fff;
         }
         .verse-big { font-size: 1.5rem; color: var(--gold); margin-bottom: 10px; display: block; }
 
-        /* SERVICES */
+        /* SERVICES - NEW CHRISTMAS VIBE BG */
         #services {
             padding: 80px 5%; text-align: center;
-            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1510936111840-65e151ad71bb?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover; background-attachment: fixed;
+            /* Winter Morning / Christmas Sky Vibe */
+            background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('https://www.transparenttextures.com/patterns/snow.png');
+            background-color: #f0f8ff; /* Alice Blue */
         }
         .section-title h2 { font-family: var(--font-head); font-size: 2.8rem; color: var(--primary-dark); margin-bottom: 10px; font-weight: 700; }
         .section-title p { font-family: var(--font-script); font-size: 2rem; color: var(--gold); margin-bottom: 40px; }
@@ -267,21 +271,25 @@
         .service-card span { transition: 0.4s; display: inline-block; }
         .service-card:hover span { transform: scale(1.2) rotate(10deg); }
 
-        /* PASTORAL */
+        /* PASTORAL - NEW CHRISTMAS VIBE BG */
         #pastoral-team {
             padding: 80px 5%; text-align: center;
-            background-color: #fdfbf7;
-            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            /* Warm Gold/Festive Vibe */
+            background: linear-gradient(rgba(255,253,232,0.9), rgba(255,253,232,0.9)), url('https://www.transparenttextures.com/patterns/christmas-magic.png');
+            background-color: #fffde7;
         }
+        
+        .pastor-flex { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;}
+
         .pastor-card {
             background: white; border-radius: 20px; overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.4s;
             position: relative; border-bottom: 5px solid var(--gold);
-            padding: 20px;
+            padding: 25px;
+            width: 100%; max-width: 350px;
         }
         .pastor-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
         
-        /* CIRCLE CUTOUT PHOTOS (SMALLER 130px) */
         .pastor-img-container { 
             width: 130px; height: 130px; 
             border-radius: 50%; 
@@ -309,7 +317,7 @@
         .timeline-content:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); }
         .timeline-row::before { content: '🌟'; position: absolute; left: -41px; top: 10px; font-size: 1.2rem; color: var(--gold); text-shadow: 0 0 10px var(--gold);}
 
-        /* FOOTER (REDUCED SIZE) */
+        /* FOOTER */
         .main-footer { 
             background: #021210; color: white; 
             padding-top: 0; position: relative; z-index: 20; margin-top: auto; 
@@ -317,9 +325,9 @@
         }
         .footer-content { display: flex; align-items: stretch; flex-wrap: wrap; }
         .footer-map { flex: 1; min-width: 350px; }
-        .footer-map iframe { width: 100%; height: 100%; min-height: 250px; /* Reduced Height */ border: 0; display: block; }
+        .footer-map iframe { width: 100%; height: 100%; min-height: 250px; border: 0; display: block; }
         .footer-info { 
-            flex: 1; min-width: 350px; padding: 40px 20px; /* Reduced Padding */
+            flex: 1; min-width: 350px; padding: 40px 20px;
             text-align: center; 
             display: flex; flex-direction: column; justify-content: center;
             background: #001f1b;
@@ -338,33 +346,22 @@
                 margin-top: 0; padding-top: 20px; 
             }
             
-            /* FIXED: Image centered and visible */
-            .hero-img-side {
-                display: block; 
-                position: relative; 
-                width: 85%; height: 280px; 
-                margin: 0 auto 20px; 
-                clip-path: none; 
-                border-left: none; border-radius: 20px; 
-                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            }
-            .hero-img-side img { width: 100%; height: 100%; object-fit: cover; }
+            /* HIDE Church Photo on Mobile */
+            .hero-img-side { display: none !important; }
 
             .hero-text-side { width: 100%; padding: 20px; text-align: center; background: none; }
             .hero-content-wrapper { text-align: center; }
             
-            /* Hide Church photo on mobile, show only centered logo if needed */
             .hero-feature-img {
-                display: block; 
-                margin: 0 auto 20px; 
-                width: 140px; 
-                height: 140px;
-                object-fit: contain;
+                display: block; margin: 0 auto 20px; width: 140px; height: 140px; object-fit: contain;
             }
 
             .btn-row { justify-content: center; }
             .xmas-title { font-size: 3rem; }
             
+            /* Optimized Mobile Image Size for Nativity */
+            #nativity .card img { height: 140px; }
+
             .footer-content { flex-direction: column; }
             .footer-map iframe { height: 250px; min-height: 250px; }
             body.no-scroll { height: auto; overflow: hidden; }
@@ -447,32 +444,41 @@
 
                 <div class="card-grid">
                     <div class="card reveal" onclick="this.classList.toggle('active')">
-                        <img src="https://static.wixstatic.com/media/be4f11_e0ce7264856a40ce97e08c3db6b5a147~mv2.jpeg" alt="Nativity Scene">
+                        <img src="https://static.wixstatic.com/media/be4f11_e0ce7264856a40ce97e08c3db6b5a147~mv2.jpeg?q=80&w=800" alt="Nativity Scene">
                         <h3>The Manger</h3>
-                        <p>A Savior is born...</p>
-                        <span class="click-hint">(Tap to read)</span>
+                        <span class="click-hint"></span>
                         <div class="verse-hidden">
-                            "And she brought forth her firstborn Son, and wrapped Him in swaddling cloths, and laid Him in a manger." <br>- Luke 2:7
+                            <p>
+                                <b>Luke 2:7</b><br>
+                                "And she brought forth her firstborn Son, and wrapped Him in swaddling cloths, and laid Him in a manger." <br><br>
+                                In the bustling town of Bethlehem, Mary gave birth to Jesus in a humble stable. The King of Kings entered the world in the most lowly of circumstances, demonstrating that God's love reaches the humblest of hearts.
+                            </p>
                         </div>
                     </div>
                     
                     <div class="card reveal" style="transition-delay: 0.1s;" onclick="this.classList.toggle('active')">
-                        <img src="https://static.wixstatic.com/media/be4f11_3e37ea4654cc4274a34253baa413910c~mv2.webp" alt="Shepherds">
+                        <img src="https://static.wixstatic.com/media/be4f11_3e37ea4654cc4274a34253baa413910c~mv2.webp?q=80&w=800" alt="Shepherds">
                         <h3>The Shepherds</h3>
-                        <p>Good tidings of joy...</p>
-                        <span class="click-hint">(Tap to read)</span>
+                        <span class="click-hint"></span>
                         <div class="verse-hidden">
-                            "Do not be afraid, for behold, I bring you good tidings of great joy which will be to all people." <br>- Luke 2:10
+                            <p>
+                                <b>Luke 2:10</b><br>
+                                "Do not be afraid, for behold, I bring you good tidings of great joy which will be to all people." <br><br>
+                                On a quiet hillside, angels appeared to shepherds to announce the 'Good News'. These humble shepherds were the first invited guests to witness the Savior, proving the Gospel is for everyone.
+                            </p>
                         </div>
                     </div>
 
                     <div class="card reveal" style="transition-delay: 0.2s;" onclick="this.classList.toggle('active')">
-                        <img src="https://static.wixstatic.com/media/be4f11_2ee320685fcb43dfb2cc5dbb02493e70~mv2.webp" alt="Wise Men">
+                        <img src="https://static.wixstatic.com/media/be4f11_2ee320685fcb43dfb2cc5dbb02493e70~mv2.webp?q=80&w=800" alt="Wise Men">
                         <h3>The Wise Men</h3>
-                        <p>We have seen His star...</p>
-                        <span class="click-hint">(Tap to read)</span>
+                        <span class="click-hint"></span>
                         <div class="verse-hidden">
-                            "And when they had come into the house, they saw the young Child with Mary His mother, and fell down and worshiped Him." <br>- Matthew 2:11
+                            <p>
+                                <b>Matthew 2:11</b><br>
+                                "And when they had come into the house, they saw the young Child with Mary His mother, and fell down and worshiped Him." <br><br>
+                                Guided by a star, Magi from the East traveled to find the King. They presented gifts of Gold, Frankincense, and Myrrh, honoring His royalty, divinity, and sacrifice.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -520,22 +526,22 @@
                 <div class="section-title reveal">
                     <h2>Pastoral Team</h2>
                 </div>
-                <div class="card-grid">
+                <div class="pastor-flex">
                     <div class="pastor-card reveal">
                         <div class="pastor-img-container">
-                            <img src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" alt="Senior Pastor">
+                            <img src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" alt="Senior Pastors">
                         </div>
                         <div class="pastor-info">
-                            <h3>Rev. A Daniel Paul</h3>
+                            <h3>Rev. A. Daniel Paul</h3>
                             <p>Senior Pastor</p>
                         </div>
                     </div>
                     <div class="pastor-card reveal" style="transition-delay: 0.1s;">
                         <div class="pastor-img-container">
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400" alt="Ministry Team">
+                            <img src="https://static.wixstatic.com/media/be4f11_39b5fabbefa445cba7ea692ba2ffcc17~mv2.jpg?w=400" alt="Ministry Team">
                         </div>
                         <div class="pastor-info">
-                            <h3>Ministry Team</h3>
+                            <h3>A. Swarna Daniel</h3>
                             <p>Worship & Prayer</p>
                         </div>
                     </div>
