@@ -97,7 +97,7 @@
             box-shadow: 0 5px 15px rgba(0,137,123,0.3); 
         }
 
-        /* MOBILE NAV - EVENLY SPACED */
+        /* MOBILE NAV - FIXED JUSTIFICATION */
         @media (max-width: 768px) {
             body { padding-top: 0; padding-bottom: 100px; } 
             
@@ -109,25 +109,37 @@
                 border-radius: 40px;
                 box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
                 border: 1px solid rgba(255,255,255,0.6);
-                padding: 0; /* Remove padding to let space-evenly work perfectly */
+                /* Remove padding on header to let UL stretch */
+                padding: 0; 
             }
             .logo { display: none; }
             
-            /* EVENLY SPACED MENU ITEMS */
             .nav-links { 
                 width: 100%; 
-                justify-content: space-evenly; /* This ensures equal space around items */
+                height: 100%; 
+                display: flex;
+                /* This pushes items to the far left and right edges */
+                justify-content: space-between; 
                 align-items: center;
                 gap: 0; 
-                height: 100%; 
-                padding: 0;
+                /* Add side padding so the first/last items don't hit the border radius */
+                padding: 0 25px; 
+                margin: 0;
             }
             
-            .nav-links li { position: relative; }
+            .nav-links li { 
+                position: relative; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+            }
+
             .nav-links li a { 
                 flex-direction: column; font-size: 0.7rem; color: #636e72; 
-                gap: 4px; padding: 5px 10px; background: none !important;
+                gap: 4px; padding: 5px; background: none !important;
                 border-radius: 0;
+                /* Ensure links don't have desktop padding */
+                width: auto;
             }
             .nav-links li a span { font-size: 1.5rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
             
