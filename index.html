@@ -97,7 +97,7 @@
             box-shadow: 0 5px 15px rgba(0,137,123,0.3); 
         }
 
-        /* MOBILE NAV - JUSTIFIED */
+        /* MOBILE NAV - EVENLY SPACED */
         @media (max-width: 768px) {
             body { padding-top: 0; padding-bottom: 100px; } 
             
@@ -109,18 +109,18 @@
                 border-radius: 40px;
                 box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
                 border: 1px solid rgba(255,255,255,0.6);
-                padding: 0 10px; /* Reduced padding slightly to give flex space */
+                padding: 0; /* Remove padding to let space-evenly work perfectly */
             }
             .logo { display: none; }
             
-            /* JUSTIFIED MENU ITEMS */
+            /* EVENLY SPACED MENU ITEMS */
             .nav-links { 
                 width: 100%; 
-                justify-content: space-between; /* Spreads items to edges */
+                justify-content: space-evenly; /* This ensures equal space around items */
                 align-items: center;
                 gap: 0; 
                 height: 100%; 
-                padding: 0 15px; /* Adds breathing room on far left/right */
+                padding: 0;
             }
             
             .nav-links li { position: relative; }
