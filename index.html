@@ -37,6 +37,7 @@
             font-family: var(--font-body); 
             color: var(--text-dark); 
             background-color: var(--bg-light);
+            /* Subtle overall texture */
             background-image: url('https://www.transparenttextures.com/patterns/snow.png');
             overflow-x: hidden; 
             min-height: 100%;
@@ -44,9 +45,7 @@
             flex-direction: column;
         }
 
-        /* Prevent scrolling during intro to stop glitches */
         body.no-scroll { overflow: hidden; height: 100vh; }
-
         main { flex: 1; }
 
         /* =========================================
@@ -95,13 +94,10 @@
            3. INTRO & ANIMATIONS
            ========================================= */
         #intro-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%;
             background-color: #050505; 
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 3000;
-            /* Smoother fade out */
-            transition: opacity 1.2s ease-in-out, visibility 1.2s;
+            z-index: 3000; transition: opacity 1.2s ease-in-out, visibility 1.2s;
         }
         #intro-overlay.intro-fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
         
@@ -117,13 +113,8 @@
         }
         @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* FIREWORKS CANVAS */
-        #fireworks-canvas { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; 
-            z-index: 3001; transition: z-index 0.1s step-end; /* Delayed Drop */
-        }
-        
-        /* SNOW & SANTA */
+        /* ANIMATION ELEMENTS */
+        #fireworks-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3001; transition: z-index 0.1s step-end; }
         #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
         .snowflake { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: snow linear infinite; pointer-events: none; }
         @keyframes snow { to { transform: translateY(105vh); } }
@@ -144,118 +135,94 @@
         .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: 0.9s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: none; }
 
-        /* HERO - PROFESSIONAL ALIGNMENT */
+        /* HERO - PROFESSIONAL ALIGNMENT & BACKGROUNDS */
         .hero-split { 
-            display: flex; 
-            /* Ensure it fills the screen exactly */
-            min-height: 100vh; 
-            height: 100vh;
-            position: relative; 
-            overflow: hidden;
-            justify-content: space-between;
-            align-items: center; /* Vertically center everything */
+            display: flex; min-height: 100vh; height: 100vh; position: relative; overflow: hidden;
+            justify-content: space-between; align-items: center;
         }
         
         .hero-text-side { 
-            width: 50%; /* Text takes exactly half */
-            height: 100%;
-            display: flex; 
-            flex-direction: column;
-            justify-content: center; 
-            align-items: flex-start; /* STRICT LEFT ALIGNMENT */
-            padding-left: 8%; /* Professional Left Indent */
-            padding-right: 20px;
-            z-index: 2; 
-            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            width: 50%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+            padding-left: 8%; padding-right: 20px; z-index: 2; 
+            
+            /* NICER BACKGROUND: Winter Bokeh Texture with Gradient Overlay */
+            background: linear-gradient(to right, rgba(245, 247, 250, 0.9), rgba(235, 237, 238, 0.8)), url('https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover; background-position: center;
         }
 
-        .hero-content-wrapper {
-            max-width: 650px; /* Limits width so lines don't get too long */
-            text-align: left;
-        }
-
-        .hero-feature-img { 
-            height: 140px; 
-            object-fit: contain; 
-            margin-bottom: 25px; 
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); 
-            display: block; /* Ensures block level for alignment */
-        }
-        
-        .welcome-label {
-            color: var(--gold); 
-            font-weight: 700; 
-            letter-spacing: 4px; 
-            font-size: 0.85rem; 
-            font-family: 'Montserrat', sans-serif;
-            display: block;
-            margin-bottom: 10px;
-        }
+        .hero-content-wrapper { max-width: 650px; text-align: left; }
+        .hero-feature-img { height: 140px; object-fit: contain; margin-bottom: 25px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); display: block; }
+        .welcome-label { color: var(--gold); font-weight: 700; letter-spacing: 4px; font-size: 0.85rem; font-family: 'Montserrat', sans-serif; display: block; margin-bottom: 10px; }
 
         .xmas-title { 
-            font-family: var(--font-head); 
-            font-size: 4.5rem; /* Larger Title */
-            line-height: 1.1; 
-            margin: 0 0 20px 0; 
-            font-weight: 800;
+            font-family: var(--font-head); font-size: 4.5rem; line-height: 1.1; margin: 0 0 20px 0; font-weight: 800;
             background: linear-gradient(to bottom, #7f8c8d 0%, #bdc3c7 20%, #ecf0f1 50%, #bdc3c7 80%, #7f8c8d 100%);
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0px 2px 0px rgba(0,0,0,0.2)); 
-            text-transform: uppercase;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 2px 0px rgba(0,0,0,0.2)); text-transform: uppercase;
         }
         
-        .tagline { 
-            font-size: 1.1rem; 
-            color: #555; 
-            margin-bottom: 40px; 
-            line-height: 1.8; 
-            max-width: 90%; 
-        }
-        
-        .btn-row { 
-            display: flex; 
-            gap: 20px; 
-            justify-content: flex-start; 
-        }
-        
+        .tagline { font-size: 1.1rem; color: #444; margin-bottom: 40px; line-height: 1.8; max-width: 90%; font-weight: 500; }
+        .btn-row { display: flex; gap: 20px; justify-content: flex-start; }
         .btn-main { background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; font-family: 'Montserrat', sans-serif; transition: 0.3s; letter-spacing: 1px; }
         .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .btn-text { color: var(--primary-dark); padding: 16px 20px; text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--gold); font-family: 'Montserrat', sans-serif; }
         
-        /* DIAGONAL DIVIDER IMAGE */
+        /* DIAGONAL SEPARATOR SECTION */
         .hero-img-side { 
-            width: 55%; /* Image takes slightly more than half to cover overlap */
-            height: 100%;
-            position: relative; 
-            /* Improved Diagonal Cut */
+            width: 55%; height: 100%; position: relative; 
             clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
-            margin-left: -10%; /* Pull it left to create the overlap effect */
+            margin-left: -10%; 
+            /* Adds the distinct diagonal line */
+            border-left: 8px solid var(--gold); 
+            box-sizing: content-box; /* Ensures border doesn't affect width calculation */
+            z-index: 5;
         }
-        .hero-img-side img { 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            /* Focus on the faces */
-            object-position: 50% 20%; 
+        .hero-img-side img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+
+        /* Snow Pile Separator for Hero bottom */
+        #hero-snow-pile {
+            position: absolute; bottom: -1px; left: 0; width: 100%; height: 120px;
+            pointer-events: none; z-index: 10;
+        }
+        #hero-snow-pile img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+
+        /* NATIVITY & SECTIONS - NEW BACKGROUNDS */
+        .section-clean { 
+            padding: 120px 5% 90px; /* Added top padding to clear snow */
+            text-align: center;
         }
 
-        /* NATIVITY & SECTIONS */
-        .section-clean { 
-            padding: 90px 5%; text-align: center;
-            background-color: #f8fff8;
-            background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
+        /* Nativity: Warm, ancient paper texture */
+        #nativity {
+            background: linear-gradient(rgba(255,250,240,0.9), rgba(255,250,240,0.9)), url('https://www.transparenttextures.com/patterns/old-map.png');
+            background-color: #fffbf2;
         }
+
+        /* Services: Clean, subtle modern pattern */
+        #services {
+            background: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url('https://www.transparenttextures.com/patterns/geometric-leaves.png');
+            background-color: #fff;
+        }
+
+        /* Pastoral: Warmer cream texture */
+        #pastoral-team {
+             background: linear-gradient(rgba(255,253,232,0.9), rgba(255,253,232,0.9)), url('https://www.transparenttextures.com/patterns/cream-paper.png');
+             background-color: #fffde8;
+        }
+
         .section-title h2 { font-family: var(--font-head); font-size: 2.8rem; color: var(--primary-dark); margin-bottom: 10px; font-weight: 700; }
         .section-title p { font-family: var(--font-script); font-size: 2rem; color: var(--gold); margin-bottom: 40px; }
         
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
         .card { 
             background: rgba(255,255,255,0.95); padding: 20px; border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: 0.4s; 
-            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.8); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06); transition: 0.4s; 
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.9); 
         }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,137,123,0.1); border-color: var(--gold); }
-        .card img { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,137,123,0.15); border-color: var(--gold); }
+        .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
         .card h3 { font-family: var(--font-head); font-size: 1.4rem; margin-bottom: 10px; color: var(--primary-dark); }
 
         /* ROADMAP */
@@ -268,12 +235,13 @@
         /* FOOTER */
         .main-footer { background: #001f1b; color: white; padding-top: 80px; position: relative; z-index: 20; margin-top: auto; }
         
-        #snow-pile { 
+        /* Existing Footer Snow Pile */
+        #footer-snow-pile { 
             position: absolute; top: -1px; left: 0; width: 100%; height: 100px; 
             pointer-events: none; z-index: 25; 
             transform: translateY(-99%);
         }
-        #snow-pile img { width: 100%; height: 100%; object-fit: cover; object-position: bottom; }
+        #footer-snow-pile img { width: 100%; height: 100%; object-fit: cover; object-position: bottom; }
 
         .footer-content { display: flex; flex-wrap: wrap; }
         .footer-map { flex: 1; min-width: 300px; height: 350px; }
@@ -286,14 +254,14 @@
 
         @media (max-width: 768px) {
             .hero-split { flex-direction: column; display: block; height: auto; min-height: auto; }
-            .hero-text-side { width: 100%; padding: 120px 20px 60px; text-align: center; align-items: center; }
+            .hero-text-side { width: 100%; padding: 120px 20px 120px; text-align: center; align-items: center; background-position: top; }
             .hero-content-wrapper { text-align: center; max-width: 100%; }
             .btn-row { justify-content: center; }
-            .hero-img-side { width: 100%; height: 350px; clip-path: none; margin: 0; }
-            .hero-img-side img { clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%); object-position: center top; } 
+            .hero-img-side { width: 100%; height: 350px; clip-path: none; margin: 0; border-left: none; border-top: 5px solid var(--gold); }
+            .hero-img-side img { clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%); object-position: center top; } 
             .xmas-title { font-size: 3rem; }
             .intro-greeting h1 { line-height: 1.2; font-size: 3.8rem; }
-            body.no-scroll { height: auto; overflow: hidden; } /* Mobile lock */
+            body.no-scroll { height: auto; overflow: hidden; }
         }
 
         /* Modal */
@@ -350,6 +318,10 @@
             <div class="hero-img-side">
                 <img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png">
             </div>
+            
+            <div id="hero-snow-pile">
+                 <img src="https://static.wixstatic.com/media/be4f11_d1617d59040049028821966205763568~mv2.png" alt="Snow pile">
+            </div>
         </section>
 
         <section id="nativity" class="section-clean">
@@ -360,17 +332,17 @@
                 </div>
                 <div class="card-grid">
                     <div class="card reveal">
-                        <img src="https://images.unsplash.com/photo-1544256272-5158a12dc6f4?q=80&w=800" alt="Manger Scene">
+                        <img src="https://images.unsplash.com/photo-1574701148212-8518049c7b2c?q=80&w=800" alt="Nativity Scene">
                         <h3>The Manger</h3>
                         <p>"And she brought forth her firstborn Son..."</p>
                     </div>
                     <div class="card reveal" style="transition-delay: 0.1s;">
-                        <img src="https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=800" alt="Star in Night Sky">
+                        <img src="https://images.unsplash.com/photo-1468276311530-9c587c8b3724?q=80&w=800" alt="Star of Bethlehem">
                         <h3>The Star</h3>
                         <p>"We have seen His star in the East..."</p>
                     </div>
                     <div class="card reveal" style="transition-delay: 0.2s;">
-                        <img src="https://images.unsplash.com/photo-1514336216410-b472e128148b?q=80&w=800" alt="Angels/Ornaments">
+                        <img src="https://images.unsplash.com/photo-1607930462459-6362962290d0?q=80&w=800" alt="Angel Tidings">
                         <h3>Good Tidings</h3>
                         <p>"I bring you good tidings of great joy..."</p>
                     </div>
@@ -378,7 +350,7 @@
             </div>
         </section>
 
-        <section id="services" class="section-clean" style="background-color: #fff;">
+        <section id="services" class="section-clean">
             <div class="container">
                 <div class="section-title reveal">
                     <h2>Weekly Services</h2>
@@ -407,7 +379,7 @@
             </div>
         </section>
 
-        <section class="section-clean" style="background-color: #ffffb3; background-image: url('https://www.transparenttextures.com/patterns/snow.png');">
+        <section id="pastoral-team" class="section-clean">
             <div class="container">
                 <div class="section-title reveal">
                     <h2>Pastoral Team</h2>
@@ -450,7 +422,7 @@
         </section>
 
         <footer class="main-footer">
-            <div id="snow-pile">
+            <div id="footer-snow-pile">
                 <img src="https://static.wixstatic.com/media/be4f11_d1617d59040049028821966205763568~mv2.png" alt="Snow pile">
             </div>
             
@@ -495,13 +467,8 @@
             
             setTimeout(() => {
                 introOverlay.classList.add('intro-fade-out');
-                // Re-enable scrolling
                 document.body.classList.remove('no-scroll');
-                
-                // Wait for fade transition to finish before dropping z-index
-                setTimeout(() => {
-                   fireworksCanvas.style.zIndex = '997'; 
-                }, 1200);
+                setTimeout(() => { fireworksCanvas.style.zIndex = '997'; }, 1200);
             }, 2500); 
         });
 
