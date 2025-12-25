@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;700;800&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -25,9 +25,9 @@
             --text-dark: #2d3436;
             --glass-nav: rgba(255, 255, 255, 0.95);
             
-            --font-head: 'Poppins', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-xmas: 'Mountains of Christmas', cursive;
+            --font-head: 'Cinzel', serif;       
+            --font-script: 'Great Vibes', cursive; 
+            --font-body: 'Lato', sans-serif;    
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -54,13 +54,22 @@
             padding: 0 5%; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.05);
             transition: 0.3s;
         }
-        .logo { font-family: var(--font-head); font-weight: 800; font-size: 1.6rem; color: var(--primary-dark); }
+        .logo { 
+            font-family: var(--font-head); 
+            font-weight: 700; font-size: 1.5rem; 
+            color: var(--primary-dark); letter-spacing: 1px;
+        }
         .nav-links { list-style: none; display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; padding: 10px 20px; border-radius: 50px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .nav-links a { 
+            text-decoration: none; color: var(--text-dark); 
+            font-family: 'Montserrat', sans-serif; font-weight: 600; 
+            padding: 10px 20px; border-radius: 50px; 
+            transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 0.95rem;
+        }
         .nav-links a:hover { color: var(--primary); background: rgba(0,137,123,0.05); }
         .nav-links a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.2); }
 
-        /* MOBILE NAV (Floating Pill) */
+        /* MOBILE NAV */
         @media (max-width: 768px) {
             header {
                 top: auto; bottom: 20px; left: 50%; transform: translateX(-50%);
@@ -78,29 +87,47 @@
         }
 
         /* =========================================
-           3. CHRISTMAS ANIMATIONS
+           3. INTRO & ANIMATIONS
            ========================================= */
-        #fireworks-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 997; }
+        #intro-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #050505; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 3000;
+            transition: opacity 1.5s ease-in-out, visibility 1.5s;
+        }
+        #intro-overlay.intro-fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .intro-greeting { text-align: center; z-index: 3002; animation: scaleUp 1s ease-out; padding: 20px; }
+        .intro-greeting h1 {
+            font-family: var(--font-script); font-size: 6rem; color: var(--xmas-red); font-weight: 400; margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(212, 36, 38, 0.8), 0 0 20px rgba(212, 36, 38, 0.4);
+        }
+        .intro-greeting h2 {
+            font-family: var(--font-head); font-size: 2.2rem; font-weight: 400; color: #fff;
+            letter-spacing: 4px; text-transform: uppercase;
+            border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 10px 0; display: inline-block;
+        }
+        @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* FIREWORKS CANVAS */
+        #fireworks-canvas { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; 
+            z-index: 3001; transition: z-index 1.5s step-end;
+        }
+        
+        /* SNOW & SANTA */
         #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
         .snowflake { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: snow linear infinite; pointer-events: none; }
         @keyframes snow { to { transform: translateY(105vh); } }
 
-        /* Flying Santa */
         #santa-container {
-            position: fixed; top: 15%; left: -600px;
-            z-index: 998; pointer-events: none;
+            position: fixed; top: 15%; left: -600px; z-index: 998; pointer-events: none;
             animation: flyAcross 25s linear infinite;
         }
-        .santa-img {
-            width: 250px; height: auto;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
-            background: transparent; border: none; box-shadow: none;
-        }
+        .santa-img { width: 250px; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); }
         @keyframes flyAcross {
             0% { left: -600px; transform: translateY(0) rotate(-2deg); }
-            25% { transform: translateY(-30px) rotate(0deg); }
-            50% { transform: translateY(0) rotate(2deg); }
-            75% { transform: translateY(20px) rotate(0deg); }
             100% { left: 120vw; transform: translateY(0) rotate(-2deg); }
         }
 
@@ -110,85 +137,127 @@
         .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: 0.9s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: none; }
 
-        /* 1. WELCOME (Hero) */
-        .hero-split { display: flex; min-height: 90vh; position: relative; overflow: hidden; background: #fff; }
+        /* HERO - LEFT ALIGNED & PROFESSIONAL BG */
+        .hero-split { 
+            display: flex; min-height: 90vh; position: relative; overflow: hidden;
+            justify-content: space-between;
+        }
+        
+        /* 1. Professional Background & Left Alignment */
         .hero-text-side { 
-            flex: 1.2; display: flex; align-items: center; justify-content: center; 
-            padding: 100px 40px 60px; text-align: center; z-index: 2; 
-            background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('https://images.unsplash.com/photo-1576692155415-95f820a2c4c1?q=80&w=1470&auto=format&fit=crop');
-            background-size: cover; background-position: center;
+            width: 55%; 
+            display: flex; 
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center vertically */
+            align-items: flex-start; /* Align horizontally to the LEFT */
+            padding: 100px 40px 60px 10%; /* More padding on left for aesthetic */
+            text-align: left; /* Ensure text flows left */
+            z-index: 2; 
+            
+            /* Professional Gradient Background */
+            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
         }
-        .hero-feature-img { 
-            height: 160px; object-fit: contain; margin-bottom: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15)); border: none; background: transparent;
-        }
-        .xmas-title { font-family: var(--font-xmas); font-size: 3.8rem; color: var(--xmas-green); line-height: 1.1; margin: 10px 0; }
-        .tagline { font-size: 1.1rem; color: #555; margin-bottom: 30px; line-height: 1.6; }
-        .btn-row { display: flex; gap: 15px; justify-content: center; }
-        .btn-main { background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s; }
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .btn-text { color: var(--primary-dark); padding: 14px 20px; text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--gold); }
-        .hero-img-side { flex: 1; overflow: hidden; }
-        .hero-img-side img { width: 100%; height: 100%; object-fit: cover; clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); }
 
-        /* General Section Styles */
+        .hero-feature-img { 
+            height: 160px; object-fit: contain; margin-bottom: 20px; 
+            align-self: flex-start; /* Ensure logo aligns left */
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); 
+        }
+        
+        .xmas-title { 
+            font-family: var(--font-head); font-size: 4rem; line-height: 1.1; margin: 15px 0 20px; font-weight: 800;
+            background: linear-gradient(to bottom, #7f8c8d 0%, #bdc3c7 20%, #ecf0f1 50%, #bdc3c7 80%, #7f8c8d 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 2px 0px rgba(0,0,0,0.2)); text-transform: uppercase;
+        }
+        
+        .tagline { 
+            font-size: 1.1rem; color: #555; margin-bottom: 35px; line-height: 1.8; 
+            max-width: 550px; /* Limit width for readability */
+            margin-right: auto; /* Push to left */
+            margin-left: 0; /* Strict left align */
+        }
+        
+        .btn-row { 
+            display: flex; gap: 15px; 
+            justify-content: flex-start; /* Align buttons left */
+            width: 100%;
+        }
+        
+        .btn-main { background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; padding: 14px 35px; border-radius: 50px; text-decoration: none; font-weight: 600; font-family: 'Montserrat', sans-serif; transition: 0.3s; letter-spacing: 1px; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn-text { color: var(--primary-dark); padding: 14px 20px; text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--gold); font-family: 'Montserrat', sans-serif; }
+        
+        /* DIAGONAL DIVIDER & NEW IMAGE */
+        .hero-img-side { 
+            width: 45%; 
+            position: relative; height: 100%;
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+            margin-left: -50px; 
+            background: #fff; /* Fallback */
+        }
+        .hero-img-side img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            object-position: top center; /* Focus on the faces/top of image */
+            transform: scale(1.02); 
+        }
+
+        /* NATIVITY & SECTIONS */
         .section-clean { 
-            padding: 80px 5%; text-align: center;
+            padding: 90px 5%; text-align: center;
             background-color: #f8fff8;
             background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
         }
-        .section-title h2 { font-family: var(--font-head); font-size: 2.5rem; color: var(--primary-dark); margin-bottom: 40px; }
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        .section-title h2 { font-family: var(--font-head); font-size: 2.8rem; color: var(--primary-dark); margin-bottom: 10px; font-weight: 700; }
+        .section-title p { font-family: var(--font-script); font-size: 2rem; color: var(--gold); margin-bottom: 40px; }
         
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
         .card { 
-            background: rgba(255,255,255,0.95); padding: 25px; border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; 
-            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.6); 
+            background: rgba(255,255,255,0.95); padding: 20px; border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: 0.4s; 
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.8); 
         }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,137,123,0.15); }
-        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
-        .card h3 { font-size: 1.3rem; margin-bottom: 5px; color: var(--primary-dark); }
-        
-        /* 3. Services Specifics */
-        .svc-icon { font-size: 3rem; color: var(--gold); margin-bottom: 15px; display: block; }
-        .svc-time { font-weight: 700; color: var(--xmas-red); font-size: 0.95rem; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,137,123,0.1); border-color: var(--gold); }
+        .card img { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
+        .card h3 { font-family: var(--font-head); font-size: 1.4rem; margin-bottom: 10px; color: var(--primary-dark); }
 
-        /* 4. Team Specifics */
-        .team-img { width: 120px !important; height: 120px !important; border-radius: 50% !important; margin: 0 auto 15px; border: 3px solid var(--primary); }
-
-        /* 5. Roadmap (Night Sky) */
+        /* ROADMAP */
         .roadmap-section { padding: 80px 5%; background: #0a0a0a url('https://i.imgur.com/9c4b7a.png') center/cover fixed; color: white; }
         .timeline { max-width: 700px; margin: 0 auto; border-left: 2px solid var(--gold); padding-left: 30px; }
         .timeline-row { margin-bottom: 40px; cursor: pointer; position: relative; }
-        .timeline-content { background: rgba(255,255,255,0.12); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .timeline-content { background: rgba(255,255,255,0.08); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .timeline-row::before { content: '❄️'; position: absolute; left: -42px; top: 10px; font-size: 1.2rem; }
 
-        /* 6. Footer & Map */
-        .main-footer { background: #001f1b; color: white; padding-top: 50px; position: relative; z-index: 20; margin-top: auto; }
-        #snow-pile { position: absolute; top: -60px; left: 0; width: 100%; height: 80px; pointer-events: none; z-index: 10; }
-        #snow-pile img { width: 100%; height: 100%; object-fit: cover; }
+        /* FOOTER */
+        .main-footer { background: #001f1b; color: white; padding-top: 80px; position: relative; z-index: 20; margin-top: auto; }
         
+        #snow-pile { 
+            position: absolute; top: -1px; left: 0; width: 100%; height: 100px; 
+            pointer-events: none; z-index: 25; 
+            transform: translateY(-99%);
+        }
+        #snow-pile img { width: 100%; height: 100%; object-fit: cover; object-position: bottom; }
+
         .footer-content { display: flex; flex-wrap: wrap; }
         .footer-map { flex: 1; min-width: 300px; height: 350px; }
         .footer-map iframe { width: 100%; height: 100%; border: 0; }
         .footer-info { flex: 1; padding: 50px; text-align: center; }
-        .footer-logo { font-family: var(--font-xmas); font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
+        .footer-logo { font-family: var(--font-head); font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; font-weight: 700;}
         .socials { margin-top: 20px; }
         .socials a { color: white; font-size: 1.5rem; margin: 0 10px; transition: 0.3s; }
         .socials a:hover { color: var(--gold); }
 
-        /* Mobile Optimization */
         @media (max-width: 768px) {
-            .hero-split { flex-direction: column; height: auto; }
-            .hero-img-side { display: none; }
-            .hero-text-side { padding: 120px 20px 40px; }
-            .xmas-title { font-size: 3rem; }
-            .santa-img { width: 150px; }
-            .btn-row { flex-direction: column; }
-            .btn-main, .btn-text { width: 100%; text-align: center; }
-            .roadmap-section { background-attachment: scroll; }
+            .hero-split { flex-direction: column; display: block; }
+            .hero-text-side { width: 100%; padding: 120px 20px 40px; text-align: center; align-items: center; }
+            .btn-row { justify-content: center; }
+            .hero-img-side { width: 100%; height: 300px; clip-path: none; margin: 0; }
+            .hero-img-side img { clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%); } 
+            .xmas-title { font-size: 2.5rem; }
+            .intro-greeting h1 { line-height: 1.2; font-size: 3.8rem; }
         }
-        
+
         /* Modal */
         .modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
         .modal-content { background: white; width: 90%; max-width: 400px; border-radius: 20px; overflow: hidden; position: relative; text-align: center; padding-bottom: 20px; }
@@ -197,8 +266,15 @@
 </head>
 <body>
 
+    <div id="intro-overlay">
+        <div class="intro-greeting">
+            <h1>Merry Christmas</h1>
+            <h2>& Happy New Year</h2>
+        </div>
+    </div>
+
     <header>
-        <div class="logo">Christ Mandir</div>
+        <div class="logo">CHRIST MANDIR</div>
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html" class="active"><span>🏠</span> Home</a></li>
@@ -223,7 +299,7 @@
                 <div class="reveal">
                     <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="hero-feature-img">
                     
-                    <span style="color:var(--gold); font-weight:700; letter-spacing:2px;">WELCOME TO</span>
+                    <span style="color:var(--gold); font-weight:700; letter-spacing:3px; font-size: 0.9rem; font-family:'Montserrat', sans-serif;">WELCOME TO</span>
                     <h1 class="xmas-title">Christ <br>Ministries</h1>
                     <p class="tagline">Warm and heartily welcome to you to Christ Ministries in the different culture and religious land of India.</p>
                     
@@ -246,17 +322,17 @@
                 </div>
                 <div class="card-grid">
                     <div class="card reveal">
-                        <img src="https://i.imgur.com/0Y1x9yS.png" alt="Manger">
+                        <img src="https://images.unsplash.com/photo-1544256272-5158a12dc6f4?q=80&w=800" alt="Manger Scene">
                         <h3>The Manger</h3>
                         <p>"And she brought forth her firstborn Son..."</p>
                     </div>
                     <div class="card reveal" style="transition-delay: 0.1s;">
-                        <img src="https://i.imgur.com/4g8g9xS.png" alt="Star">
+                        <img src="https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=800" alt="Star in Night Sky">
                         <h3>The Star</h3>
                         <p>"We have seen His star in the East..."</p>
                     </div>
                     <div class="card reveal" style="transition-delay: 0.2s;">
-                        <img src="https://i.imgur.com/2e5f6hS.png" alt="Tidings">
+                        <img src="https://images.unsplash.com/photo-1514336216410-b472e128148b?q=80&w=800" alt="Angels/Ornaments">
                         <h3>Good Tidings</h3>
                         <p>"I bring you good tidings of great joy..."</p>
                     </div>
@@ -272,21 +348,21 @@
                 </div>
                 <div class="card-grid">
                     <div class="card reveal">
-                        <span class="svc-icon">☀️</span>
+                        <span style="font-size:3rem; display:block; margin-bottom:15px;">☀️</span>
                         <h3>Sunday</h3>
-                        <p class="svc-time">10:00 AM - 1:00 PM</p>
+                        <p style="color:var(--xmas-red); font-weight:700;">10:00 AM - 1:00 PM</p>
                         <p style="font-size:0.9rem;">Main Service</p>
                     </div>
                     <div class="card reveal" style="transition-delay: 0.1s;">
-                        <span class="svc-icon">🔥</span>
+                        <span style="font-size:3rem; display:block; margin-bottom:15px;">🔥</span>
                         <h3>Friday</h3>
-                        <p class="svc-time">10:30 AM - 2:00 PM</p>
+                        <p style="color:var(--xmas-red); font-weight:700;">10:30 AM - 2:00 PM</p>
                         <p style="font-size:0.9rem;">Fasting Prayer</p>
                     </div>
                     <div class="card reveal" style="transition-delay: 0.2s;">
-                        <span class="svc-icon">🎸</span>
+                        <span style="font-size:3rem; display:block; margin-bottom:15px;">🎸</span>
                         <h3>Saturday</h3>
-                        <p class="svc-time">6:00 PM - 8:00 PM</p>
+                        <p style="color:var(--xmas-red); font-weight:700;">6:00 PM - 8:00 PM</p>
                         <p style="font-size:0.9rem;">Youth Fellowship</p>
                     </div>
                 </div>
@@ -337,7 +413,7 @@
 
         <footer class="main-footer">
             <div id="snow-pile">
-                <img src="https://i.imgur.com/8d1a3sS.png" alt="Snow pile">
+                <img src="https://static.wixstatic.com/media/be4f11_d1617d59040049028821966205763568~mv2.png" alt="Snow pile">
             </div>
             
             <div class="footer-content">
@@ -374,6 +450,17 @@
     </div>
 
     <script>
+        // 0. Intro Animation (REDUCED TIME TO 2500ms)
+        window.addEventListener('load', () => {
+            const introOverlay = document.getElementById('intro-overlay');
+            const fireworksCanvas = document.getElementById('fireworks-canvas');
+            
+            setTimeout(() => {
+                introOverlay.classList.add('intro-fade-out');
+                fireworksCanvas.style.zIndex = '997'; 
+            }, 2500); // 2.5 Seconds
+        });
+
         // 1. Reveal Animation
         function reveal() {
             document.querySelectorAll(".reveal").forEach(el => {
@@ -383,9 +470,9 @@
         window.addEventListener("scroll", reveal);
         reveal();
 
-        // 2. Snow Logic (Optimized)
+        // 2. Snow Logic
         const snowContainer = document.getElementById('snow-container');
-        const snowInterval = window.innerWidth < 768 ? 300 : 150; 
+        const snowInterval = window.innerWidth < 768 ? 200 : 100; 
 
         function createSnowflake() {
             const s = document.createElement('div');
@@ -394,16 +481,16 @@
             const size = Math.random() * 4 + 2;
             s.style.width = size + 'px';
             s.style.height = size + 'px';
-            s.style.animationDuration = Math.random() * 5 + 5 + 's';
+            s.style.animationDuration = Math.random() * 10 + 5 + 's';
             s.style.opacity = Math.random() * 0.6 + 0.4;
             snowContainer.appendChild(s);
             setTimeout(() => {
                 if (s && s.parentNode) s.parentNode.removeChild(s);
-            }, 10000);
+            }, 15000); 
         }
         setInterval(createSnowflake, snowInterval);
 
-        // 3. Improved Fireworks Logic (Christmas Colors)
+        // 3. Fireworks Logic
         const canvas = document.getElementById('fireworks-canvas');
         const ctx = canvas.getContext('2d');
         
@@ -434,7 +521,7 @@
             draw() {
                 if (!this.exploded) {
                     ctx.fillStyle = this.color;
-                    ctx.fillRect(this.x, this.y, 3, 8); 
+                    ctx.fillRect(this.x, this.y, 2, 5); 
                 }
                 this.parts.forEach(p => p.draw());
             }
@@ -464,16 +551,15 @@
                 ctx.globalAlpha = this.alpha;
                 ctx.fillStyle = this.color;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, 1.2, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.globalAlpha = 1;
             }
         }
 
         function animateFireworks() {
-            ctx.fillStyle = 'rgba(0,0,0,0.1)'; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            if (Math.random() < 0.02) fireworks.push(new Firework());
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            if (Math.random() < 0.03) fireworks.push(new Firework()); 
             fireworks.forEach(f => { f.update(); f.draw() });
             fireworks = fireworks.filter(f => !f.exploded || f.parts.some(p => p.alpha > 0));
             requestAnimationFrame(animateFireworks);
