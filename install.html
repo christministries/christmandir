@@ -46,6 +46,19 @@
             transition: transform 0.2s;
         }
         #installBtn:active { transform: scale(0.95); }
+
+        /* Success Message */
+        #successMsg {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            border: 1px solid #c3e6cb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
         
         /* iOS Instructions */
         .ios-instruction {
@@ -72,6 +85,8 @@
     <p>Daily Verses • Quiz • Stories</p>
 
     <button id="installBtn">⬇ Install App</button>
+    
+    <div id="successMsg">✅ Installation Completed</div>
 
     <div id="ios-help" class="ios-instruction">
         <strong>To install on iPhone:</strong><br><br>
@@ -89,6 +104,7 @@
 
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
+        const successMsg = document.getElementById('successMsg');
         const iosHelp = document.getElementById('ios-help');
 
         // Detect iOS
@@ -106,13 +122,25 @@
         });
 
         installBtn.addEventListener('click', (e) => {
+            // Hide the install button immediately so they don't click twice
             installBtn.style.display = 'none';
+            
+            // Show the native browser prompt
             deferredPrompt.prompt();
+            
+            // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === 'accepted') {
                     console.log('User accepted the A2HS prompt');
-                    // Optional: Redirect to main app after install
-                    setTimeout(() => window.location.href = 'index.html', 1000);
+                    
+                    // Show the "Installation Completed" message
+                    successMsg.style.display = 'block';
+                    
+                    // Note: We REMOVED the line that redirects to index.html
+                } else {
+                    console.log('User dismissed the A2HS prompt');
+                    // If they cancelled, show the install button again so they can retry
+                    installBtn.style.display = 'block';
                 }
                 deferredPrompt = null;
             });
