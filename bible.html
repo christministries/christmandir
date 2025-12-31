@@ -53,14 +53,8 @@
 
         /* --- NAVIGATION --- */
         header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .nav-links { list-style: none; padding: 0; margin: 0; display: flex; width: 100%; }
+        .nav-links { list-style: none; padding: 0; margin: 0; width: 100%; }
         
-        /* Generic Link Styles */
-        .nav-links li {
-            position: relative; /* Keep them separate */
-            z-index: 1;
-        }
-
         .nav-links li a { 
             text-decoration: none; 
             font-family: var(--font-head); 
@@ -76,7 +70,7 @@
 
         /* Prevent clicking the active tab */
         .nav-links li a.active {
-            pointer-events: none; /* Disables click completely */
+            pointer-events: none;
             cursor: default;
         }
 
@@ -94,14 +88,20 @@
             }
             .logo { display: none; }
             
-            /* STRICT SEPARATION OF BUTTONS */
+            /* --- FIXED: CSS GRID LAYOUT --- */
+            /* This forces 4 equal columns. Overlap is impossible. */
+            .nav-links {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                height: 100%;
+                width: 100%;
+            }
+            
             .nav-links li { 
-                flex: 1; 
                 height: 100%; 
                 display: flex; 
                 justify-content: center; 
                 align-items: center; 
-                overflow: hidden; /* Prevents overlap */
             }
             
             .nav-links li a { 
@@ -116,7 +116,6 @@
             .nav-links li a.active { color: var(--primary); }
             .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
             
-            /* Disable Hover on Mobile */
             .nav-links li a:hover { background: transparent; }
         }
 
@@ -129,9 +128,10 @@
                 display: flex; justify-content: space-between; align-items: center; padding: 0 60px;
                 box-shadow: 0 5px 20px rgba(0,0,0,0.03);
             }
+            /* Desktop uses Flexbox */
+            .nav-links { display: flex; gap: 30px; }
+            
             .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-            .nav-links { gap: 30px; }
-            .nav-links li { width: auto; } /* Reset flex behavior */
             .nav-links li a { font-size: 1rem; color: var(--text-light); gap: 8px; padding: 10px 20px; border-radius: 25px; }
             .nav-links li a:hover { background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); }
             .nav-links li a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); }
@@ -280,7 +280,7 @@
         <ul class="nav-links">
             <li><a href="index.html"><span>🏠</span> Home</a></li>
             
-            <li><a class="active"><span>📖</span> Bible</a></li>
+            <li><a href="javascript:void(0);" class="active" onclick="event.preventDefault();"><span>📖</span> Bible</a></li>
             
             <li><a href="quiz.html"><span>🧩</span> Quiz</a></li>
             <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
