@@ -802,17 +802,19 @@
   });
 
 
-  // --- SHARE LOGIC (The "App Link" Trick) ---
+// --- SHARE BUTTON LOGIC ---
   const shareBtn = document.getElementById('shareBtn');
 
   shareBtn.addEventListener('click', async () => {
-    const appUrl = window.location.href; // Your Website URL
     
-    // This message makes it look like an App Link
+    // 👇👇 CHANGE THIS URL TO YOUR GITHUB ADDRESS 👇👇
+    // Example: 'https://johndoe.github.io/christ-mandir/install.html'
+    const installPageUrl = 'https://christministries.github.io/christmandir/install.html'; 
+
     const shareData = {
       title: 'Christ Mandir App',
-      text: 'Install the official Christ Mandir App to get daily verses and quizzes! Click here to download:',
-      url: appUrl, 
+      text: 'Install the official Christ Mandir App for daily verses and quizzes!',
+      url: installPageUrl, 
     };
 
     if (navigator.share) {
@@ -822,14 +824,15 @@
         console.log('Error sharing:', err);
       }
     } else {
-      // Desktop Fallback
-      navigator.clipboard.writeText(`Install the App here: ${appUrl}`);
-      alert('App link copied! You can now paste it to a friend.');
+      // Fallback for desktop
+      navigator.clipboard.writeText(installPageUrl);
+      alert('App install link copied to clipboard!');
     }
   });
 </script>
 </body>
 </html>
+
 
 
 
