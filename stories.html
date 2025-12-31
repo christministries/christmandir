@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Christ Mandir - Stories</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&family=Noto+Serif+Telugu:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #00897b;
+            --primary-dark: #00695c;
+            --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
+            --secondary: #00bcd4;
+            --bg-color: #f0f2f5;
+            --glass-nav: rgba(255, 255, 255, 0.95);
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --white: #ffffff;
+            
+            --font-head: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-telugu: 'Noto Serif Telugu', serif;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        /* --- Background Animation --- */
+        @keyframes bgScroll {
+            from { background-position: 0 0; }
+            to { background-position: 400px 400px; }
+        }
+
+        body { 
+            font-family: var(--font-body);
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%2300897b' stroke-width='1.5' opacity='0.07'%3E%3Cpath d='M80,40 v120 M40,80 h80' /%3E%3Cpath d='M240,260 c0,0 20-20 60-20 s60,20 60,20 v80 c0,0 -20-20 -60-20 s-60,20 -60,20 z M300,240 v80' /%3E%3Cpath d='M260,60 q 40,-40 80,0 t -40,60 q -40,-20 -40,-60' /%3E%3Cpath d='M120,280 v80 M80,300 h80' /%3E%3Cpath d='M280,100 c0,0 15-15 45-15 s45,15 45,15 v60 c0,0 -15-15 -45-15 s-45,15 -45,15 z M325,85 v60' /%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 400px 400px; 
+            animation: bgScroll 80s linear infinite;
+            padding-bottom: 100px; 
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .nav-links { list-style: none; padding: 0; margin: 0; width: 100%; }
+        
+        .nav-item { 
+            text-decoration: none; 
+            font-family: var(--font-head); 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: 0.3s; 
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            pointer-events: none;
+            cursor: default;
+        }
+
+        /* MOBILE NAV */
+        @media (max-width: 767px) {
+            header {
+                bottom: 20px; left: 50%; transform: translateX(-50%);
+                width: 94%; 
+                max-width: 420px; height: 70px;
+                background: var(--glass-nav);
+                backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                border-radius: 40px;
+                box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
+                border: 1px solid rgba(255,255,255,0.6);
+            }
+            .logo { display: none; }
+            
+            /* CSS GRID: 5 items now */
+            .nav-links {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                height: 100%;
+                width: 100%;
+            }
+            
+            .nav-links li { height: 100%; display: flex; justify-content: center; align-items: center; }
+            .nav-item { flex-direction: column; font-size: 0.65rem; gap: 4px; padding: 0; }
+            .nav-item span { font-size: 1.3rem; transition: transform 0.2s; }
+            .nav-item.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
+            .nav-item:hover { background: transparent; }
+        }
+
+        /* DESKTOP NAV */
+        @media (min-width: 768px) {
+            body { padding-top: 100px; padding-bottom: 0; }
+            header {
+                top: 0; left: 0; width: 100%; height: 80px;
+                background: rgba(255,255,255,0.85); backdrop-filter: blur(15px);
+                display: flex; justify-content: space-between; align-items: center; padding: 0 60px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            }
+            .nav-links { display: flex; gap: 20px; }
+            .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            .nav-item { font-size: 1rem; gap: 8px; padding: 10px 15px; border-radius: 25px; width: auto; }
+            .nav-item:hover { background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); }
+            .nav-item.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); }
+        }
+
+        /* --- STORIES LAYOUT --- */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            text-align: center;
+            font-family: var(--font-telugu);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            background: var(--white);
+            padding: 15px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: inline-block;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Story Card */
+        .story-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.03);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 137, 123, 0.15);
+        }
+
+        /* Image Placeholder */
+        .card-img {
+            height: 180px;
+            background: #e0f2f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+            position: relative;
+        }
+        
+        /* Gradient Overlay on image */
+        .card-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.05), transparent);
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-family: var(--font-telugu);
+            font-size: 22px;
+            font-weight: 700;
+            color: #222;
+            margin: 0 0 8px 0;
+        }
+
+        .card-desc {
+            font-family: var(--font-telugu);
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: var(--font-head);
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .card-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .container { padding: 15px; padding-bottom: 100px; }
+            .story-grid { grid-template-columns: 1fr; }
+            .page-title { width: 100%; font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Christ Mandir</div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-item"><span>🏠</span> Home</a></li>
+            <li><a href="bible.html" class="nav-item"><span>📖</span> Bible</a></li>
+            
+            <li><div class="nav-item active"><span>📚</span> Stories</div></li>
+            
+            <li><a href="quiz.html" class="nav-item"><span>🧩</span> Quiz</a></li>
+            <li><a href="dailyverse.html" class="nav-item"><span>✨</span> Verse</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="page-title">బైబిల్ కథలు (Bible Stories)</div>
+
+    <div class="story-grid">
+        
+        <div class="story-card" onclick="window.location.href='noah-ark.html'">
+            <div class="card-img">🚢</div>
+            <div class="card-content">
+                <h3 class="card-title">నోవహు ఓడ (Noah's Ark)</h3>
+                <p class="card-desc">దేవుని ఆజ్ఞ మేరకు నోవహు చేసిన గొప్ప ఓడ మరియు జలప్రళయం యొక్క అద్భుతమైన కథ.</p>
+                <span class="card-btn">Read & Listen ▶</span>
+            </div>
+        </div>
+
+        <div class="story-card">
+            <div class="card-img">👑</div>
+            <div class="card-content">
+                <h3 class="card-title">దావీదు మరియు గొల్యాతు</h3>
+                <p class="card-desc">చిన్న బాలుడైన దావీదు దేవుని శక్తితో భారీకాయుడైన గొల్యాతును ఎలా ఓడించాడు?</p>
+                <span class="card-btn">Coming Soon</span>
+            </div>
+        </div>
+
+        <div class="story-card">
+            <div class="card-img">🦁</div>
+            <div class="card-content">
+                <h3 class="card-title">సింహాల గుహలో దానియేలు</h3>
+                <p class="card-desc">దానియేలు దేవుని యందు ఉంచిన విశ్వాసం మరియు సింహాల నుండి రక్షణ.</p>
+                <span class="card-btn">Coming Soon</span>
+            </div>
+        </div>
+
+        <div class="story-card">
+            <div class="card-img">🌟</div>
+            <div class="card-content">
+                <h3 class="card-title">ఏసు క్రీస్తు జననం</h3>
+                <p class="card-desc">బెత్లెహేములో రక్షకుని జననం మరియు గొర్లకాపరుల సందర్శన.</p>
+                <span class="card-btn">Coming Soon</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
