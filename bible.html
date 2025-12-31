@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Christ Mandir - Bible</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&family=Noto+Serif+Telugu:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* --- Brand Palette --- */
+            --primary: #00897b;
+            --primary-dark: #00695c;
+            --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
+            --secondary: #00bcd4;
+            --bg-color: #f0f2f5;
+            --glass-nav: rgba(255, 255, 255, 0.95);
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --white: #ffffff;
+            
+            /* --- Functional Vars --- */
+            --verse-size: 20px;
+            --font-head: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-telugu: 'Noto Serif Telugu', serif;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        /* --- Background Animation --- */
+        @keyframes bgScroll {
+            from { background-position: 0 0; }
+            to { background-position: 400px 400px; }
+        }
+
+        body { 
+            font-family: var(--font-body);
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%2300897b' stroke-width='1.5' opacity='0.07'%3E%3Cpath d='M80,40 v120 M40,80 h80' /%3E%3Cpath d='M240,260 c0,0 20-20 60-20 s60,20 60,20 v80 c0,0 -20-20 -60-20 s-60,20 -60,20 z M300,240 v80' /%3E%3Cpath d='M260,60 q 40,-40 80,0 t -40,60 q -40,-20 -40,-60' /%3E%3Cpath d='M120,280 v80 M80,300 h80' /%3E%3Cpath d='M280,100 c0,0 15-15 45-15 s45,15 45,15 v60 c0,0 -15-15 -45-15 s-45,15 -45,15 z M325,85 v60' /%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 400px 400px; 
+            animation: bgScroll 80s linear infinite;
+            padding-bottom: 100px; 
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        header { position: fixed; z-index: 1000; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .nav-links { list-style: none; padding: 0; margin: 0; display: flex; width: 100%; }
+        
+        /* Generic Link Styles */
+        .nav-links li {
+            position: relative; /* Keep them separate */
+            z-index: 1;
+        }
+
+        .nav-links li a { 
+            text-decoration: none; 
+            font-family: var(--font-head); 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: 0.3s; 
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        /* Prevent clicking the active tab */
+        .nav-links li a.active {
+            pointer-events: none; /* Disables click completely */
+            cursor: default;
+        }
+
+        /* MOBILE NAV */
+        @media (max-width: 767px) {
+            header {
+                bottom: 20px; left: 50%; transform: translateX(-50%);
+                width: 94%; 
+                max-width: 400px; height: 70px;
+                background: var(--glass-nav);
+                backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                border-radius: 40px;
+                box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
+                border: 1px solid rgba(255,255,255,0.6);
+            }
+            .logo { display: none; }
+            
+            /* STRICT SEPARATION OF BUTTONS */
+            .nav-links li { 
+                flex: 1; 
+                height: 100%; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                overflow: hidden; /* Prevents overlap */
+            }
+            
+            .nav-links li a { 
+                flex-direction: column; 
+                font-size: 0.7rem; 
+                color: var(--text-light); 
+                gap: 4px; 
+                padding: 0; 
+            }
+            .nav-links li a span { font-size: 1.5rem; transition: transform 0.2s; }
+            
+            .nav-links li a.active { color: var(--primary); }
+            .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
+            
+            /* Disable Hover on Mobile */
+            .nav-links li a:hover { background: transparent; }
+        }
+
+        /* DESKTOP NAV */
+        @media (min-width: 768px) {
+            body { padding-top: 100px; padding-bottom: 0; }
+            header {
+                top: 0; left: 0; width: 100%; height: 80px;
+                background: rgba(255,255,255,0.85); backdrop-filter: blur(15px);
+                display: flex; justify-content: space-between; align-items: center; padding: 0 60px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            }
+            .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            .nav-links { gap: 30px; }
+            .nav-links li { width: auto; } /* Reset flex behavior */
+            .nav-links li a { font-size: 1rem; color: var(--text-light); gap: 8px; padding: 10px 20px; border-radius: 25px; }
+            .nav-links li a:hover { background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); }
+            .nav-links li a.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); }
+        }
+
+        /* --- BIBLE APP STYLES --- */
+        .bible-box { 
+            width: 100%;
+            max-width: 900px; 
+            margin: 0 auto; 
+            background: var(--white); 
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 100px); 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            position: relative; 
+            z-index: 1;
+        }
+
+        @media (min-width: 769px) {
+            .bible-box { 
+                height: 80vh; 
+                border-radius: 24px; 
+                border: 1px solid rgba(255,255,255,0.8); 
+            }
+        }
+
+        .app-header { 
+            font-size: 22px; 
+            font-family: var(--font-telugu);
+            font-weight: 600; 
+            text-align: center; 
+            padding: 15px; 
+            border-bottom: 1px solid #eee; 
+            background: var(--white);
+            color: var(--primary-dark);
+            border-radius: 24px 24px 0 0;
+        }
+        @media (max-width: 768px) { .app-header { border-radius: 0; } }
+
+        .controls { 
+            padding: 15px; 
+            background: var(--white); 
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .select-group { display: flex; gap: 8px; flex: 1 1 100%; }
+        .tools-group { display: flex; gap: 8px; flex: 1 1 100%; }
+        .nav-group { display: flex; gap: 8px; flex: 1 1 100%; }
+
+        select { 
+            padding: 12px; 
+            font-size: 16px; 
+            border-radius: 12px; 
+            border: 1px solid #e0e0e0; 
+            background: #f8f9fa;
+            color: var(--text-main);
+            flex: 1;
+            font-family: var(--font-telugu);
+            outline: none;
+            transition: border 0.3s;
+        }
+        select:focus { border-color: var(--primary); }
+
+        button { 
+            padding: 12px; 
+            font-size: 14px; 
+            border-radius: 12px; 
+            border: none;
+            cursor: pointer; 
+            font-family: var(--font-head);
+            background: #f1f3f4;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: #e0e7ff;
+            color: var(--primary);
+        }
+
+        button:active { transform: scale(0.95); }
+
+        #compareBtn { background: rgba(0, 137, 123, 0.1); color: var(--primary); flex: 2; }
+        #compareBtn.active { background: var(--primary-gradient); color: white; box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4); }
+
+        .font-btn { font-size: 16px; max-width: 50px; }
+
+        #prevBtn, #nextBtn { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(0, 137, 123, 0.25); }
+        #prevBtn:hover, #nextBtn:hover { background: var(--primary-dark); box-shadow: 0 6px 15px rgba(0, 137, 123, 0.4); color: white; }
+
+        .verse-container { 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            padding: 20px; 
+            scroll-behavior: smooth;
+            background: var(--white);
+            border-radius: 0 0 24px 24px;
+        }
+        @media (max-width: 768px) { .verse-container { border-radius: 0; } }
+
+        .verse { padding: 15px 0; border-bottom: 1px solid #f0f0f0; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .verse-num { font-weight: 700; color: var(--primary); margin-right: 10px; font-size: 0.9em; vertical-align: top; font-family: var(--font-body); }
+        .telugu { font-family: var(--font-telugu); font-size: var(--verse-size); line-height: 1.7; color: var(--text-main); }
+        .english { 
+            font-family: 'Roboto', sans-serif; 
+            font-size: calc(var(--verse-size) - 4px); 
+            color: var(--text-light); 
+            padding: 10px 15px; 
+            border-left: 3px solid var(--secondary); 
+            margin-top: 10px; 
+            line-height: 1.5;
+            background: #f8fbff;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        @media (min-width: 600px) {
+            .controls { flex-wrap: nowrap; padding: 20px; }
+            .select-group { flex: 3; }
+            .tools-group { flex: 2; }
+            .nav-group { flex: 2; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Christ Mandir</div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="index.html"><span>🏠</span> Home</a></li>
+            
+            <li><a class="active"><span>📖</span> Bible</a></li>
+            
+            <li><a href="quiz.html"><span>🧩</span> Quiz</a></li>
+            <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="bible-box">
+  <div class="app-header">పరిశుద్ధ గ్రంథం</div>
+
+  <div class="controls">
+    <div class="select-group">
+      <select id="bookSelect"></select>
+      <select id="chapterSelect"></select>
+    </div>
+    
+    <div class="tools-group">
+      <button class="font-btn" id="fontDec">A-</button>
+      <button id="compareBtn">Eng / Tel</button>
+      <button class="font-btn" id="fontInc">A+</button>
+    </div>
+
+    <div class="nav-group">
+      <button id="prevBtn">❮ Prev</button>
+      <button id="nextBtn">Next ❯</button>
+    </div>
+  </div>
+
+  <div class="verse-container" id="verseContainer"></div>
+</div>
+
+<script>
+// ===== Telugu Data =====
+const teluguData = {
+  "Book": [
+    { 
+      "BookName": "ఆదికాండము",
+      "Chapter": [
+        {
+          "Verse": [
+            {"Verseid":"00000000", "Verse":"ఆదియందు దేవుడు భూమ్యాకాశములను సృజించెను."},
+            {"Verseid":"00000001", "Verse":"భూమి నిరాకారముగాను శూన్యముగాను ఉండెను; చీకటి అగాధ జలము పైన కమ్మియుండెను; దేవుని ఆత్మ జలములపైన అల్లాడుచుండెను."},
+            {"Verseid":"00000002", "Verse":"దేవుడు వెలుగు కమ్మని పలుకగా వెలుగు కలిగెను."}
+          ]
+        },
+        {
+          "Verse": [
+             {"Verseid":"00000000", "Verse":"ఆకాశమును భూమియు వాటిలోని సమస్త సమూహమును సంపూర్తి చేయబడెను."},
+             {"Verseid":"00000001", "Verse":"దేవుడు తాను చేసిన తన పని ఏడవ దినమున కల్లా సంపూర్తి చేసెను."}
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// ===== English KJV Data =====
+const englishRaw = {
+ "verses":[
+    {"book_name":"Genesis","book":1,"chapter":1,"verse":1,"text":"In the beginning God created the heaven and the earth."},
+    {"book_name":"Genesis","book":1,"chapter":1,"verse":2,"text":"And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters."},
+    {"book_name":"Genesis","book":1,"chapter":1,"verse":3,"text":"And God said, Let there be light: and there was light."},
+    {"book_name":"Genesis","book":1,"chapter":2,"verse":1,"text":"Thus the heavens and the earth were finished, and all the host of them."},
+    {"book_name":"Genesis","book":1,"chapter":2,"verse":2,"text":"And on the seventh day God ended his work which he had made."}
+ ]
+};
+
+// ===== Process Data =====
+const englishData = {};
+englishRaw.verses.forEach(v => {
+  let bookName = v.book_name;
+  if(bookName === "Genesis") bookName = teluguData.Book[0].BookName; 
+  const chapter = v.chapter;
+  if(!englishData[bookName]) englishData[bookName] = {};
+  if(!englishData[bookName][chapter]) englishData[bookName][chapter] = [];
+  englishData[bookName][chapter].push({ "Verse": v.text, "Num": v.verse });
+});
+
+// ===== UI variables =====
+let currentBookIndex = 0;
+let currentChapterIndex = 0; 
+let showEnglish = false;
+let currentFontSize = 20;
+
+const bookSelect = document.getElementById('bookSelect');
+const chapterSelect = document.getElementById('chapterSelect');
+const verseContainer = document.getElementById('verseContainer');
+const compareBtn = document.getElementById('compareBtn');
+const fontIncBtn = document.getElementById('fontInc');
+const fontDecBtn = document.getElementById('fontDec');
+
+// ===== Load books =====
+function loadBooks(){
+  bookSelect.innerHTML='';
+  teluguData.Book.forEach((b,i)=>{
+    const opt = document.createElement('option');
+    opt.value=i;
+    opt.textContent=b.BookName;
+    bookSelect.appendChild(opt);
+  });
+  currentBookIndex=0;
+  bookSelect.value=currentBookIndex;
+  loadChapters();
+}
+
+// ===== Load chapters =====
+function loadChapters(){
+  chapterSelect.innerHTML='';
+  const chapters = teluguData.Book[currentBookIndex].Chapter;
+  chapters.forEach((ch,i)=>{
+    const opt = document.createElement('option');
+    opt.value=i;
+    opt.textContent='అధ్యాయం '+(i+1);
+    chapterSelect.appendChild(opt);
+  });
+  if (currentChapterIndex >= chapters.length) currentChapterIndex = 0;
+  chapterSelect.value = currentChapterIndex;
+  loadVerses();
+}
+
+// ===== Load verses =====
+function loadVerses(){
+  verseContainer.innerHTML='';
+  const bookObj = teluguData.Book[currentBookIndex];
+  const teluguVerses = bookObj.Chapter[currentChapterIndex].Verse;
+  const bookName = bookObj.BookName;
+  const chapterNum = currentChapterIndex + 1;
+
+  let englishChapter = [];
+  if(englishData[bookName] && englishData[bookName][chapterNum]){
+      englishChapter = englishData[bookName][chapterNum];
+  }
+
+  teluguVerses.forEach((tv, i) => {
+    const evObj = englishChapter[i]; 
+    const evText = evObj ? evObj.Verse : "";
+    const displayStyle = showEnglish ? 'block' : 'none';
+
+    const div = document.createElement('div');
+    div.className = 'verse';
+    div.innerHTML=`
+      <span class='verse-num'>${i+1}</span>
+      <span class='telugu'>${tv.Verse}</span>
+      <div class='english' style='display:${displayStyle}'>${evText}</div>
+    `;
+    verseContainer.appendChild(div);
+  });
+  
+  verseContainer.scrollTop = 0;
+}
+
+// ===== Event handlers =====
+bookSelect.onchange = ()=>{
+  currentBookIndex = parseInt(bookSelect.value);
+  currentChapterIndex = 0;
+  loadChapters();
+};
+
+chapterSelect.onchange = ()=>{
+  currentChapterIndex = parseInt(chapterSelect.value);
+  loadVerses();
+};
+
+compareBtn.onclick = ()=>{
+  showEnglish = !showEnglish;
+  compareBtn.classList.toggle('active');
+  loadVerses();
+};
+
+function updateFontSize() {
+  document.documentElement.style.setProperty('--verse-size', currentFontSize + 'px');
+}
+
+fontIncBtn.onclick = () => {
+  if (currentFontSize < 40) {
+    currentFontSize += 2;
+    updateFontSize();
+  }
+};
+
+fontDecBtn.onclick = () => {
+  if (currentFontSize > 14) {
+    currentFontSize -= 2;
+    updateFontSize();
+  }
+};
+
+// --- Navigation ---
+document.getElementById('prevBtn').onclick = () => {
+  if(currentChapterIndex > 0) {
+    currentChapterIndex--;
+  } else if(currentBookIndex > 0){
+    currentBookIndex--;
+    currentChapterIndex = teluguData.Book[currentBookIndex].Chapter.length - 1;
+    bookSelect.value = currentBookIndex;
+    loadChapters(); 
+    return; 
+  } else { return; }
+  chapterSelect.value = currentChapterIndex;
+  loadVerses();
+};
+
+document.getElementById('nextBtn').onclick = () => {
+  const chapters = teluguData.Book[currentBookIndex].Chapter.length;
+  if(currentChapterIndex < chapters - 1) {
+    currentChapterIndex++;
+  } else if(currentBookIndex < teluguData.Book.length - 1){
+    currentBookIndex++;
+    currentChapterIndex = 0;
+    bookSelect.value = currentBookIndex;
+    loadChapters();
+    return;
+  } else { return; }
+  chapterSelect.value = currentChapterIndex;
+  loadVerses();
+};
+
+// ===== Initialize =====
+loadBooks();
+updateFontSize(); 
+</script>
+
+</body>
+</html>
