@@ -91,7 +91,7 @@
             background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); 
         }
 
-        /* MOBILE NAV - FIXED JUSTIFICATION */
+        /* MOBILE NAV */
         @media (max-width: 768px) {
             body { padding-top: 0; padding-bottom: 90px; } 
             
@@ -112,28 +112,17 @@
             .nav-links { 
                 width: 100%; height: 100%;
                 display: flex; 
-                /* Ensures perfectly equal spacing from edges and between items */
                 justify-content: space-evenly; 
                 align-items: center;
                 gap: 0; padding: 0; margin: 0;
             }
             
-            .nav-links li { 
-                position: relative; 
-                display: flex; 
-                justify-content: center; 
-                align-items: center;
-                /* Allow touch target to be comfortable */
-                height: 100%; 
-            }
+            .nav-links li { position: relative; display: flex; justify-content: center; align-items: center; }
 
             .nav-links li a { 
                 flex-direction: column; font-size: 0.65rem; color: #636e72; 
-                gap: 3px; padding: 0; background: none !important; 
-                border-radius: 0; 
-                /* Ensure link doesn't collapse */
-                display: flex; justify-content: center; align-items: center;
-                height: 100%; width: 100%;
+                gap: 3px; padding: 5px; background: none !important; 
+                border-radius: 0; width: auto;
             }
             
             .nav-links li a span { font-size: 1.4rem; transition: 0.3s; display: block; margin-bottom: 2px;}
@@ -245,19 +234,14 @@
         #nativity .card img { height: 180px; width: 100%; object-fit: cover; border-radius: 10px; transition: 0.3s; }
         #nativity .card h3 { color: var(--gold); font-size: 1.3rem; margin: 15px 0 5px;}
         
-        /* HIDDEN TEXT LOGIC - FIXED */
+        /* Hidden detailed matter */
         .verse-hidden {
             max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s ease;
             background: rgba(0,0,0,0.3); border-radius: 8px; margin-top: 0; padding: 0; text-align: left;
         }
-        .verse-hidden p { 
-            padding: 15px; font-size: 0.95rem; line-height: 1.6; color: #f4f4f4; 
-            border-left: 3px solid var(--gold); margin: 0; 
-        }
+        .verse-hidden p { padding: 15px; font-size: 0.95rem; line-height: 1.6; color: #f4f4f4; border-left: 3px solid var(--gold); margin: 0; }
         
-        /* Class added via JS on click */
         .card.active .verse-hidden { max-height: 500px; opacity: 1; padding: 10px; margin-top: 10px; }
-        
         .click-hint { font-size: 0.75rem; color: var(--gold); opacity: 0.7; margin-top: 5px; display: block; letter-spacing: 1px; text-transform: uppercase;}
 
         .nativity-footer-text {
@@ -269,7 +253,8 @@
         /* SERVICES */
         #services {
             padding: 80px 5%; text-align: center;
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('https://www.transparenttextures.com/patterns/snow.png');
+            background-color: #f0f8ff;
         }
         .section-title h2 { font-family: var(--font-head); font-size: 2.8rem; color: var(--primary-dark); margin-bottom: 10px; font-weight: 700; }
         .section-title p { font-family: var(--font-script); font-size: 2rem; color: var(--gold); margin-bottom: 40px; }
@@ -288,7 +273,8 @@
         /* PASTORAL */
         #pastoral-team {
             padding: 80px 5%; text-align: center;
-            background: linear-gradient(to bottom, #fffbf0 0%, #fff3e0 100%);
+            background: linear-gradient(rgba(255,253,232,0.9), rgba(255,253,232,0.9)), url('https://www.transparenttextures.com/patterns/christmas-magic.png');
+            background-color: #fffde7;
         }
         .pastor-flex { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;}
 
@@ -302,18 +288,11 @@
         .pastor-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
         
         .pastor-img-container { 
-            width: 130px; height: 130px; 
-            border-radius: 50%; 
-            overflow: hidden; 
-            margin: 0 auto 15px; 
+            width: 130px; height: 130px; border-radius: 50%; 
+            overflow: hidden; margin: 0 auto 15px; 
             border: 4px solid var(--gold);
         }
-        .pastor-img-container img { 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            object-position: top; 
-            transition: 0.5s; 
-        }
+        .pastor-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: 0.5s; }
         .pastor-card:hover .pastor-img-container img { transform: scale(1.1); }
         
         .pastor-info { padding: 0; }
@@ -328,7 +307,7 @@
         .timeline-content:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); }
         .timeline-row::before { content: '🌟'; position: absolute; left: -41px; top: 10px; font-size: 1.2rem; color: var(--gold); text-shadow: 0 0 10px var(--gold);}
 
-        /* FOOTER */
+        /* FOOTER & APP ACTIONS */
         .main-footer { 
             background: #021210; color: white; 
             padding-top: 0; position: relative; z-index: 20; margin-top: auto; 
@@ -337,6 +316,7 @@
         .footer-content { display: flex; align-items: stretch; flex-wrap: wrap; }
         .footer-map { flex: 1; min-width: 350px; }
         .footer-map iframe { width: 100%; height: 100%; min-height: 250px; border: 0; display: block; }
+        
         .footer-info { 
             flex: 1; min-width: 350px; padding: 40px 20px;
             text-align: center; 
@@ -348,6 +328,19 @@
         .socials { margin-top: 15px; }
         .socials a { color: white; font-size: 1.2rem; margin: 0 8px; transition: 0.3s; }
         .socials a:hover { color: var(--gold); transform: scale(1.1); }
+
+        /* APP ACTIONS STYLING */
+        .app-actions { margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .app-btn {
+            display: inline-block; padding: 12px 25px; margin: 5px;
+            border-radius: 50px; font-family: var(--font-nav-link); 
+            font-weight: 600; text-transform: uppercase; font-size: 0.8rem;
+            cursor: pointer; transition: 0.3s; border: none; outline: none;
+        }
+        .btn-install { background: var(--gold); color: #001f1b; }
+        .btn-install:hover { background: white; transform: translateY(-3px); }
+        .btn-share { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-share:hover { background: var(--gold); color: #001f1b; transform: translateY(-3px); }
 
         /* MOBILE ADJUSTMENTS */
         @media (max-width: 768px) {
@@ -402,7 +395,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html" class="active"><span>🏠</span> Home</a></li>
-                <li><a href="./bible.html"><span>📖</span> Bible</a></li>
+                <li><a href="bible.html"><span>📖</span> Bible</a></li>
                 <li><a href="quiz.html"><span>🧩</span> Quiz</a></li>
                 <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
             </ul>
@@ -617,19 +610,20 @@
                     </div>
                     <div class="socials">
                         <a href="https://wa.me/919533723237"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://www.youtube.com/@christmandir"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
-                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
-                    <div style="margin-top: 15px;">
-                        <button id="installBtn" style="display: none; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 20px; font-weight: bold; margin-right: 10px;">
+                    
+                    <div class="app-actions">
+                        <button id="installBtn" class="app-btn btn-install" style="display: none;">
                           ⬇ Install App
                         </button>
-                    
-                        <button id="shareBtn" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 20px; font-weight: bold;">
+                        <button id="shareBtn" class="app-btn btn-share">
                           🔗 Share App Link
                         </button>
-                      </div>
+                    </div>
+
+                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
                 </div>
             </div>
         </footer>
@@ -773,65 +767,60 @@
         
         document.getElementById('year').innerText = new Date().getFullYear();
     </script>
-    <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('Service Worker Registered'))
-      .catch((error) => console.log('Service Worker Failed', error));
-  }
-</script>
-<script>
-  // --- INSTALLATION LOGIC ---
-  let deferredPrompt;
-  const installBtn = document.getElementById('installBtn');
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'inline-block'; // Show button only if installable
-  });
-
-  installBtn.addEventListener('click', (e) => {
-    installBtn.style.display = 'none';
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      deferredPrompt = null;
-    });
-  });
-
-  window.addEventListener('appinstalled', () => {
-    installBtn.style.display = 'none';
-    console.log('App Installed');
-  });
-
-
-// --- SHARE BUTTON LOGIC ---
-  const shareBtn = document.getElementById('shareBtn');
-
-  shareBtn.addEventListener('click', async () => {
     
-    // 👇👇 CHANGE THIS URL TO YOUR GITHUB ADDRESS 👇👇
-    // Example: 'https://johndoe.github.io/christ-mandir/install.html'
-    const installPageUrl = 'https://christministries.github.io/christmandir/install.html'; 
-
-    const shareData = {
-      title: 'Christ Mandir App',
-      text: 'Install the official Christ Mandir App for daily verses and quizzes!',
-      url: installPageUrl, 
-    };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (err) {
-        console.log('Error sharing:', err);
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('Service Worker Registered'))
+          .catch((error) => console.log('Service Worker Failed', error));
       }
-    } else {
-      // Fallback for desktop
-      navigator.clipboard.writeText(installPageUrl);
-      alert('App install link copied to clipboard!');
-    }
-  });
-</script>
+    
+      // --- INSTALLATION LOGIC ---
+      let deferredPrompt;
+      const installBtn = document.getElementById('installBtn');
+    
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = 'inline-block'; // Show button only if installable
+      });
+    
+      installBtn.addEventListener('click', (e) => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt = null;
+        });
+      });
+    
+      window.addEventListener('appinstalled', () => {
+        installBtn.style.display = 'none';
+        console.log('App Installed');
+      });
+    
+      // --- SHARE BUTTON LOGIC ---
+      const shareBtn = document.getElementById('shareBtn');
+    
+      shareBtn.addEventListener('click', async () => {
+        const installPageUrl = 'https://christministries.github.io/christmandir/install.html'; 
+    
+        const shareData = {
+          title: 'Christ Mandir App',
+          text: 'Install the official Christ Mandir App for daily verses and quizzes!',
+          url: installPageUrl, 
+        };
+    
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            console.log('Error sharing:', err);
+          }
+        } else {
+          navigator.clipboard.writeText(installPageUrl);
+          alert('App install link copied to clipboard!');
+        }
+      });
+    </script>
 </body>
 </html>
