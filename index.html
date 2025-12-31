@@ -619,6 +619,13 @@
                     <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Mandir</p>
                 </div>
             </div>
+            <button id="installBtn" style="display: none; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; margin-right: 10px;">
+    Install App
+  </button>
+
+  <button id="shareBtn" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px;">
+    Share App
+  </button>
         </footer>
     </main>
 
@@ -767,8 +774,70 @@
       .catch((error) => console.log('Service Worker Failed', error));
   }
 </script>
+    <script>
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+
+  // 1. Listen for the "beforeinstallprompt" event
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so we can trigger it later.
+    deferredPrompt = e;
+    // Update UI notify the user they can install the PWA
+    installBtn.style.display = 'inline-block';
+  });
+
+  // 2. Handle the button click
+  installBtn.addEventListener('click', (e) => {
+    // Hide the app provided install promotion
+    installBtn.style.display = 'none';
+    // Show the install prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      deferredPrompt = null;
+    });
+  });
+
+  // 3. Check if app is already installed (optional clean up)
+  window.addEventListener('appinstalled', () => {
+    // Hide the install button
+    installBtn.style.display = 'none';
+    deferredPrompt = null;
+    console.log('PWA was installed');
+  });
+        const shareBtn = document.getElementById('shareBtn');
+
+  shareBtn.addEventListener('click', async () => {
+    // Check if the browser supports native sharing
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Christ Mandir App',
+          text: 'Check out this Christian App with daily verses and quizzes!',
+          url: window.location.href, // Shares the current page URL
+        });
+        console.log('Content shared successfully');
+      } catch (error) {
+        console.log('Error sharing:', error);
+      }
+    } else {
+      // Fallback for desktop browsers that don't support "Share"
+      // Takes the URL and copies it to the clipboard
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard! You can paste it to share.');
+    }
+  });
+</script>
 </body>
 </html>
+
 
 
 
