@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Christ Mandir App</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+            margin: 0;
+        }
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        h1 { margin: 0 0 10px 0; color: #222; font-size: 24px;}
+        p { color: #666; margin: 0 0 30px 0; }
+        
+        /* The Install Button */
+        #installBtn {
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,123,255,0.3);
+            display: none; /* Hidden until browser says it's ready */
+            transition: transform 0.2s;
+        }
+        #installBtn:active { transform: scale(0.95); }
+        
+        /* iOS Instructions */
+        .ios-instruction {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            max-width: 300px;
+        }
+        .ios-icon { vertical-align: middle; width: 20px; }
+
+        .skip-link { margin-top: 30px; color: #999; text-decoration: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+    <img src="icon-192.png" alt="App Logo" class="app-icon">
+
+    <h1>Christ Mandir App</h1>
+    <p>Daily Verses • Quiz • Stories</p>
+
+    <button id="installBtn">⬇ Install App</button>
+
+    <div id="ios-help" class="ios-instruction">
+        <strong>To install on iPhone:</strong><br><br>
+        1. Tap the <strong>Share</strong> button <span style="font-size:18px">⎋</span><br>
+        2. Scroll down & tap <strong>"Add to Home Screen"</strong> <span style="font-size:18px">⊞</span>
+    </div>
+
+    <a href="index.html" class="skip-link">Open website without installing</a>
+
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js');
+        }
+
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        const iosHelp = document.getElementById('ios-help');
+
+        // Detect iOS
+        const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
+
+        if (isIos) {
+            iosHelp.style.display = 'block'; 
+        }
+
+        // Listen for install prompt (Android/Desktop)
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block'; // Reveal the button
+        });
+
+        installBtn.addEventListener('click', (e) => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt');
+                    // Optional: Redirect to main app after install
+                    setTimeout(() => window.location.href = 'index.html', 1000);
+                }
+                deferredPrompt = null;
+            });
+        });
+    </script>
+</body>
+</html>
