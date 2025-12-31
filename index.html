@@ -74,12 +74,12 @@
             background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .nav-links { list-style: none; padding: 0; margin: 0; display: flex; gap: 30px; }
+        .nav-links { list-style: none; padding: 0; margin: 0; display: flex; gap: 20px; }
         
         .nav-links li a { 
             text-decoration: none; color: #636e72; 
             font-family: var(--font-nav-logo); font-weight: 600; 
-            padding: 10px 20px; border-radius: 25px; 
+            padding: 10px 15px; border-radius: 25px; 
             transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 1rem;
         }
 
@@ -234,7 +234,7 @@
         #nativity .card img { height: 180px; width: 100%; object-fit: cover; border-radius: 10px; transition: 0.3s; }
         #nativity .card h3 { color: var(--gold); font-size: 1.3rem; margin: 15px 0 5px;}
         
-        /* Hidden detailed matter */
+        /* Hidden detailed matter - 0 Height by default */
         .verse-hidden {
             max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s ease;
             background: rgba(0,0,0,0.3); border-radius: 8px; margin-top: 0; padding: 0; text-align: left;
@@ -288,11 +288,18 @@
         .pastor-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
         
         .pastor-img-container { 
-            width: 130px; height: 130px; border-radius: 50%; 
-            overflow: hidden; margin: 0 auto 15px; 
+            width: 130px; height: 130px; 
+            border-radius: 50%; 
+            overflow: hidden; 
+            margin: 0 auto 15px; 
             border: 4px solid var(--gold);
         }
-        .pastor-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: 0.5s; }
+        .pastor-img-container img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            object-position: top; 
+            transition: 0.5s; 
+        }
         .pastor-card:hover .pastor-img-container img { transform: scale(1.1); }
         
         .pastor-info { padding: 0; }
@@ -329,16 +336,21 @@
         .socials a { color: white; font-size: 1.2rem; margin: 0 8px; transition: 0.3s; }
         .socials a:hover { color: var(--gold); transform: scale(1.1); }
 
-        /* APP ACTIONS STYLING */
-        .app-actions { margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .app-btn {
-            display: inline-block; padding: 12px 25px; margin: 5px;
-            border-radius: 50px; font-family: var(--font-nav-link); 
-            font-weight: 600; text-transform: uppercase; font-size: 0.8rem;
-            cursor: pointer; transition: 0.3s; border: none; outline: none;
+        /* APP ACTIONS STYLING (NEW) */
+        .footer-app-buttons { 
+            margin-top: 25px; padding-top: 20px; 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
         }
-        .btn-install { background: var(--gold); color: #001f1b; }
-        .btn-install:hover { background: white; transform: translateY(-3px); }
+        .app-btn {
+            padding: 12px 25px; border-radius: 50px; 
+            font-family: var(--font-nav-link); font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; transition: 0.3s; border: none; outline: none;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-install { background: var(--gold); color: #001f1b; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .btn-install:hover { background: #fff; transform: translateY(-3px); }
+        
         .btn-share { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
         .btn-share:hover { background: var(--gold); color: #001f1b; transform: translateY(-3px); }
 
@@ -395,10 +407,9 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html" class="active"><span>🏠</span> Home</a></li>
-              
+                <li><a href="bible.html"><span>📖</span> Bible</a></li>
+                <li><a href="stories.html"><span>📚</span> Stories</a></li>
                 <li><a href="quiz.html"><span>🧩</span> Quiz</a></li>
-                  <li><a href="stories.html"><span>📚</span> Stories</div></li>
-                  <li><a href="bible.html"><span>📖</span> Bible</a></li>
                 <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
             </ul>
         </nav>
@@ -442,7 +453,7 @@
                 </div>
                 
                 <p class="nativity-desc reveal">
-                    The story of Christmas began in the humble town of Bethlehem...
+                    The story of Christmas began in the humble town of Bethlehem, where Jesus was born in a manger under a star-filled sky. Angels proclaimed peace to the shepherds, and wise men journeyed from afar to worship the King.
                 </p>
 
                 <div class="card-grid">
@@ -454,7 +465,7 @@
                             <p>
                                 <b>Luke 2:7</b><br>
                                 "And she brought forth her firstborn Son, and wrapped Him in swaddling cloths, and laid Him in a manger." <br><br>
-                                In the bustling town of Bethlehem, Mary gave birth to Jesus in a humble stable...
+                                In the bustling town of Bethlehem, Mary gave birth to Jesus in a humble stable. The King of Kings entered the world in the most lowly of circumstances, demonstrating that God's love reaches the humblest of hearts.
                             </p>
                         </div>
                     </div>
@@ -467,7 +478,7 @@
                             <p>
                                 <b>Luke 2:10</b><br>
                                 "Do not be afraid, for behold, I bring you good tidings of great joy which will be to all people." <br><br>
-                                On a quiet hillside, angels appeared to shepherds to announce the 'Good News'...
+                                On a quiet hillside, angels appeared to shepherds to announce the 'Good News'. These humble shepherds were the first invited guests to witness the Savior, proving the Gospel is for everyone.
                             </p>
                         </div>
                     </div>
@@ -480,7 +491,7 @@
                             <p>
                                 <b>Matthew 2:11</b><br>
                                 "And when they had come into the house, they saw the young Child with Mary His mother, and fell down and worshiped Him." <br><br>
-                                Guided by a star, Magi from the East traveled to find the King...
+                                Guided by a star, Magi from the East traveled to find the King. They presented gifts of Gold, Frankincense, and Myrrh, honoring His royalty, divinity, and sacrifice.
                             </p>
                         </div>
                     </div>
@@ -489,7 +500,7 @@
                 <div class="nativity-footer-text reveal">
                     <span class="verse-big">"For God so loved the world..."</span>
                     <p style="color:#ccc; font-size:1.1rem;">
-                        John 3:16 reminds us that this season is about the ultimate gift of love.
+                        John 3:16 reminds us that this season is about the ultimate gift of love. May the peace of Christ rule in your hearts this Christmas and always.
                     </p>
                 </div>
             </div>
@@ -612,11 +623,11 @@
                     </div>
                     <div class="socials">
                         <a href="https://wa.me/919533723237"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.youtube.com/@christmandir"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                     
-                    <div class="app-actions">
+                    <div class="footer-app-buttons">
                         <button id="installBtn" class="app-btn btn-install" style="display: none;">
                           ⬇ Install App
                         </button>
@@ -784,7 +795,7 @@
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        installBtn.style.display = 'inline-block'; // Show button only if installable
+        installBtn.style.display = 'inline-flex'; 
       });
     
       installBtn.addEventListener('click', (e) => {
@@ -826,5 +837,3 @@
     </script>
 </body>
 </html>
-
-
