@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Christ Mandir | Christmas Celebration</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. CORE STYLES & VARIABLES
+           ========================================= */
+        :root {
+            --primary: #00897b;
+            --primary-dark: #004d40;
+            --gold: #d4af37; 
+            --xmas-red: #b3000c;
+            --xmas-green: #0f4d2a;
+            --bg-light: #f8ffff;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            
+            --nav-bg: rgba(255, 255, 255, 0.85); 
+            --glass-nav: rgba(255, 255, 255, 0.85);
+            --nav-text: #2d3436;
+            --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
+            
+            --font-head: 'Cinzel', serif;       
+            --font-script: 'Great Vibes', cursive; 
+            --font-body: 'Lato', sans-serif;
+            --font-nav-logo: 'Poppins', sans-serif; 
+            --font-nav-link: 'Inter', sans-serif; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; height: 100%; }
+        
+        body { 
+            font-family: var(--font-body); 
+            color: var(--text-dark); 
+            background-color: var(--bg-light);
+            overflow-x: hidden; 
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding-top: 90px;
+        }
+
+        body.no-scroll { overflow: hidden; height: 100vh; }
+        main { flex: 1; }
+
+        /* =========================================
+           2. NAVIGATION 
+           ========================================= */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: var(--glass-nav); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 60px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .logo { 
+            font-family: var(--font-nav-logo); 
+            font-size: 1.8rem; font-weight: 800; 
+            background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { list-style: none; padding: 0; margin: 0; display: flex; gap: 20px; }
+        
+        .nav-links li a { 
+            text-decoration: none; color: #636e72; 
+            font-family: var(--font-nav-logo); font-weight: 600; 
+            padding: 10px 15px; border-radius: 25px; 
+            transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 1rem;
+        }
+
+        .nav-links li a:hover { 
+            background: rgba(0,137,123,0.08); color: var(--primary); transform: translateY(-2px); 
+        }
+
+        .nav-links li a.active { 
+            background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,137,123,0.3); 
+        }
+
+        /* MOBILE NAV */
+        @media (max-width: 768px) {
+            body { padding-top: 0; padding-bottom: 90px; } 
+            
+            header {
+                top: auto; bottom: 20px; left: 50%; transform: translateX(-50%);
+                width: 94%; max-width: 400px; height: 70px;
+                background: var(--glass-nav);
+                backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                border-radius: 40px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                border: 1px solid rgba(255,255,255,0.6);
+                padding: 0; 
+            }
+            .logo { display: none; }
+            
+            header nav { width: 100%; height: 100%; }
+
+            .nav-links { 
+                width: 100%; height: 100%;
+                display: flex; 
+                justify-content: space-evenly; 
+                align-items: center;
+                gap: 0; padding: 0; margin: 0;
+            }
+            
+            .nav-links li { position: relative; display: flex; justify-content: center; align-items: center; }
+
+            .nav-links li a { 
+                flex-direction: column; font-size: 0.65rem; color: #636e72; 
+                gap: 3px; padding: 5px; background: none !important; 
+                border-radius: 0; width: auto;
+            }
+            
+            .nav-links li a span { font-size: 1.4rem; transition: 0.3s; display: block; margin-bottom: 2px;}
+            
+            .nav-links li a.active { color: var(--primary); box-shadow: none; }
+            .nav-links li a.active span { 
+                transform: translateY(-3px) scale(1.1); 
+                filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); 
+            }
+        }
+
+        /* =========================================
+           3. ANIMATIONS
+           ========================================= */
+        #intro-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%;
+            background-color: #050505; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 3000; transition: opacity 1.2s ease-in-out, visibility 1.2s;
+        }
+        #intro-overlay.intro-fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .intro-greeting { text-align: center; z-index: 3002; animation: scaleUp 1s ease-out; padding: 20px; }
+        .intro-greeting h1 {
+            font-family: var(--font-script); font-size: 6rem; color: var(--xmas-red); font-weight: 400; margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(212, 36, 38, 0.8), 0 0 20px rgba(212, 36, 38, 0.4);
+        }
+        .intro-greeting h2 {
+            font-family: var(--font-head); font-size: 2.2rem; font-weight: 400; color: #fff;
+            letter-spacing: 4px; text-transform: uppercase;
+            border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 10px 0; display: inline-block;
+        }
+        @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        #fireworks-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3001; transition: z-index 0.1s step-end; }
+        #santa-container { position: fixed; top: 15%; left: -600px; z-index: 998; pointer-events: none; animation: flyAcross 25s linear infinite; }
+        .santa-img { width: 250px; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); }
+        @keyframes flyAcross { 0% { left: -600px; transform: translateY(0) rotate(-2deg); } 100% { left: 120vw; transform: translateY(0) rotate(-2deg); } }
+
+        #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+        .snowflake { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: snow linear infinite; pointer-events: none; }
+        @keyframes snow { to { transform: translateY(105vh); } }
+
+        /* =========================================
+           4. SECTIONS & LAYOUT
+           ========================================= */
+        .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: 0.9s cubic-bezier(0.19, 1, 0.22, 1); }
+        .reveal.active { opacity: 1; transform: none; }
+
+        /* HERO SECTION */
+        .hero-split { 
+            display: flex; min-height: 100vh; position: relative; overflow: hidden;
+            justify-content: space-between; align-items: center;
+            margin-top: -90px; padding-top: 90px; 
+        }
+        .hero-text-side { 
+            width: 50%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+            padding-left: 8%; padding-right: 20px; z-index: 2; 
+            background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0.85)), url('https://images.unsplash.com/photo-1543791959-12b3f543281a?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .hero-content-wrapper { max-width: 650px; text-align: left; }
+        .hero-feature-img { height: 140px; object-fit: contain; margin-bottom: 25px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); display: block; }
+        .welcome-label { color: var(--gold); font-weight: 700; letter-spacing: 4px; font-size: 0.85rem; font-family: 'Montserrat', sans-serif; display: block; margin-bottom: 10px; }
+        .xmas-title { 
+            font-family: var(--font-head); font-size: 4.5rem; line-height: 1.1; margin: 0 0 20px 0; font-weight: 800;
+            background: linear-gradient(to bottom, #7f8c8d 0%, #bdc3c7 20%, #333 50%, #bdc3c7 80%, #7f8c8d 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 2px 0px rgba(0,0,0,0.2)); text-transform: uppercase;
+        }
+        .tagline { font-size: 1.1rem; color: #444; margin-bottom: 40px; line-height: 1.8; max-width: 90%; font-weight: 500; }
+        .btn-row { display: flex; gap: 20px; justify-content: flex-start; }
+        .btn-main { background: linear-gradient(135deg, var(--xmas-red), var(--xmas-green)); color: white; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; font-family: 'Montserrat', sans-serif; transition: 0.3s; letter-spacing: 1px; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn-text { color: var(--primary-dark); padding: 16px 20px; text-decoration: none; font-weight: 600; border-bottom: 2px solid var(--gold); font-family: 'Montserrat', sans-serif; }
+        
+        .hero-img-side { 
+            width: 55%; height: 100vh; position: absolute; right: 0; top: 0;
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            margin-left: -10%; border-left: 8px solid var(--gold); z-index: 5;
+        }
+        .hero-img-side img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+
+        /* NATIVITY SECTION */
+        #nativity {
+            padding: 50px 5%;
+            text-align: center;
+            background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364); 
+            color: white; position: relative;
+        }
+        #nativity .section-title h2 { color: var(--gold); margin-bottom: 10px; font-size: 2.2rem; }
+        #nativity .section-title p { color: #ccc; font-size: 1.1rem; margin-bottom: 20px; }
+        
+        .nativity-desc {
+            max-width: 800px; margin: 0 auto 30px; color: #eee; font-size: 1rem; line-height: 1.7; font-family: var(--font-body);
+        }
+
+        #nativity .card-grid { gap: 20px; }
+        
+        /* Interactive Cards */
+        #nativity .card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px); color: white; border-radius: 12px;
+            padding: 20px; cursor: pointer; transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+        #nativity .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        #nativity .card img { height: 180px; width: 100%; object-fit: cover; border-radius: 10px; transition: 0.3s; }
+        #nativity .card h3 { color: var(--gold); font-size: 1.3rem; margin: 15px 0 5px;}
+        
+        /* Hidden detailed matter - 0 Height by default */
+        .verse-hidden {
+            max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s ease;
+            background: rgba(0,0,0,0.3); border-radius: 8px; margin-top: 0; padding: 0; text-align: left;
+        }
+        .verse-hidden p { padding: 15px; font-size: 0.95rem; line-height: 1.6; color: #f4f4f4; border-left: 3px solid var(--gold); margin: 0; }
+        
+        .card.active .verse-hidden { max-height: 500px; opacity: 1; padding: 10px; margin-top: 10px; }
+        .click-hint { font-size: 0.75rem; color: var(--gold); opacity: 0.7; margin-top: 5px; display: block; letter-spacing: 1px; text-transform: uppercase;}
+
+        .nativity-footer-text {
+            margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);
+            font-family: var(--font-head); color: #fff;
+        }
+        .verse-big { font-size: 1.5rem; color: var(--gold); margin-bottom: 10px; display: block; }
+
+        /* SERVICES */
+        #services {
+            padding: 80px 5%; text-align: center;
+            background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('https://www.transparenttextures.com/patterns/snow.png');
+            background-color: #f0f8ff;
+        }
+        .section-title h2 { font-family: var(--font-head); font-size: 2.8rem; color: var(--primary-dark); margin-bottom: 10px; font-weight: 700; }
+        .section-title p { font-family: var(--font-script); font-size: 2rem; color: var(--gold); margin-bottom: 40px; }
+        
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        
+        .service-card {
+            background: white; padding: 30px 20px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .service-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2); border-color: var(--gold); }
+        .service-card span { transition: 0.4s; display: inline-block; }
+        .service-card:hover span { transform: scale(1.2) rotate(10deg); }
+
+        /* PASTORAL */
+        #pastoral-team {
+            padding: 80px 5%; text-align: center;
+            background: linear-gradient(rgba(255,253,232,0.9), rgba(255,253,232,0.9)), url('https://www.transparenttextures.com/patterns/christmas-magic.png');
+            background-color: #fffde7;
+        }
+        .pastor-flex { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;}
+
+        .pastor-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.4s;
+            position: relative; border-bottom: 5px solid var(--gold);
+            padding: 25px;
+            width: 100%; max-width: 350px;
+        }
+        .pastor-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        
+        .pastor-img-container { 
+            width: 130px; height: 130px; 
+            border-radius: 50%; 
+            overflow: hidden; 
+            margin: 0 auto 15px; 
+            border: 4px solid var(--gold);
+        }
+        .pastor-img-container img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            object-position: top; 
+            transition: 0.5s; 
+        }
+        .pastor-card:hover .pastor-img-container img { transform: scale(1.1); }
+        
+        .pastor-info { padding: 0; }
+        .pastor-info h3 { font-family: var(--font-head); font-size: 1.4rem; color: var(--primary-dark); margin-bottom: 5px; }
+        .pastor-info p { color: #666; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* ROADMAP */
+        .roadmap-section { padding: 80px 5%; background: #050b11 url('https://i.imgur.com/9c4b7a.png') center/cover fixed; color: white; border-top: 3px solid var(--gold); }
+        .timeline { max-width: 700px; margin: 0 auto; border-left: 2px solid var(--gold); padding-left: 30px; }
+        .timeline-row { margin-bottom: 40px; cursor: pointer; position: relative; }
+        .timeline-content { background: rgba(255,255,255,0.08); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;}
+        .timeline-content:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); }
+        .timeline-row::before { content: '🌟'; position: absolute; left: -41px; top: 10px; font-size: 1.2rem; color: var(--gold); text-shadow: 0 0 10px var(--gold);}
+
+        /* FOOTER & APP ACTIONS */
+        .main-footer { 
+            background: #021210; color: white; 
+            padding-top: 0; position: relative; z-index: 20; margin-top: auto; 
+            border-top: 2px solid var(--gold);
+        }
+        .footer-content { display: flex; align-items: stretch; flex-wrap: wrap; }
+        .footer-map { flex: 1; min-width: 350px; }
+        .footer-map iframe { width: 100%; height: 100%; min-height: 250px; border: 0; display: block; }
+        
+        .footer-info { 
+            flex: 1; min-width: 350px; padding: 40px 20px;
+            text-align: center; 
+            display: flex; flex-direction: column; justify-content: center;
+            background: #001f1b;
+        }
+        .footer-logo { font-family: var(--font-head); font-size: 1.8rem; color: var(--gold); margin-bottom: 10px; font-weight: 700;}
+        .contact-list p { font-size: 0.9rem; margin-bottom: 5px; opacity: 0.8; }
+        .socials { margin-top: 15px; }
+        .socials a { color: white; font-size: 1.2rem; margin: 0 8px; transition: 0.3s; }
+        .socials a:hover { color: var(--gold); transform: scale(1.1); }
+
+        /* APP ACTIONS STYLING (NEW) */
+        .footer-app-buttons { 
+            margin-top: 25px; padding-top: 20px; 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+        }
+        .app-btn {
+            padding: 12px 25px; border-radius: 50px; 
+            font-family: var(--font-nav-link); font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; transition: 0.3s; border: none; outline: none;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-install { background: var(--gold); color: #001f1b; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .btn-install:hover { background: #fff; transform: translateY(-3px); }
+        
+        .btn-share { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-share:hover { background: var(--gold); color: #001f1b; transform: translateY(-3px); }
+
+        /* MOBILE ADJUSTMENTS */
+        @media (max-width: 768px) {
+            .hero-split { 
+                flex-direction: column-reverse; 
+                display: flex; height: auto; min-height: 100vh; 
+                margin-top: 0; padding-top: 20px; 
+            }
+            .hero-img-side { display: none !important; }
+
+            .hero-text-side { width: 100%; padding: 20px; text-align: center; background: none; }
+            .hero-content-wrapper { text-align: center; }
+            
+            .hero-feature-img {
+                display: block; margin: 0 auto 20px; width: 140px; height: 140px; object-fit: contain;
+            }
+
+            .btn-row { justify-content: center; }
+            .xmas-title { font-size: 3rem; }
+            
+            #nativity .card img { height: 140px; }
+
+            .footer-content { flex-direction: column; }
+            .footer-map iframe { height: 250px; min-height: 250px; }
+            body.no-scroll { height: auto; overflow: hidden; }
+            
+            .roadmap-section { padding: 40px 15px; } 
+            .timeline { padding-left: 20px; }
+            .timeline-row::before { left: -31px; font-size: 1rem; }
+            .timeline-content { padding: 15px; } 
+            .timeline-content h3 { font-size: 1.1rem; }
+            .timeline-content p { font-size: 0.9rem; }
+        }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #fff; width: 90%; max-width: 500px; border-radius: 20px; overflow: hidden; position: relative; text-align: center; padding-bottom: 25px; border: 2px solid var(--gold); }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 35px; cursor: pointer; color: #333; z-index: 10;}
+    </style>
+</head>
+<body class="no-scroll">
+
+    <div id="intro-overlay">
+        <div class="intro-greeting">
+            <h1>Merry Christmas</h1>
+            <h2>& Happy New Year</h2>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">Christ Mandir</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><span>🏠</span> Home</a></li>
+                <li><a href="bible.html"><span>📖</span> Bible</a></li>
+                <li><a href="stories.html"><span>📚</span> Stories</a></li>
+                <li><a href="quiz.html"><span>🧩</span> Quiz</a></li>
+                <li><a href="dailyverse.html"><span>✨</span> Verse</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <div id="santa-container">
+        <img src="https://static.wixstatic.com/media/be4f11_6e0a5d13aff544498ef571e2f20751d3~mv2.png" alt="Flying Santa" class="santa-img">
+    </div>
+
+    <div id="snow-container"></div>
+
+    <main>
+        <section class="hero-split">
+            <div class="hero-text-side">
+                <div class="hero-content-wrapper reveal">
+                    <img src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="hero-feature-img">
+                    
+                    <span class="welcome-label">WELCOME TO</span>
+                    <h1 class="xmas-title">Christ <br>Mandir</h1>
+                    <p class="tagline">Warm and heartily welcome to you to Christ Mandir. Join us in celebrating the season of light and hope in the different culture and religious land of India.</p>
+                    
+                    <div class="btn-row">
+                        <a href="dailyverse.html" class="btn-main">Daily Verse</a>
+                        <a href="#nativity" class="btn-text">Nativity Story</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-img-side">
+                <img src="https://static.wixstatic.com/media/be4f11_7e4b9a5693b546efb87eecc0f1e4e1a1~mv2.png" alt="Christmas Scene">
+            </div>
+        </section>
+
+        <section id="nativity" class="section-clean">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>The Greatest Gift</h2>
+                    <p>Celebrating the Birth of Jesus</p>
+                </div>
+                
+                <p class="nativity-desc reveal">
+                    The story of Christmas began in the humble town of Bethlehem, where Jesus was born in a manger under a star-filled sky. Angels proclaimed peace to the shepherds, and wise men journeyed from afar to worship the King.
+                </p>
+
+                <div class="card-grid">
+                    <div class="card reveal" onclick="this.classList.toggle('active')">
+                        <img src="https://images.unsplash.com/photo-1544256272-5158a12dc6f4?q=80&w=800" alt="Nativity Scene">
+                        <h3>The Manger</h3>
+                        <span class="click-hint">(Tap to read)</span>
+                        <div class="verse-hidden">
+                            <p>
+                                <b>Luke 2:7</b><br>
+                                "And she brought forth her firstborn Son, and wrapped Him in swaddling cloths, and laid Him in a manger." <br><br>
+                                In the bustling town of Bethlehem, Mary gave birth to Jesus in a humble stable. The King of Kings entered the world in the most lowly of circumstances, demonstrating that God's love reaches the humblest of hearts.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card reveal" style="transition-delay: 0.1s;" onclick="this.classList.toggle('active')">
+                        <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?q=80&w=800" alt="Shepherds">
+                        <h3>The Shepherds</h3>
+                        <span class="click-hint">(Tap to read)</span>
+                        <div class="verse-hidden">
+                            <p>
+                                <b>Luke 2:10</b><br>
+                                "Do not be afraid, for behold, I bring you good tidings of great joy which will be to all people." <br><br>
+                                On a quiet hillside, angels appeared to shepherds to announce the 'Good News'. These humble shepherds were the first invited guests to witness the Savior, proving the Gospel is for everyone.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card reveal" style="transition-delay: 0.2s;" onclick="this.classList.toggle('active')">
+                        <img src="https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=800" alt="Wise Men">
+                        <h3>The Wise Men</h3>
+                        <span class="click-hint">(Tap to read)</span>
+                        <div class="verse-hidden">
+                            <p>
+                                <b>Matthew 2:11</b><br>
+                                "And when they had come into the house, they saw the young Child with Mary His mother, and fell down and worshiped Him." <br><br>
+                                Guided by a star, Magi from the East traveled to find the King. They presented gifts of Gold, Frankincense, and Myrrh, honoring His royalty, divinity, and sacrifice.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nativity-footer-text reveal">
+                    <span class="verse-big">"For God so loved the world..."</span>
+                    <p style="color:#ccc; font-size:1.1rem;">
+                        John 3:16 reminds us that this season is about the ultimate gift of love. May the peace of Christ rule in your hearts this Christmas and always.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section-clean">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Weekly Services</h2>
+                    <p>Join us in worship and fellowship</p>
+                </div>
+                <div class="card-grid">
+                    <div class="service-card reveal">
+                        <span style="font-size:3rem; display:block; margin-bottom:15px; color:var(--gold);">☀️</span>
+                        <h3>Sunday</h3>
+                        <p style="color:var(--xmas-red); font-weight:700;">10:00 AM - 1:00 PM</p>
+                        <p style="font-size:0.9rem;">Main Service</p>
+                    </div>
+                    <div class="service-card reveal" style="transition-delay: 0.1s;">
+                        <span style="font-size:3rem; display:block; margin-bottom:15px; color:var(--gold);">🔥</span>
+                        <h3>Friday</h3>
+                        <p style="color:var(--xmas-red); font-weight:700;">10:30 AM - 2:00 PM</p>
+                        <p style="font-size:0.9rem;">Fasting Prayer</p>
+                    </div>
+                    <div class="service-card reveal" style="transition-delay: 0.2s;">
+                        <span style="font-size:3rem; display:block; margin-bottom:15px; color:var(--gold);">🎸</span>
+                        <h3>Saturday</h3>
+                        <p style="color:var(--xmas-red); font-weight:700;">6:00 PM - 8:00 PM</p>
+                        <p style="font-size:0.9rem;">Youth Fellowship</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pastoral-team" class="section-clean">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Pastoral Team</h2>
+                </div>
+                <div class="pastor-flex">
+                    <div class="pastor-card reveal">
+                        <div class="pastor-img-container">
+                            <img src="https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png" alt="Senior Pastors">
+                        </div>
+                        <div class="pastor-info">
+                            <h3>Rev. & Mrs. A. Daniel Paul</h3>
+                            <p>Senior Pastors</p>
+                        </div>
+                    </div>
+                    <div class="pastor-card reveal" style="transition-delay: 0.1s;">
+                        <div class="pastor-img-container">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400" alt="Ministry Team">
+                        </div>
+                        <div class="pastor-info">
+                            <h3>Ministry Team</h3>
+                            <p>Worship & Prayer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="roadmap-section">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2 style="color:white;">Our Journey</h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2020', 'The Vision: God gave a clear mission to reach the brokenhearted.', 'https://images.unsplash.com/photo-1491396023581-4344e51f45dc?w=800')">
+                        <div class="timeline-content">
+                            <h3>2020 - The Vision</h3>
+                            <p>God gave a clear mission to reach the brokenhearted.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2021', 'Community Outreach: Expanding our mission to local villages.', 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800')">
+                        <div class="timeline-content">
+                            <h3>2021 - Outreach</h3>
+                            <p>Expanding our mission to reach local villages.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2022', 'Building Foundations: Securing land for the new church building.', 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800')">
+                        <div class="timeline-content">
+                            <h3>2022 - Foundation</h3>
+                            <p>Securing land for the new church building.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2023', 'Established in Yernagudem: A beacon of hope in Andhra Pradesh.', 'https://images.unsplash.com/photo-1548625361-9872e4544061?w=800')">
+                        <div class="timeline-content">
+                            <h3>2023 - Establishment</h3>
+                            <p>A beacon of hope in Andhra Pradesh.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2024', 'Growth & Grace: Seeing lives transformed daily.', 'https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=800')">
+                        <div class="timeline-content">
+                            <h3>2024 - Growth</h3>
+                            <p>Seeing lives transformed daily by His grace.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-row reveal" onclick="openRoadmapModal('2025', 'Digital Future: Launching Christ Mandir Online.', 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800')">
+                        <div class="timeline-content">
+                            <h3>2025 - Digital Future</h3>
+                            <p>Launching Christ Mandir Online to reach the world.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-map">
+                    <iframe src="https://maps.google.com/maps?q=Christ+mandir,Yernagudem-Chinnayagudem+Road,Yernagudem,Andhra+Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="footer-info">
+                    <div class="footer-logo">Christ Mandir</div>
+                    <div class="contact-list">
+                        <p>📍 Yernagudem-Chinnayagudem Rd, AP</p>
+                        <p>📞 +91 98765 43210</p>
+                        <p>✉️ contact@christmandir.com</p>
+                    </div>
+                    <div class="socials">
+                        <a href="https://wa.me/919533723237"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.youtube.com/@christmandir"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    
+                    <div class="footer-app-buttons">
+                        <button id="installBtn" class="app-btn btn-install" style="display: none;">
+                          ⬇ Install App
+                        </button>
+                        <button id="shareBtn" class="app-btn btn-share">
+                          🔗 Share App Link
+                        </button>
+                    </div>
+
+                    <p style="margin-top:20px; font-size:0.8rem; opacity:0.6;">© <span id="year"></span> Christ Ministries</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <div id="roadmap-modal" class="modal" onclick="closeRoadmapModal()">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeRoadmapModal()">×</span>
+            <img id="modal-img" src="" style="width:100%; height:250px; object-fit:cover; border-bottom: 3px solid var(--gold);">
+            <div class="modal-text" style="padding:30px 20px;">
+                <h3 id="modal-title" style="color:var(--primary-dark); font-family: var(--font-head); font-size: 1.8rem; margin-bottom: 15px;">Title</h3>
+                <p id="modal-desc" style="color:#555; font-size: 1.1rem; line-height: 1.6;">Description</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 0. Intro Animation
+        window.addEventListener('load', () => {
+            const introOverlay = document.getElementById('intro-overlay');
+            const fireworksCanvas = document.getElementById('fireworks-canvas');
+            
+            setTimeout(() => {
+                introOverlay.classList.add('intro-fade-out');
+                document.body.classList.remove('no-scroll');
+                setTimeout(() => { fireworksCanvas.style.zIndex = '997'; }, 1200);
+            }, 3000); 
+        });
+
+        // 1. Reveal Animation
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // 2. SLOWER Fireworks Logic
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        let fireworks = [];
+        const colors = ['#d42426', '#165b33', '#d4af37', '#ffffff', '#FFD700']; 
+
+        class Firework {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height;
+                this.sy = Math.random() * -3 - 2; 
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.exploded = false;
+                this.parts = [];
+            }
+            update() {
+                this.y += this.sy;
+                if (this.y < canvas.height * 0.3 && !this.exploded) this.explode();
+                this.parts.forEach(p => p.update());
+            }
+            draw() {
+                if (!this.exploded) {
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(this.x, this.y, 2, 5); 
+                }
+                this.parts.forEach(p => p.draw());
+            }
+            explode() {
+                this.exploded = true;
+                for (let i = 0; i < 50; i++) this.parts.push(new Particle(this.x, this.y, this.color));
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x; this.y = y; this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 2 + 1;
+                this.sx = Math.cos(angle) * speed;
+                this.sy = Math.sin(angle) * speed;
+                this.alpha = 1;
+                this.gravity = 0.05; 
+            }
+            update() {
+                this.x += this.sx;
+                this.y += this.sy;
+                this.sy += this.gravity;
+                this.alpha -= 0.008;
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 1.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function animateFireworks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            if (Math.random() < 0.02) fireworks.push(new Firework()); 
+            fireworks.forEach(f => { f.update(); f.draw() });
+            fireworks = fireworks.filter(f => !f.exploded || f.parts.some(p => p.alpha > 0));
+            requestAnimationFrame(animateFireworks);
+        }
+        animateFireworks();
+
+        // 3. Snow Logic
+        const snowContainer = document.getElementById('snow-container');
+        function createSnowflake() {
+            const s = document.createElement('div');
+            s.className = 'snowflake';
+            s.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 4 + 2;
+            s.style.width = size + 'px';
+            s.style.height = size + 'px';
+            s.style.animationDuration = Math.random() * 5 + 5 + 's';
+            s.style.opacity = Math.random() * 0.6 + 0.4;
+            snowContainer.appendChild(s);
+            setTimeout(() => {
+                if (s && s.parentNode) s.parentNode.removeChild(s);
+            }, 10000); 
+        }
+        setInterval(createSnowflake, 150);
+
+        // 4. Modal Logic
+        function openRoadmapModal(title, desc, imgSrc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('roadmap-modal').style.display = 'flex';
+        }
+        function closeRoadmapModal() { document.getElementById('roadmap-modal').style.display = 'none'; }
+        
+        document.getElementById('year').innerText = new Date().getFullYear();
+    </script>
+    
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('Service Worker Registered'))
+          .catch((error) => console.log('Service Worker Failed', error));
+      }
+    
+      // --- INSTALLATION LOGIC ---
+      let deferredPrompt;
+      const installBtn = document.getElementById('installBtn');
+    
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = 'inline-flex'; 
+      });
+    
+      installBtn.addEventListener('click', (e) => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt = null;
+        });
+      });
+    
+      window.addEventListener('appinstalled', () => {
+        installBtn.style.display = 'none';
+        console.log('App Installed');
+      });
+    
+      // --- SHARE BUTTON LOGIC ---
+      const shareBtn = document.getElementById('shareBtn');
+    
+      shareBtn.addEventListener('click', async () => {
+        const installPageUrl = 'https://christministries.github.io/christmandir/install.html'; 
+    
+        const shareData = {
+          title: 'Christ Mandir App',
+          text: 'Install the official Christ Mandir App for daily verses and quizzes!',
+          url: installPageUrl, 
+        };
+    
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            console.log('Error sharing:', err);
+          }
+        } else {
+          navigator.clipboard.writeText(installPageUrl);
+          alert('App install link copied to clipboard!');
+        }
+      });
+    </script>
+</body>
+</html>
