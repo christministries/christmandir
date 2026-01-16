@@ -54,7 +54,6 @@
             padding-top: 90px;
         }
 
-        body.no-scroll { overflow: hidden; height: 100vh; }
         main { flex: 1; }
 
         /* =========================================
@@ -135,43 +134,52 @@
         }
 
         /* =========================================
-           3. ANIMATIONS & EFFECTS
+           3. NEW BANNER / POPUP STYLES
            ========================================= */
-        #intro-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%;
-            background-color: #050505; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 3000; transition: opacity 1.2s ease-in-out, visibility 1.2s;
+        #welcome-banner {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dimmed background */
+            z-index: 5000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 1; transition: opacity 0.5s ease;
         }
-        #intro-overlay.intro-fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
         
-        /* Intro Text Styling */
-        .intro-greeting { text-align: center; z-index: 3002; animation: scaleUp 1.5s ease-out; padding: 20px; }
-        .intro-greeting h1 {
-            font-family: var(--font-script); font-size: 5rem; color: #fff; font-weight: 400; margin-bottom: 0px;
-            text-shadow: 0 0 10px rgba(255,255,255, 0.8);
-        }
-        .intro-year {
-            font-family: var(--font-head); font-size: 6rem; font-weight: 700; color: var(--gold);
-            line-height: 1; letter-spacing: 5px;
-            background: linear-gradient(to bottom, #cfc09f 22%,#634f2c 24%, #cfc09f 26%, #cfc09f 27%,#ffecb3 40%,#3a2c0f 78%); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: riseUp 2s ease-out;
+        .banner-content {
+            background: white;
+            width: 90%; max-width: 450px;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            border: 3px solid var(--gold);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes riseUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
 
-        /* Fireworks & Backgrounds */
-        #fireworks-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3001; transition: z-index 0.1s step-end; }
-        
-        #santa-container { position: fixed; top: 15%; left: -600px; z-index: 998; pointer-events: none; animation: flyAcross 25s linear infinite; }
-        .santa-img { width: 250px; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); }
-        @keyframes flyAcross { 0% { left: -600px; transform: translateY(0) rotate(-2deg); } 100% { left: 120vw; transform: translateY(0) rotate(-2deg); } }
+        .close-banner {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 1.8rem; cursor: pointer; color: #555;
+            transition: 0.2s; line-height: 1;
+        }
+        .close-banner:hover { color: var(--xmas-red); transform: scale(1.1); }
 
-        #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
-        .snowflake { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: snow linear infinite; pointer-events: none; }
-        @keyframes snow { to { transform: translateY(105vh); } }
+        .banner-title {
+            font-family: var(--font-script); font-size: 3.5rem; color: var(--xmas-red);
+            margin-bottom: 5px; line-height: 1.2;
+        }
+        .banner-year {
+            font-family: var(--font-head); font-size: 3rem; color: var(--gold);
+            font-weight: 700; margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .banner-msg {
+            font-family: var(--font-body); font-size: 1rem; color: #555; line-height: 1.5;
+        }
 
         /* =========================================
            4. SECTIONS & LAYOUT
@@ -393,8 +401,9 @@
             .timeline-content h3 { font-size: 1.1rem; }
             .timeline-content p { font-size: 0.9rem; }
             
-            .intro-greeting h1 { font-size: 3.5rem; }
-            .intro-year { font-size: 4rem; }
+            /* Banner Adjustment Mobile */
+            .banner-title { font-size: 2.5rem; }
+            .banner-year { font-size: 2.2rem; }
         }
 
         /* Modal */
@@ -403,17 +412,17 @@
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 35px; cursor: pointer; color: #333; z-index: 10;}
     </style>
 </head>
-<body class="no-scroll">
+<body>
 
-    <canvas id="fireworks-canvas"></canvas>
-
-    <div id="snow-container"></div>
-    
-
-    <div id="intro-overlay">
-        <div class="intro-greeting">
-            <h1>Happy <br> New Year</h1>
-            <div class="intro-year">2026</div>
+    <div id="welcome-banner">
+        <div class="banner-content">
+            <span class="close-banner" onclick="document.getElementById('welcome-banner').style.opacity = '0'; setTimeout(()=> document.getElementById('welcome-banner').style.display='none', 500);">&times;</span>
+            
+            <h2 class="banner-title">Happy <br> New Year</h2>
+            <div class="banner-year">2026</div>
+            <p class="banner-msg">
+                Welcome to Christ Mandir.<br>May this year bring you abundant peace, joy, and blessings.
+            </p>
         </div>
     </div>
 
@@ -454,6 +463,56 @@
         </section>
 
         <section id="nativity" class="section-clean">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>The Greatest Gift</h2>
+                    <p>Celebrating the Birth of Jesus</p>
+                </div>
+                
+                <p class="nativity-desc reveal">
+                    The story of Christmas began in the humble town of Bethlehem, where Jesus was born in a manger under a star-filled sky. Angels proclaimed peace to the shepherds, and wise men journeyed from afar to worship the King.
+                </p>
+
+                <div class="card-grid">
+                    <div class="card reveal" onclick="this.classList.toggle('active')">
+                        <img src="https://images.unsplash.com/photo-1544256272-5158a12dc6f4?q=80&w=800" alt="Nativity Scene">
+                        <h3>The Manger</h3>
+                        <span class="click-hint">(Tap to read)</span>
+                        <div class="verse-hidden">
+                            <p>
+                                <b>Luke 2:7</b><br>
+                                "And she brought forth her firstborn Son, and wrapped Him in swaddling cloths, and laid Him in a manger." <br><br>
+                                In the bustling town of Bethlehem, Mary gave birth to Jesus in a humble stable. The King of Kings entered the world in the most lowly of circumstances, demonstrating that God's love reaches the humblest of hearts.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card reveal" style="transition-delay: 0.1s;" onclick="this.classList.toggle('active')">
+                        <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?q=80&w=800" alt="Shepherds">
+                        <h3>The Shepherds</h3>
+                        <span class="click-hint">(Tap to read)</span>
+                        <div class="verse-hidden">
+                            <p>
+                                <b>Luke 2:10</b><br>
+                                "Do not be afraid, for behold, I bring you good tidings of great joy which will be to all people." <br><br>
+                                On a quiet hillside, angels appeared to shepherds to announce the 'Good News'. These humble shepherds were the first invited guests to witness the Savior, proving the Gospel is for everyone.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card reveal" style="transition-delay: 0.2s;" onclick="this.classList.toggle('active')">
+                        <img src="https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=800" alt="Wise Men">
+                        <h3>The Wise Men</h3>
+                        <span class="click-hint">(Tap to read)</span>
+                        <div class="verse-hidden">
+                            <p>
+                                <b>Matthew 2:11</b><br>
+                                "And when they had come into the house, they saw the young Child with Mary His mother, and fell down and worshiped Him." <br><br>
+                                Guided by a star, Magi from the East traveled to find the King. They presented gifts of Gold, Frankincense, and Myrrh, honoring His royalty, divinity, and sacrifice.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="nativity-footer-text reveal">
                     <span class="verse-big">"For God so loved the world..."</span>
@@ -612,37 +671,6 @@
     </div>
 
     <script>
-        // Variables to control animation states
-        let stopAnimation = false;
-        let snowInterval;
-
-        // 0. Intro Animation
-        window.addEventListener('load', () => {
-            const introOverlay = document.getElementById('intro-overlay');
-            const fireworksCanvas = document.getElementById('fireworks-canvas');
-            const snowContainer = document.getElementById('snow-container');
-            
-            setTimeout(() => {
-                introOverlay.classList.add('intro-fade-out');
-                document.body.classList.remove('no-scroll');
-                
-                // NEW: Fade out effects and then stop them
-                fireworksCanvas.style.transition = 'opacity 1s ease';
-                snowContainer.style.transition = 'opacity 1s ease';
-                fireworksCanvas.style.opacity = '0';
-                snowContainer.style.opacity = '0';
-
-                // After transition ends, remove elements and stop logic to save performance
-                setTimeout(() => { 
-                    fireworksCanvas.style.display = 'none';
-                    snowContainer.style.display = 'none';
-                    stopAnimation = true; // Stop loop in animateFireworks
-                    clearInterval(snowInterval); // Stop snow loop
-                }, 1000);
-
-            }, 3500); 
-        });
-
         // 1. Reveal Animation
         function reveal() {
             document.querySelectorAll(".reveal").forEach(el => {
@@ -652,105 +680,7 @@
         window.addEventListener("scroll", reveal);
         reveal();
 
-        // 2. SLOWER Fireworks Logic
-        const canvas = document.getElementById('fireworks-canvas');
-        const ctx = canvas.getContext('2d');
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        
-        let fireworks = [];
-        const colors = ['#d42426', '#165b33', '#d4af37', '#ffffff', '#FFD700', '#00ffff']; 
-
-        class Firework {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height;
-                this.sy = Math.random() * -3 - 2; 
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.exploded = false;
-                this.parts = [];
-            }
-            update() {
-                this.y += this.sy;
-                if (this.y < canvas.height * 0.3 && !this.exploded) this.explode();
-                this.parts.forEach(p => p.update());
-            }
-            draw() {
-                if (!this.exploded) {
-                    ctx.fillStyle = this.color;
-                    ctx.fillRect(this.x, this.y, 2, 5); 
-                }
-                this.parts.forEach(p => p.draw());
-            }
-            explode() {
-                this.exploded = true;
-                for (let i = 0; i < 50; i++) this.parts.push(new Particle(this.x, this.y, this.color));
-            }
-        }
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x; this.y = y; this.color = color;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 2 + 1;
-                this.sx = Math.cos(angle) * speed;
-                this.sy = Math.sin(angle) * speed;
-                this.alpha = 1;
-                this.gravity = 0.05; 
-            }
-            update() {
-                this.x += this.sx;
-                this.y += this.sy;
-                this.sy += this.gravity;
-                this.alpha -= 0.008;
-            }
-            draw() {
-                ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 1.2, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-        }
-
-        function animateFireworks() {
-            // STOP LOGIC ADDED HERE
-            if (stopAnimation) return; 
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
-            if (Math.random() < 0.05) fireworks.push(new Firework()); 
-            fireworks.forEach(f => { f.update(); f.draw() });
-            fireworks = fireworks.filter(f => !f.exploded || f.parts.some(p => p.alpha > 0));
-            requestAnimationFrame(animateFireworks);
-        }
-        animateFireworks();
-
-        // 3. Snow Logic
-        const snowContainer = document.getElementById('snow-container');
-        function createSnowflake() {
-            const s = document.createElement('div');
-            s.className = 'snowflake';
-            s.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 4 + 2;
-            s.style.width = size + 'px';
-            s.style.height = size + 'px';
-            s.style.animationDuration = Math.random() * 5 + 5 + 's';
-            s.style.opacity = Math.random() * 0.6 + 0.4;
-            snowContainer.appendChild(s);
-            setTimeout(() => {
-                if (s && s.parentNode) s.parentNode.removeChild(s);
-            }, 10000); 
-        }
-        // Assigned to variable so we can clear it later
-        snowInterval = setInterval(createSnowflake, 150);
-
-        // 4. Modal Logic
+        // 2. Modal Logic for Roadmap
         function openRoadmapModal(title, desc, imgSrc) {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-desc').innerText = desc;
