@@ -53,7 +53,9 @@
         }
         .head-btn:active { transform: scale(0.95); }
         .hb-share { background: #f4f4f4; color: var(--text-main); }
+        .hb-share:hover { background: #e0e0e0; }
         .hb-save { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(0,137,123,0.3); }
+        .hb-save:hover { background: #00796b; }
 
         .desktop-header {
             display: none; height: 70px; width: 100%; background: #fff;
@@ -61,7 +63,8 @@
             border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 100; flex-shrink: 0;
         }
         .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .dt-nav { display: flex; gap: 30px; }
+        .dt-nav { display: flex; gap: 20px; align-items: center; }
+
         .dt-link { 
             text-decoration: none; font-family: var(--font-head); font-size: 0.9rem; color: var(--text-light); 
             font-weight: 600; padding: 10px 20px; border-radius: 25px; transition: 0.3s;
@@ -82,12 +85,34 @@
 
         .preview-zone {
             height: 35vh; width: 100%;
-            background: radial-gradient(circle at center, #111 0%, #000 100%); 
+            background: radial-gradient(circle at center, #2d3e4e 0%, #1a1c20 100%);
             display: flex; justify-content: center; align-items: center;
             overflow: hidden; position: relative;
             padding: 10px; cursor: zoom-in;
             flex-shrink: 0; z-index: 5;
         }
+
+        /* Desktop Floating Tools */
+        .desktop-tools {
+            display: none; /* Hidden on mobile */
+            position: absolute; right: 30px; top: 50%; transform: translateY(-50%);
+            flex-direction: column; gap: 15px; z-index: 100;
+        }
+        
+        .dt-float-btn {
+            width: 60px; height: 60px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #fff; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .dt-float-btn:hover { background: rgba(255,255,255,0.2); transform: translateX(-5px); border-color: var(--primary); }
+        .dt-float-btn:active { transform: scale(0.95); }
+        .dt-btn-icon { font-size: 24px; margin-bottom: 4px; }
+        .dt-btn-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
+        
+        .dt-float-btn.save-btn:hover { background: var(--primary); border-color: var(--primary); }
+
 
         /* Particles & Rays */
         .holy-rays {
@@ -150,6 +175,8 @@
                 border: 1px solid #fff; margin: 20px; background: #fff;
             }
             .preview-zone { flex: 1.6; height: 100%; border-right: 1px solid #f0f0f0; padding: 40px; }
+            .desktop-tools { display: flex; } /* Show tools on desktop */
+            
             .controls-zone { width: 420px; height: 100%; flex: none; border-radius: 0; box-shadow: none; border-top: none; margin-bottom: 0; }
             .ctrl-tabs { display: flex; height: 60px; }
             .ctrl-content { padding: 30px; padding-bottom: 20px; border-bottom: 1px solid #f5f5f5; }
@@ -161,11 +188,10 @@
         /* UI Elements */
         label { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 5px; display: block; letter-spacing: 0.5px; }
         
-        /* UPDATED: BIGGER TEXT AREA */
         textarea {
             width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px;
             font-family: 'Hind Guntur', sans-serif; font-size: 14px; color: var(--text-main);
-            background: #f9f9f9; resize: vertical; min-height: 140px; /* Bigger Height */
+            background: #f9f9f9; resize: vertical; min-height: 140px;
             transition: 0.3s;
         }
         textarea:focus, .ref-input:focus, .text-input:focus, select:focus { border-color: var(--primary); outline: none; background: #fff; }
@@ -281,14 +307,15 @@
 
     <header class="desktop-header">
         <div class="logo">Christ <span>Mandir</span></div>
-        <nav class="dt-nav">
-            <a href="index.html" class="dt-link">🏠 Home</a>
-            <a href="bible.html" class="dt-link">📖 Bible</a>
-            <a href="stories.html" class="dt-link">📚 Stories</a>
-            <a href="quiz.html" class="dt-link">🧩 Quiz</a>
-            <a href="dailyverse.html" class="dt-link active">✨ Verse</a>
-
-        </nav>
+        <div style="display:flex; align-items:center;">
+            <nav class="dt-nav">
+                <a href="index.html" class="dt-link">🏠 Home</a>
+                <a href="bible.html" class="dt-link">📖 Bible</a>
+                <a href="stories.html" class="dt-link">📚 Stories</a>
+                <a href="quiz.html" class="dt-link">🧩 Quiz</a>
+                <a href="dailyverse.html" class="dt-link active">✨ Verse</a>
+            </nav>
+        </div>
     </header>
 
     <main>
@@ -341,6 +368,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="desktop-tools">
+                    <div class="dt-float-btn" onclick="shareImage()">
+                        <div class="dt-btn-icon">🔗</div>
+                        <div class="dt-btn-label">Share</div>
+                    </div>
+                    <div class="dt-float-btn save-btn" onclick="downloadCard()">
+                        <div class="dt-btn-icon">⬇</div>
+                        <div class="dt-btn-label">Save</div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="controls-zone">
@@ -529,8 +568,9 @@
         <a href="index.html" class="nav-item"><span>🏠</span> Home</a>
         <a href="bible.html" class="nav-item"><span>📖</span> Bible</a>
         <a href="stories.html" class="nav-item"><span>📚</span> Stories</a>
+        <a href="quiz.html" class="nav-item"><span>🧩</span> Quiz</a>
         <a href="dailyverse.html" class="nav-item active"><span>✨</span> Verse</a>
-        <a href="quiz.html" class="nav-item"><span>❓</span> Quiz</a>
+
     </nav>
 
     <div id="preview-modal" onclick="closePreview()"><img id="preview-img" src=""></div>
@@ -809,8 +849,18 @@
     function closePreview() { document.getElementById('preview-modal').style.display = 'none'; }
 
     async function downloadCard() {
-        const btns = document.querySelectorAll('.hb-save');
-        btns.forEach(b => b.innerText = "⏳");
+        const btns = document.querySelectorAll('.hb-save, .save-btn'); // Select all save buttons
+        const originalTexts = [];
+        btns.forEach(b => { 
+            if(b.querySelector('.dt-btn-label')) {
+                 originalTexts.push(b.querySelector('.dt-btn-label').innerText);
+                 b.querySelector('.dt-btn-label').innerText = "Wait...";
+            } else {
+                 originalTexts.push(b.innerText);
+                 b.innerText = "⏳"; 
+            }
+        });
+        
         const clone = createCaptureClone();
         try {
             const canvas = await html2canvas(clone, { useCORS: true, scale: 3, width: 380, height: 506, backgroundColor: null });
@@ -822,7 +872,14 @@
             document.body.removeChild(link);
         } catch(e) { alert("Download failed"); }
         document.body.removeChild(clone);
-        btns.forEach(b => b.innerText = "Save");
+        
+        btns.forEach((b, i) => { 
+            if(b.querySelector('.dt-btn-label')) {
+                 b.querySelector('.dt-btn-label').innerText = "Save";
+            } else {
+                 b.innerText = "Save"; 
+            }
+        });
     }
 
     async function shareImage() {
