@@ -4,7 +4,7 @@ A comprehensive, web-based Bible application hosted on GitHub Pages. This projec
 
 ## 🚀 Live Demo
 You can view the live project here:
-**(https://wwww.christmandir.com)**
+**(https://www.christmandir.com)**
 
 ## 📂 Project Structure
 
