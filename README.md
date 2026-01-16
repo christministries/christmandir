@@ -4,8 +4,7 @@ A comprehensive, web-based Bible application hosted on GitHub Pages. This projec
 
 ## 🚀 Live Demo
 You can view the live project here:
-**[https://your-username.github.io/your-repo-name/](https://your-username.github.io/your-repo-name/)**
-*(Replace `your-username` and `your-repo-name` with your actual GitHub details)*
+**(https://wwww.christmandir.com)**
 
 ## 📂 Project Structure
 
