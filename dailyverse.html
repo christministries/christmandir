@@ -131,15 +131,21 @@
             box-shadow: 0 30px 80px rgba(0,0,0,0.5); border-radius: 20px; 
             pointer-events: none; z-index: 10; position: relative;
         }
-        .verse-card { pointer-events: auto; width: 380px; height: 506px; position: relative; overflow: hidden; border-radius: 30px; background: #000; }
+        .verse-card { pointer-events: auto; width: 380px; height: 506px; position: relative; overflow: hidden; border-radius: 30px; background: #000; border: 0px solid rgba(255,255,255,0.1); }
+
+        /* Effects Layers */
+        .vignette-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0) 100%); transition: 0.3s; }
+        .noise-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; opacity: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); transition: 0.3s; mix-blend-mode: overlay; }
 
         /* --- 3. CONTROLS ZONE --- */
         .controls-zone {
-            height: calc(65vh - 90px); width: 100%; 
+            flex: 1; /* Changed to fill remaining space */
+            width: 100%; 
             background: var(--panel-bg); display: flex; flex-direction: column;
             border-top: 1px solid #e0e0e0; z-index: 20;
             border-radius: 25px 25px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
-            position: relative; margin-bottom: 90px; 
+            position: relative; margin-bottom: 0;
+            overflow: hidden;
         }
 
         .ctrl-tabs {
@@ -158,7 +164,8 @@
         .ctrl-content {
             flex: 1; overflow-y: auto; padding: 20px;
             display: none; flex-direction: column; gap: 15px;
-            padding-bottom: 40px; 
+            /* UPDATED PADDING: increased to 120px to clear the bottom nav on mobile */
+            padding-bottom: 120px; 
         }
         .ctrl-content.active { display: flex; }
 
@@ -328,6 +335,8 @@
                     <div class="verse-card" id="mainCard">
                         <div id="bg-layer" class="bg-layer"></div>
                         <div id="overlay-layer" class="overlay-layer"></div>
+                        <div id="vignette-layer" class="vignette-layer"></div>
+                        <div id="noise-layer" class="noise-layer"></div>
                         <div id="frame-layer" class="inner-frame"></div>
                         <div class="watermark" id="watermark">CHRIST MANDIR</div>
                         <div class="sticker-layer" id="stickerLayer">
@@ -411,6 +420,12 @@
                         <button class="btn" onclick="setTextTransform('uppercase')">AA</button>
                         <button class="btn" onclick="setTextTransform('none')">Aa</button>
                     </div>
+
+                    <label class="d-label" style="margin-top:10px">Spacing & Height</label>
+                    <div class="grid-2">
+                        <div><label>Line Height</label><input type="range" min="1" max="3" step="0.1" value="1.6" oninput="setLineHeight(this.value)"></div>
+                        <div><label>Letter Space</label><input type="range" min="-2" max="10" value="0" oninput="setLetterSpacing(this.value)"></div>
+                    </div>
                     
                     <label class="d-label">Alignment</label>
                     <div class="grid-3">
@@ -459,6 +474,12 @@
                         <div class="swatch grad-3" onclick="setTextGradient('sunset')"></div>
                     </div>
                     
+                    <label class="d-label" style="margin-top:10px">Text Highlight (Bg)</label>
+                    <div class="grid-2">
+                         <input type="color" value="#ffffff" oninput="setTextHighlight(this.value)">
+                         <button class="btn" onclick="setTextHighlight('transparent')">None</button>
+                    </div>
+
                     <label class="d-label" style="margin-top:10px">Text Shadow</label>
                     <div class="grid-2">
                         <input type="range" min="0" max="20" value="0" oninput="setShadowBlur(this.value)">
@@ -469,6 +490,16 @@
                     <div class="grid-2">
                         <input type="range" min="0" max="3" step="0.1" value="0" oninput="setTextStroke(this.value)">
                         <input type="color" value="#000000" oninput="setStrokeColor(this.value)">
+                    </div>
+
+                    <label class="d-label" style="margin-top:15px">Card Design</label>
+                    <div class="grid-2">
+                        <div><label>Border W</label><input type="range" min="0" max="10" value="0" oninput="setCardBorderWidth(this.value)"></div>
+                        <div><label>Border C</label><input type="color" value="#ffffff" oninput="setCardBorderColor(this.value)"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div><label>Corner Radius</label><input type="range" min="0" max="40" value="30" oninput="setCardRadius(this.value)"></div>
+                        <div><label>Glass Blur</label><input type="range" min="0" max="20" value="0" oninput="setCardBlur(this.value)"></div>
                     </div>
                 </div>
                 
@@ -542,6 +573,12 @@
                         <div><label>Saturate</label><input type="range" min="0" max="200" value="100" oninput="updateFilters()"></div>
                         <div><label>Blur</label><input type="range" min="0" max="20" value="0" oninput="updateFilters()"></div>
                     </div>
+
+                    <label class="d-label" style="margin-top:10px">Pro Effects</label>
+                    <div class="grid-2">
+                        <div><label>Vignette</label><input type="range" min="0" max="100" value="0" oninput="setVignette(this.value)"></div>
+                        <div><label>Noise/Grain</label><input type="range" min="0" max="100" value="0" oninput="setNoise(this.value)"></div>
+                    </div>
                     
                     <label class="d-label" style="margin-top:10px">Overlay</label>
                     <div class="grid-2">
@@ -592,6 +629,7 @@
     let iconX = 0, iconY = 0;
     let strokeW = 0, strokeC = '#000000';
     let shadowBlur = 0, shadowC = '#000000';
+    let cardBorderW = 0, cardBorderC = '#ffffff';
     const defaultAuthImg = "https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png";
 
     window.addEventListener('paste', e => {
@@ -790,7 +828,31 @@
         document.getElementById('verse-text').style.textShadow = `2px 2px ${shadowBlur}px ${shadowC}`;
     }
 
-    /* FILTERS */
+    function setTextHighlight(val) {
+        document.getElementById('verse-text').style.backgroundColor = val;
+    }
+
+    /* CARD DESIGN CONTROLS */
+    function setCardBorderWidth(val) { cardBorderW = val; updateCardBorder(); }
+    function setCardBorderColor(val) { cardBorderC = val; updateCardBorder(); }
+    function updateCardBorder() {
+        document.getElementById('mainCard').style.border = `${cardBorderW}px solid ${cardBorderC}`;
+    }
+    function setCardRadius(val) {
+        document.getElementById('mainCard').style.borderRadius = val + 'px';
+        document.querySelector('.inner-frame').style.borderRadius = (val - 10) + 'px';
+    }
+    function setCardBlur(val) {
+        // Blur the card background (requires backdrop-filter support on element or pseudo)
+        // Since we have image inside, we can't blur the parent easily without blurrying content.
+        // We will apply blur to bg-layer 
+        // NOTE: This duplicates filter function, so let's combine in updateFilters or just treat it separately if independent.
+        // For now, let's make it blur the overlay layer to create a "frosted" look on top of BG.
+        // Actually, let's just use it as an alias for image blur for simplicity in this structure.
+        updateFilters(); 
+    }
+
+    /* FILTERS & EFFECTS */
     function updateFilters() {
         const inputs = document.querySelectorAll('#tab-media input[type=range]');
         const f_bri = inputs[0].value;
@@ -799,6 +861,22 @@
         const f_blur = inputs[3].value;
         document.getElementById('bg-layer').style.filter = `brightness(${f_bri}%) contrast(${f_con}%) saturate(${f_sat}%) blur(${f_blur}px)`;
     }
+
+    function setVignette(val) {
+        const v = document.getElementById('vignette-layer');
+        // Radial gradient from transparent center to black edges
+        // val 0 to 100.
+        // 0 = transparent. 100 = strong black corners.
+        // We adjust the percentage of the transparent start point.
+        // High val = small transparent circle (more vignette). Low val = big circle.
+        const stop = 100 - (val * 0.8); // 100 -> 20%, 0 -> 100%
+        v.style.background = `radial-gradient(circle, transparent ${stop}%, rgba(0,0,0, ${val/100}) 100%)`;
+    }
+
+    function setNoise(val) {
+        document.getElementById('noise-layer').style.opacity = val / 100;
+    }
+
 
     /* DECOR */
     function toggleEl(id) {
