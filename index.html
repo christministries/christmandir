@@ -33,7 +33,7 @@
             --nav-text: #2d3436;
             --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
             
-            --font-head: 'Cinzel', serif;       
+            --font-head: 'Cinzel', serif;        
             --font-script: 'Great Vibes', cursive; 
             --font-body: 'Lato', sans-serif;
             --font-nav-logo: 'Poppins', sans-serif; 
@@ -620,6 +620,23 @@
         function closeRoadmapModal() { document.getElementById('roadmap-modal').style.display = 'none'; }
         
         document.getElementById('year').innerText = new Date().getFullYear();
+
+        // --- NEW: AUTO-DISMISS WELCOME BANNER ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const banner = document.getElementById('welcome-banner');
+                if (banner) {
+                    // Start the fade out
+                    banner.style.opacity = '0';
+                    
+                    // Remove from display after the 0.5s fade transition finishes
+                    setTimeout(() => {
+                        banner.style.display = 'none';
+                        document.body.classList.remove('no-scroll');
+                    }, 500); 
+                }
+            }, 3000); // 3 seconds delay
+        });
     </script>
     
     <script>
