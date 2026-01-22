@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@500;700&family=Playfair+Display:wght@700&family=Lora:ital,wght@1,600&family=Montserrat:wght@800&family=Great+Vibes&family=Oswald:wght@500&family=Merriweather:wght@300&family=Roboto+Slab:wght@600&family=Hind+Guntur:wght@400;600;700&family=Tenali+Ramakrishna&family=Suranna&family=Ramabhadra&family=Mallanna&family=Mandali&family=NTR&family=Peddana&family=Timmana&family=Dhurjati&family=Gurajada&family=Lakki+Reddy&family=Ravi+Prakash&family=Sree+Krushnadevaraya&family=Ponnala&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@300;500;700;900&family=Playfair+Display:wght@700&family=Lora:ital,wght@1,600&family=Montserrat:wght@800&family=Great+Vibes&family=Oswald:wght@500&family=Merriweather:wght@300&family=Roboto+Slab:wght@600&family=Hind+Guntur:wght@300;400;600;700&family=Tenali+Ramakrishna&family=Suranna&family=Ramabhadra&family=Mallanna&family=Mandali&family=NTR&family=Peddana&family=Timmana&family=Dhurjati&family=Gurajada&family=Lakki+Reddy&family=Ravi+Prakash&family=Sree+Krushnadevaraya&family=Ponnala&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
@@ -16,11 +16,13 @@
             --primary: #00897b;
             --primary-gradient: linear-gradient(135deg, #00897b, #4db6ac);
             --gold: #D4AF37; 
-            --glass-nav: rgba(255, 255, 255, 0.85);
+            --glass-nav: rgba(255, 255, 255, 0.95);
             --text-main: #2d3436;
             --text-light: #636e72;
             --bg-color: #f0f2f5;
             --panel-bg: #ffffff;
+            --group-bg: #f8f9fa;
+            --border-color: #e9ecef;
             --font-head: 'Poppins', sans-serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -53,9 +55,7 @@
         }
         .head-btn:active { transform: scale(0.95); }
         .hb-share { background: #f4f4f4; color: var(--text-main); }
-        .hb-share:hover { background: #e0e0e0; }
         .hb-save { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(0,137,123,0.3); }
-        .hb-save:hover { background: #00796b; }
 
         .desktop-header {
             display: none; height: 70px; width: 100%; background: #fff;
@@ -94,8 +94,7 @@
 
         /* Desktop Floating Tools */
         .desktop-tools {
-            display: none; /* Hidden on mobile */
-            position: absolute; right: 30px; top: 50%; transform: translateY(-50%);
+            display: none; position: absolute; right: 30px; top: 50%; transform: translateY(-50%);
             flex-direction: column; gap: 15px; z-index: 100;
         }
         
@@ -107,25 +106,11 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .dt-float-btn:hover { background: rgba(255,255,255,0.2); transform: translateX(-5px); border-color: var(--primary); }
-        .dt-float-btn:active { transform: scale(0.95); }
+        .dt-float-btn.save-btn:hover { background: var(--primary); border-color: var(--primary); }
         .dt-btn-icon { font-size: 24px; margin-bottom: 4px; }
         .dt-btn-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
-        
-        .dt-float-btn.save-btn:hover { background: var(--primary); border-color: var(--primary); }
 
-
-        /* Particles & Rays */
-        .holy-rays {
-            position: absolute; top: 50%; left: 50%; width: 150vw; height: 150vw;
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.05) 20deg, transparent 40deg);
-            transform: translate(-50%, -50%); animation: rotateRays 60s linear infinite; pointer-events: none; z-index: 1;
-        }
-        @keyframes rotateRays { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        .dust-container { position: absolute; top:0; left:0; width:100%; height:100%; z-index: 2; pointer-events: none; }
-        .dust-dot { position: absolute; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff; opacity: 0; animation: riseUp 10s infinite ease-in; }
-        @keyframes riseUp { 0% { transform: translateY(120%) scale(0); opacity: 0; } 20% { opacity: 0.5; } 100% { transform: translateY(-20%) scale(1); opacity: 0; } }
-
+        /* Card Elements */
         #card-scaler {
             transform-origin: center center; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 30px 80px rgba(0,0,0,0.5); border-radius: 20px; 
@@ -133,116 +118,22 @@
         }
         .verse-card { pointer-events: auto; width: 380px; height: 506px; position: relative; overflow: hidden; border-radius: 30px; background: #000; border: 0px solid rgba(255,255,255,0.1); }
 
-        /* Effects Layers */
+        .bg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; transform: scale(1.1); transition: 0.1s; }
+        .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; transition: 0.3s; }
+        .texture-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; opacity: 0; background-size: cover; mix-blend-mode: overlay; }
+        .pattern-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; opacity: 0.3; background-size: 10px 10px; }
         .vignette-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0) 100%); transition: 0.3s; }
         .noise-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; opacity: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); transition: 0.3s; mix-blend-mode: overlay; }
-
-        /* --- 3. CONTROLS ZONE --- */
-        .controls-zone {
-            flex: 1; /* Fill remaining space */
-            width: 100%; 
-            background: var(--panel-bg); display: flex; flex-direction: column;
-            border-top: 1px solid #e0e0e0; z-index: 20;
-            border-radius: 25px 25px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
-            position: relative; margin-bottom: 0;
-            overflow: hidden;
-        }
-
-        .ctrl-tabs {
-            display: flex; height: 50px; border-bottom: 1px solid #f4f4f4; flex-shrink: 0; padding: 0 5px;
-            background: #fff; border-radius: 25px 25px 0 0;
-        }
-        .tab-btn {
-            flex: 1; border: none; background: transparent; 
-            font-family: var(--font-head); font-size: 0.7rem; font-weight: 700; 
-            color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px;
-            cursor: pointer; transition: 0.3s; position: relative;
-        }
-        .tab-btn.active { color: var(--primary); }
-        .tab-btn.active::after { content:''; position: absolute; bottom: 0; left: 20%; width: 60%; height: 3px; background: var(--primary); border-radius: 10px; }
-
-        .ctrl-content {
-            flex: 1; overflow-y: auto; padding: 20px;
-            display: none; flex-direction: column; gap: 15px;
-            /* FIXED: Huge padding-bottom ensures content scrolls WAY above the floating nav bar */
-            padding-bottom: 180px; 
-        }
-        .ctrl-content.active { display: flex; }
-
-        /* --- 4. DESKTOP OPTIMIZATION --- */
-        @media (min-width: 900px) {
-            .mobile-header { display: none; }
-            .desktop-header { display: flex; }
-            .bottom-nav { display: none !important; }
-            
-            main { padding-top: 70px; flex-direction: row; max-width: 1400px; margin: 0 auto; height: 100vh; }
-            .app-shell { 
-                flex-direction: row; width: 100%; height: calc(100% - 40px);
-                box-shadow: 0 30px 60px rgba(0,0,0,0.1); border-radius: 30px; overflow: hidden;
-                border: 1px solid #fff; margin: 20px; background: #fff;
-            }
-            .preview-zone { flex: 1.6; height: 100%; border-right: 1px solid #f0f0f0; padding: 40px; }
-            .desktop-tools { display: flex; } 
-            
-            .controls-zone { width: 420px; height: 100%; flex: none; border-radius: 0; box-shadow: none; border-top: none; margin-bottom: 0; }
-            .ctrl-tabs { display: flex; height: 60px; }
-            .tab-btn { font-size: 0.8rem; }
-            .ctrl-content { padding: 30px; padding-bottom: 20px; border-bottom: 1px solid #f5f5f5; }
-            .d-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px; margin-bottom: 10px; }
-        }
-        .d-label { display: none; }
-        @media (min-width: 900px) { .d-label { display: block; } }
-
-        /* UI Elements */
-        label { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 5px; display: block; letter-spacing: 0.5px; }
-        
-        textarea {
-            width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px;
-            font-family: 'Hind Guntur', sans-serif; font-size: 14px; color: var(--text-main);
-            background: #f9f9f9; resize: vertical; min-height: 140px;
-            transition: 0.3s;
-        }
-        textarea:focus, .ref-input:focus, .text-input:focus, select:focus { border-color: var(--primary); outline: none; background: #fff; }
-        
-        .ref-input, .text-input, select { width: 100%; padding: 10px 12px; border: 2px solid #e0e0e0; border-radius: 12px; font-family: 'Hind Guntur', sans-serif; font-size: 14px; color: var(--text-main); background: #f9f9f9; transition: 0.3s; }
-        select { font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; }
-
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .flex-wrap-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-        
-        .btn { border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.75rem; font-family: var(--font-head); height: 40px; display: flex; align-items: center; justify-content: center; background: #fff; color: var(--text-light); border: 1px solid #e0e0e0; transition: 0.2s; flex: 1; min-width: 60px; }
-        .btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
-        .btn:active { transform: scale(0.97); }
-        .btn-dark { background: var(--text-main); color: #fff; border: none; }
-        
-        input[type=range] { width: 100%; accent-color: var(--primary); margin: 8px 0; }
-        input[type="color"] { width: 100%; height: 40px; border: none; background: none; cursor: pointer; padding: 0; }
-        input[type="date"] { width: 100%; height: 40px; border: 2px solid #e0e0e0; border-radius: 10px; padding: 0 10px; font-family: var(--font-body); }
-
-        /* Swatches */
-        .swatch-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px; }
-        .swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(0,0,0,0.05); transition: 0.2s; }
-        .swatch:hover { transform: scale(1.1); box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
-        .swatch.grad-1 { background: linear-gradient(45deg, #FFD700, #FDB931); }
-        .swatch.grad-2 { background: linear-gradient(45deg, #00C9FF, #92FE9D); }
-        .swatch.grad-3 { background: linear-gradient(45deg, #fc00ff, #00dbde); }
-
-        /* Card Styles */
-        .bg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; transform: scale(1.1); transition: 0.5s; }
-        .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; transition: 0.5s; }
         .inner-frame { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; border-radius: 20px; z-index: 2; pointer-events: none; transition: 0.5s; }
-        .content { position: relative; z-index: 4; height: 400px; padding: 45px; display: flex; flex-direction: column; box-sizing: border-box; transition: 0.5s; }
-        .v-text { font-size: 28px; line-height: 1.6; font-weight: 700; width: 100%; transition: 0.3s; }
-        .v-ref { font-size: 13px; margin-top: 20px; display: inline-block; transition: 0.3s; }
+        
+        .content { position: relative; z-index: 4; height: 400px; padding: 45px; display: flex; flex-direction: column; box-sizing: border-box; transition: 0.3s; border-radius: 10px; }
+        .v-text { font-size: 28px; line-height: 1.6; font-weight: 700; width: 100%; transition: 0.1s; }
+        .text-divider { width: 60px; height: 2px; background: currentColor; margin: 15px 0; display: none; opacity: 0.7; }
+        .v-ref { font-size: 13px; margin-top: 5px; display: inline-block; transition: 0.3s; }
+        
         .pos-center { justify-content: center; align-items: center; text-align: center; }
         .pos-left { justify-content: center; align-items: flex-start; text-align: left; }
         .pos-right { justify-content: center; align-items: flex-end; text-align: right; }
-        
-        .txt-glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 25px 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
-        .txt-strip { border-left: 5px solid var(--gold); border-right: 5px solid var(--gold); padding: 0 15px; background: rgba(0,0,0,0.3); }
-        .txt-quote::before { content: "“"; font-size: 60px; position: absolute; top: -30px; left: 0; opacity: 0.4; }
         
         /* Banner Styles */
         .banner { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 340px; height: 82px; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.4); border-radius: 18px; transition: 0.3s; }
@@ -267,15 +158,101 @@
         .brand-tagline { font-size: 8px; font-weight: 500; color: rgba(255,255,255,0.85); text-transform: uppercase; letter-spacing: 1.2px; white-space: nowrap; }
         .person-photo { height: 56px; width: 56px; border-radius: 50%; border: 1.5px solid #fff; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
 
-        /* Watermark & Stickers */
-        .watermark { 
-            position: absolute; top: 20px; left: 50%; transform: translateX(-50%); 
-            font-size: 10px; text-transform: uppercase; letter-spacing: 3px; font-weight: 800;
-            color: rgba(255,255,255,0.4); pointer-events: none; z-index: 8; 
-            display: none; width: 100%; text-align: center;
-        }
+        .watermark { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-size: 10px; text-transform: uppercase; letter-spacing: 3px; font-weight: 800; color: rgba(255,255,255,0.4); pointer-events: none; z-index: 8; display: none; width: 100%; text-align: center; }
         .sticker-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 6; display: flex; align-items: center; justify-content: center; }
         .card-icon { font-size: 100px; color: rgba(255,255,255,0.1); display: none; text-shadow: 0 0 10px rgba(0,0,0,0.2); }
+
+        /* --- 3. CONTROLS ZONE --- */
+        .controls-zone {
+            flex: 1; width: 100%; 
+            background: var(--panel-bg); display: flex; flex-direction: column;
+            border-top: 1px solid #e0e0e0; z-index: 20;
+            border-radius: 25px 25px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
+            position: relative; margin-bottom: 0; overflow: hidden;
+        }
+
+        .ctrl-tabs {
+            display: flex; height: 50px; border-bottom: 1px solid #f4f4f4; flex-shrink: 0; padding: 0 5px;
+            background: #fff; border-radius: 25px 25px 0 0; overflow-x: auto;
+        }
+        .tab-btn {
+            flex: 1; min-width: 70px; border: none; background: transparent; 
+            font-family: var(--font-head); font-size: 0.7rem; font-weight: 700; 
+            color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer; transition: 0.3s; position: relative; white-space: nowrap;
+        }
+        .tab-btn.active { color: var(--primary); }
+        .tab-btn.active::after { content:''; position: absolute; bottom: 0; left: 20%; width: 60%; height: 3px; background: var(--primary); border-radius: 10px; }
+
+        .ctrl-content {
+            flex: 1; overflow-y: auto; padding: 20px;
+            display: none; flex-direction: column; gap: 20px;
+            padding-bottom: 200px; /* Huge padding to clear nav */
+        }
+        .ctrl-content.active { display: flex; }
+
+        /* GROUP BOX STYLING */
+        .ctrl-group {
+            background: var(--group-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 10px;
+        }
+        .group-title { font-size: 0.7rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+        .group-title::before { content: ''; width: 4px; height: 12px; background: var(--primary); border-radius: 2px; display: inline-block; }
+
+        /* UI Elements */
+        label { font-size: 0.7rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 4px; display: block; letter-spacing: 0.5px; }
+        
+        textarea {
+            width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px;
+            font-family: 'Hind Guntur', sans-serif; font-size: 14px; color: var(--text-main);
+            background: #fff; resize: vertical; min-height: 140px; transition: 0.3s;
+        }
+        textarea:focus, .ref-input:focus, .text-input:focus, select:focus { border-color: var(--primary); outline: none; background: #fff; }
+        
+        .ref-input, .text-input, select { width: 100%; padding: 10px 12px; border: 2px solid #e0e0e0; border-radius: 12px; font-family: 'Hind Guntur', sans-serif; font-size: 14px; color: var(--text-main); background: #fff; transition: 0.3s; }
+        select { font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; }
+
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .flex-wrap-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        
+        .btn { border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.75rem; font-family: var(--font-head); height: 40px; display: flex; align-items: center; justify-content: center; background: #fff; color: var(--text-light); border: 1px solid #e0e0e0; transition: 0.2s; flex: 1; min-width: 60px; }
+        .btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+        .btn:active { transform: scale(0.97); }
+        .btn-dark { background: var(--text-main); color: #fff; border: none; }
+        
+        input[type=range] { width: 100%; accent-color: var(--primary); margin: 8px 0; }
+        input[type="color"] { width: 100%; height: 40px; border: none; background: none; cursor: pointer; padding: 0; }
+        input[type="date"] { width: 100%; height: 40px; border: 2px solid #e0e0e0; border-radius: 10px; padding: 0 10px; font-family: var(--font-body); }
+
+        .swatch-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px; }
+        .swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(0,0,0,0.05); transition: 0.2s; }
+        .swatch:hover { transform: scale(1.1); box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+        .swatch.grad-1 { background: linear-gradient(45deg, #FFD700, #FDB931); }
+        .swatch.grad-2 { background: linear-gradient(45deg, #00C9FF, #92FE9D); }
+        .swatch.grad-3 { background: linear-gradient(45deg, #fc00ff, #00dbde); }
+
+        /* --- 4. DESKTOP OPTIMIZATION --- */
+        @media (min-width: 900px) {
+            .mobile-header { display: none; }
+            .desktop-header { display: flex; }
+            .bottom-nav { display: none !important; }
+            
+            main { padding-top: 70px; flex-direction: row; max-width: 1400px; margin: 0 auto; height: 100vh; }
+            .app-shell { 
+                flex-direction: row; width: 100%; height: calc(100% - 40px);
+                box-shadow: 0 30px 60px rgba(0,0,0,0.1); border-radius: 30px; overflow: hidden;
+                border: 1px solid #fff; margin: 20px; background: #fff;
+            }
+            .preview-zone { flex: 1.6; height: 100%; border-right: 1px solid #f0f0f0; padding: 40px; }
+            .desktop-tools { display: flex; } 
+            
+            .controls-zone { width: 420px; height: 100%; flex: none; border-radius: 0; box-shadow: none; border-top: none; margin-bottom: 0; }
+            .ctrl-tabs { display: flex; height: 60px; }
+            .tab-btn { font-size: 0.8rem; }
+            .ctrl-content { padding: 30px; padding-bottom: 40px; border-bottom: 1px solid #f5f5f5; }
+        }
 
         /* --- 5. BOTTOM NAV (Mobile Only) --- */
         .bottom-nav {
@@ -329,17 +306,17 @@
     <main>
         <div class="app-shell">
             <div class="preview-zone" onclick="generatePreview()">
-                <div class="holy-rays"></div>
-                <div class="dust-container" id="dust-container"></div>
-                
                 <div id="card-scaler">
                     <div class="verse-card" id="mainCard">
                         <div id="bg-layer" class="bg-layer"></div>
+                        <div id="pattern-layer" class="pattern-layer"></div>
+                        <div id="texture-layer" class="texture-layer"></div>
                         <div id="overlay-layer" class="overlay-layer"></div>
                         <div id="vignette-layer" class="vignette-layer"></div>
                         <div id="noise-layer" class="noise-layer"></div>
                         <div id="frame-layer" class="inner-frame"></div>
                         <div class="watermark" id="watermark">CHRIST MANDIR</div>
+                        
                         <div class="sticker-layer" id="stickerLayer">
                             <div class="card-icon" id="icon-cross">✝</div>
                             <div class="card-icon" id="icon-dove">🕊️</div>
@@ -357,10 +334,13 @@
                             <div class="card-icon" id="icon-wings">👼</div>
                             <div class="card-icon" id="icon-olive">🕊️🌿</div>
                         </div>
+
                         <div id="content-layer" class="content pos-center">
                             <div id="verse-text" class="v-text"></div>
+                            <div id="divider-line" class="text-divider"></div>
                             <div id="verse-ref" class="v-ref"></div>
                         </div>
+
                         <div class="banner" id="cardBanner">
                             <div class="banner-left">
                                 <img crossorigin="anonymous" src="https://static.wixstatic.com/media/be4f11_498fc9ffce664d869f61f333f1e13834~mv2.jpeg" class="logo-img" id="logoImg">
@@ -389,203 +369,293 @@
                         <div class="dt-btn-label">Save</div>
                     </div>
                 </div>
-
             </div>
 
             <div class="controls-zone">
                 <div class="ctrl-tabs">
-                    <button class="tab-btn active" onclick="switchTab('background', this)">🎨 Background</button>
-                    <button class="tab-btn" onclick="switchTab('text', this)">✍️ Text</button>
+                    <button class="tab-btn active" onclick="switchTab('background', this)">🌄 Canvas</button>
+                    <button class="tab-btn" onclick="switchTab('text', this)">✍️ Verse</button>
+                    <button class="tab-btn" onclick="switchTab('reference', this)">📖 Ref</button>
                     <button class="tab-btn" onclick="switchTab('decor', this)">✨ Decor</button>
-                    <button class="tab-btn" onclick="switchTab('footer', this)">🏷️ Banner</button>
+                    <button class="tab-btn" onclick="switchTab('footer', this)">🏷️ Footer</button>
                 </div>
 
                 <div id="tab-background" class="ctrl-content active">
-                    <label class="d-label">Image Source</label>
-                    <div class="grid-3">
-                        <button class="btn" onclick="document.getElementById('bgUpload').click()">📂 Upload</button>
-                        <button class="btn" onclick="clearBackground()">❌ Clear</button>
-                        <button class="btn-dark" onclick="refreshBackground()">🖼 Shuffle</button>
-                    </div>
-                    <input type="file" id="bgUpload" accept="image/*" onchange="uploadBg(this)" style="display:none">
-                    
-                    <label class="d-label" style="margin-top:10px">Filters</label>
-                    <div class="grid-2">
-                        <div><label>Bright</label><input type="range" min="0" max="200" value="100" oninput="updateFilters()"></div>
-                        <div><label>Contrast</label><input type="range" min="0" max="200" value="100" oninput="updateFilters()"></div>
-                        <div><label>Saturate</label><input type="range" min="0" max="200" value="100" oninput="updateFilters()"></div>
-                        <div><label>Blur</label><input type="range" min="0" max="20" value="0" oninput="updateFilters()"></div>
+                    <div class="ctrl-group">
+                        <div class="group-title">Image Source</div>
+                        <div class="grid-3">
+                            <button class="btn" onclick="document.getElementById('bgUpload').click()">📂 Upload</button>
+                            <button class="btn" onclick="clearBackground()">❌ Clear</button>
+                            <button class="btn-dark" onclick="refreshBackground()">🖼 Shuffle</button>
+                        </div>
+                        <input type="file" id="bgUpload" accept="image/*" onchange="uploadBg(this)" style="display:none">
+                        
+                        <label style="margin-top:8px">Or Use Gradient</label>
+                        <div class="grid-3">
+                            <button class="btn" onclick="setBgGradient('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')" style="background:linear-gradient(135deg, #667eea, #764ba2); color:white; border:none;">Blue</button>
+                            <button class="btn" onclick="setBgGradient('linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)')" style="background:linear-gradient(135deg, #ff9a9e, #fecfef); color:#333; border:none;">Pink</button>
+                            <button class="btn" onclick="setBgGradient('radial-gradient(circle at center, #232526 0%, #414345 100%)')" style="background:radial-gradient(circle, #232526, #414345); color:white; border:none;">Dark</button>
+                        </div>
                     </div>
 
-                    <label class="d-label" style="margin-top:10px">Pro Effects</label>
-                    <div class="grid-2">
-                        <div><label>Vignette</label><input type="range" min="0" max="100" value="0" oninput="setVignette(this.value)"></div>
-                        <div><label>Noise/Grain</label><input type="range" min="0" max="100" value="0" oninput="setNoise(this.value)"></div>
+                    <div class="ctrl-group">
+                        <div class="group-title">Adjust</div>
+                        <div class="grid-3">
+                            <div><label>Pan X</label><input type="range" min="0" max="100" value="50" oninput="setBgPos(this.value, null)"></div>
+                            <div><label>Pan Y</label><input type="range" min="0" max="100" value="50" oninput="setBgPos(null, this.value)"></div>
+                            <div><label>Zoom</label><input type="range" min="100" max="200" value="110" oninput="setBgZoom(this.value)"></div>
+                        </div>
                     </div>
-                    
-                    <label class="d-label" style="margin-top:10px">Color Overlay</label>
-                    <div class="grid-2">
-                        <input type="color" id="ovStart" value="#000000" oninput="setOverlayGradient()">
-                        <input type="color" id="ovEnd" value="#000000" oninput="setOverlayGradient()">
-                    </div>
-                    <input type="range" min="0" max="90" value="40" oninput="setOverlayOpacity(this.value)">
 
-                    <label class="d-label" style="margin-top:15px">Card Shape & Border</label>
-                    <div class="grid-2">
-                        <div><label>Border W</label><input type="range" min="0" max="10" value="0" oninput="setCardBorderWidth(this.value)"></div>
-                        <div><label>Border C</label><input type="color" value="#ffffff" oninput="setCardBorderColor(this.value)"></div>
+                    <div class="ctrl-group">
+                        <div class="group-title">Filters & FX</div>
+                        <div class="grid-2">
+                            <div><label>Bright</label><input type="range" min="0" max="200" value="100" oninput="updateFilters()"></div>
+                            <div><label>Contrast</label><input type="range" min="0" max="200" value="100" oninput="updateFilters()"></div>
+                            <div><label>Blur</label><input type="range" min="0" max="20" value="0" oninput="updateFilters()"></div>
+                            <div><label>Vignette</label><input type="range" min="0" max="100" value="0" oninput="setVignette(this.value)"></div>
+                        </div>
+                        <div class="grid-2" style="margin-top:5px">
+                             <div><label>Noise</label><input type="range" min="0" max="100" value="0" oninput="setNoise(this.value)"></div>
+                             <div>
+                                 <label>Patterns</label>
+                                 <select onchange="setPattern(this.value)">
+                                     <option value="none">None</option>
+                                     <option value="dots">Dots</option>
+                                     <option value="lines">Lines</option>
+                                     <option value="grid">Grid</option>
+                                 </select>
+                             </div>
+                        </div>
                     </div>
-                    <div class="grid-2">
-                        <div><label>Corner Radius</label><input type="range" min="0" max="40" value="30" oninput="setCardRadius(this.value)"></div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Overlay Color</div>
+                        <div class="grid-2">
+                            <input type="color" id="ovStart" value="#000000" oninput="setOverlayGradient()">
+                            <input type="color" id="ovEnd" value="#000000" oninput="setOverlayGradient()">
+                        </div>
+                        <div class="grid-2">
+                            <div><label>Opacity</label><input type="range" min="0" max="90" value="40" oninput="setOverlayOpacity(this.value)"></div>
+                            <div>
+                                <label>Blend</label>
+                                <select onchange="setOverlayBlendMode(this.value)">
+                                    <option value="normal">Normal</option>
+                                    <option value="multiply">Multiply</option>
+                                    <option value="screen">Screen</option>
+                                    <option value="overlay">Overlay</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div id="tab-text" class="ctrl-content">
-                    <label class="d-label">Content</label>
-                    <textarea id="inputVerse" placeholder="Type Verse..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
-                    
-                    <label class="d-label" style="margin-top:10px">Reference</label>
-                    <div class="grid-2">
+                    <div class="ctrl-group">
+                        <div class="group-title">Content</div>
+                        <textarea id="inputVerse" placeholder="Type Verse..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Font</div>
+                        <select id="fontSelect" onchange="setFont(this.value)"></select>
+                        <div class="grid-2">
+                            <div><label>Size</label><input type="range" min="10" max="60" value="28" oninput="setFontSize(this.value)"></div>
+                            <div><label>Weight</label><input type="range" min="100" max="900" step="100" value="700" oninput="setFontWeight(this.value)"></div>
+                        </div>
+                        <div class="grid-4" style="margin-top:5px">
+                            <button class="btn" onclick="toggleStyle('italic')">I</button>
+                            <button class="btn" onclick="toggleDecoration('underline')">U</button>
+                            <button class="btn" onclick="setTextTransform('uppercase')">AA</button>
+                            <button class="btn" onclick="setTextTransform('none')">Aa</button>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Color & Style</div>
+                        <div class="grid-2">
+                            <input type="color" oninput="setColor(this.value)" value="#ffffff">
+                            <button class="btn" onclick="setTextGradient('gold')">Gold</button>
+                        </div>
+                        <div class="swatch-grid">
+                            <div class="swatch" style="background:#fff" onclick="setColor('#fff')"></div>
+                            <div class="swatch" style="background:#000" onclick="setColor('#000')"></div>
+                            <div class="swatch" style="background:#D4AF37" onclick="setColor('#D4AF37')"></div>
+                            <div class="swatch" style="background:#e74c3c" onclick="setColor('#e74c3c')"></div>
+                            <div class="swatch grad-1" onclick="setTextGradient('gold')"></div>
+                            <div class="swatch grad-2" onclick="setTextGradient('ocean')"></div>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Spacing & Alignment</div>
+                        <div class="grid-2">
+                            <div><label>Line Ht</label><input type="range" min="1" max="3" step="0.1" value="1.6" oninput="setLineHeight(this.value)"></div>
+                            <div><label>Letter Sp</label><input type="range" min="-2" max="10" value="0" oninput="setLetterSpacing(this.value)"></div>
+                        </div>
+                        <div class="grid-3" style="margin-top:5px">
+                            <button class="btn" onclick="alignText('pos-left')">Left</button>
+                            <button class="btn" onclick="alignText('pos-center')">Center</button>
+                            <button class="btn" onclick="alignText('pos-right')">Right</button>
+                            <button class="btn" onclick="setVerticalAlign('flex-start')">Top</button>
+                            <button class="btn" onclick="setVerticalAlign('center')">Mid</button>
+                            <button class="btn" onclick="setVerticalAlign('flex-end')">Bot</button>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Shadow & Stroke</div>
+                        <div class="grid-2">
+                            <div><label>Shadow X</label><input type="range" min="-10" max="10" value="2" oninput="setShadowX(this.value)"></div>
+                            <div><label>Shadow Y</label><input type="range" min="-10" max="10" value="2" oninput="setShadowY(this.value)"></div>
+                        </div>
+                        <div class="grid-2">
+                            <div><label>Blur</label><input type="range" min="0" max="20" value="0" oninput="setShadowBlur(this.value)"></div>
+                            <input type="color" value="#000000" oninput="setShadowColor(this.value)">
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Glass Box</div>
+                        <div class="grid-2">
+                             <input type="color" value="#ffffff" oninput="setBoxColor(this.value)">
+                             <input type="range" min="0" max="100" value="0" oninput="setBoxOpacity(this.value)" title="Box Opacity">
+                        </div>
+                        <div class="grid-2" style="margin-top:5px">
+                             <div><label>Blur</label><input type="range" min="0" max="20" value="0" oninput="setBoxBlur(this.value)"></div>
+                             <div><label>Padding</label><input type="range" min="0" max="60" value="0" oninput="setBoxPadding(this.value)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-reference" class="ctrl-content">
+                    <div class="ctrl-group">
+                        <div class="group-title">Reference Text</div>
                         <input type="text" class="ref-input" id="inputRef" placeholder="Ref" value="యెషయా 54:17" oninput="updateText()">
-                        <input type="range" min="10" max="40" value="13" oninput="setRefSize(this.value)" title="Ref Size">
                     </div>
 
-                    <label class="d-label" style="margin-top:15px">Typography</label>
-                    <select id="fontSelect" onchange="setFont(this.value)" style="margin-bottom:8px"></select>
-                    
-                    <div class="grid-4">
-                        <button class="btn" onclick="adjustFontSize(-2)">A-</button>
-                        <button class="btn" onclick="adjustFontSize(2)">A+</button>
-                        <button class="btn" onclick="toggleStyle('bold')">B</button>
-                        <button class="btn" onclick="toggleStyle('italic')">I</button>
-                        <button class="btn" onclick="toggleDecoration('underline')">U</button>
-                        <button class="btn" onclick="toggleDecoration('line-through')">S</button>
-                        <button class="btn" onclick="setTextTransform('uppercase')">AA</button>
-                        <button class="btn" onclick="setTextTransform('none')">Aa</button>
-                    </div>
-
-                    <label class="d-label" style="margin-top:10px">Spacing & Layout</label>
-                    <div class="grid-2">
-                        <div><label>Line Height</label><input type="range" min="1" max="3" step="0.1" value="1.6" oninput="setLineHeight(this.value)"></div>
-                        <div><label>Letter Space</label><input type="range" min="-2" max="10" value="0" oninput="setLetterSpacing(this.value)"></div>
+                    <div class="ctrl-group">
+                        <div class="group-title">Styling</div>
+                        <div class="grid-2">
+                            <div><label>Size</label><input type="range" min="10" max="40" value="13" oninput="setRefSize(this.value)"></div>
+                            <div><label>Gap</label><input type="range" min="0" max="50" value="5" oninput="setRefMargin(this.value)"></div>
+                        </div>
+                        <div class="grid-2" style="margin-top:5px">
+                            <input type="color" value="#ffffff" oninput="setRefColor(this.value)">
+                            <button class="btn" onclick="toggleDivider()">Divider</button>
+                        </div>
                     </div>
                     
-                    <div class="grid-3" style="margin-top:5px">
-                        <button class="btn" onclick="alignText('pos-left')">Left</button>
-                        <button class="btn" onclick="alignText('pos-center')">Center</button>
-                        <button class="btn" onclick="alignText('pos-right')">Right</button>
-                        <button class="btn" onclick="setVerticalAlign('flex-start')">Top</button>
-                        <button class="btn" onclick="setVerticalAlign('center')">Mid</button>
-                        <button class="btn" onclick="setVerticalAlign('flex-end')">Bot</button>
-                    </div>
-
-                    <label class="d-label" style="margin-top:10px">Nudge & Padding</label>
-                    <div class="grid-4">
-                        <button class="btn" onclick="nudgeText(0, -5)">⬆</button>
-                        <button class="btn" onclick="nudgeText(0, 5)">⬇</button>
-                        <button class="btn" onclick="nudgeText(-5, 0)">⬅</button>
-                        <button class="btn" onclick="nudgeText(5, 0)">➡</button>
-                    </div>
-                    <label>Padding</label>
-                    <input type="range" min="20" max="100" value="45" oninput="setPadding(this.value)">
-
-                    <label class="d-label" style="margin-top:15px">Colors & Style</label>
-                    <div class="grid-2" style="margin-bottom:8px">
-                        <input type="color" oninput="setColor(this.value)" value="#ffffff">
-                        <button class="btn" onclick="setTextGradient('gold')">Gold Grad</button>
-                    </div>
-                    <div class="swatch-grid">
-                        <div class="swatch" style="background:#fff" onclick="setColor('#fff')"></div>
-                        <div class="swatch" style="background:#000" onclick="setColor('#000')"></div>
-                        <div class="swatch" style="background:#D4AF37" onclick="setColor('#D4AF37')"></div>
-                        <div class="swatch" style="background:#e74c3c" onclick="setColor('#e74c3c')"></div>
-                        <div class="swatch" style="background:#8e44ad" onclick="setColor('#8e44ad')"></div>
-                        <div class="swatch grad-1" onclick="setTextGradient('gold')"></div>
-                        <div class="swatch grad-2" onclick="setTextGradient('ocean')"></div>
-                        <div class="swatch grad-3" onclick="setTextGradient('sunset')"></div>
-                    </div>
-
-                    <label class="d-label" style="margin-top:10px">Highlight & Effects</label>
-                    <div class="grid-2">
-                         <div><label>Marker</label><input type="color" value="#ffffff" oninput="setTextHighlight(this.value)"></div>
-                         <button class="btn" onclick="setTextHighlight('transparent')" style="margin-top:16px">No Marker</button>
-                    </div>
-                    <div class="grid-2" style="margin-top:8px">
-                        <div><label>Shadow</label><input type="range" min="0" max="20" value="0" oninput="setShadowBlur(this.value)"></div>
-                        <div><label>Stroke</label><input type="range" min="0" max="3" step="0.1" value="0" oninput="setTextStroke(this.value)"></div>
+                    <div class="ctrl-group">
+                        <div class="group-title">Ref Position</div>
+                        <div class="grid-3">
+                            <button class="btn" onclick="setRefAlign('left')">Left</button>
+                            <button class="btn" onclick="setRefAlign('center')">Center</button>
+                            <button class="btn" onclick="setRefAlign('right')">Right</button>
+                        </div>
                     </div>
                 </div>
                 
                 <div id="tab-decor" class="ctrl-content">
-                    <label class="d-label">Stickers</label>
-                    <div class="flex-wrap-grid">
-                        <button class="btn" onclick="setIcon('none')">🚫</button>
-                        <button class="btn" onclick="setIcon('cross')">✝</button>
-                        <button class="btn" onclick="setIcon('dove')">🕊️</button>
-                        <button class="btn" onclick="setIcon('book')">📖</button>
-                        <button class="btn" onclick="setIcon('pray')">🙏</button>
-                        <button class="btn" onclick="setIcon('star')">✨</button>
-                        <button class="btn" onclick="setIcon('heart')">❤️</button>
-                        <button class="btn" onclick="setIcon('crown')">👑</button>
-                        <button class="btn" onclick="setIcon('fire')">🔥</button>
-                        <button class="btn" onclick="setIcon('anchor')">⚓</button>
-                        <button class="btn" onclick="setIcon('leaf')">🌿</button>
-                        <button class="btn" onclick="setIcon('fish')">🐟</button>
-                        <button class="btn" onclick="setIcon('chalice')">🍷</button>
-                        <button class="btn" onclick="setIcon('rays')">☀</button>
-                        <button class="btn" onclick="setIcon('wings')">👼</button>
-                        <button class="btn" onclick="setIcon('olive')">🕊️🌿</button>
-                    </div>
-                    
-                    <label class="d-label" style="margin-top:10px">Sticker Adjust</label>
-                    <div class="grid-3">
-                        <div><label>Color</label><input type="color" value="#ffffff" oninput="setIconColor(this.value)"></div>
-                        <div><label>Size</label><input type="range" min="50" max="200" value="100" oninput="setIconSize(this.value)"></div>
-                        <div><label>Rotate</label><input type="range" min="0" max="360" value="0" oninput="setIconRotation(this.value)"></div>
-                    </div>
-                    <div class="grid-4" style="margin-top:5px">
-                        <button class="btn" onclick="nudgeIcon(0, -5)">⬆</button>
-                        <button class="btn" onclick="nudgeIcon(0, 5)">⬇</button>
-                        <button class="btn" onclick="nudgeIcon(-5, 0)">⬅</button>
-                        <button class="btn" onclick="nudgeIcon(5, 0)">➡</button>
+                    <div class="ctrl-group">
+                        <div class="group-title">Card Frame</div>
+                        <div class="grid-3">
+                            <div><label>Width</label><input type="range" min="0" max="10" value="0" oninput="setCardBorderWidth(this.value)"></div>
+                            <div><label>Radius</label><input type="range" min="0" max="40" value="30" oninput="setCardRadius(this.value)"></div>
+                            <div><label>Color</label><input type="color" value="#ffffff" oninput="setCardBorderColor(this.value)"></div>
+                        </div>
+                        <select onchange="setCardBorderStyle(this.value)">
+                            <option value="solid">Solid</option>
+                            <option value="dashed">Dashed</option>
+                            <option value="dotted">Dotted</option>
+                            <option value="double">Double</option>
+                        </select>
                     </div>
 
-                    <label class="d-label" style="margin-top:15px">Watermark</label>
-                    <div class="grid-2">
-                        <button class="btn" onclick="toggleWatermark()">👁 Toggle</button>
-                        <input type="range" min="0" max="100" value="30" oninput="setWatermarkOpacity(this.value)">
+                    <div class="ctrl-group">
+                        <div class="group-title">Textures</div>
+                        <div class="grid-3">
+                            <button class="btn" onclick="setTexture('none')">None</button>
+                            <button class="btn" onclick="setTexture('paper')">Paper</button>
+                            <button class="btn" onclick="setTexture('canvas')">Canvas</button>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Stickers</div>
+                        <div class="flex-wrap-grid">
+                            <button class="btn" onclick="setIcon('none')">🚫</button>
+                            <button class="btn" onclick="setIcon('cross')">✝</button>
+                            <button class="btn" onclick="setIcon('dove')">🕊️</button>
+                            <button class="btn" onclick="setIcon('book')">📖</button>
+                            <button class="btn" onclick="setIcon('pray')">🙏</button>
+                            <button class="btn" onclick="setIcon('star')">✨</button>
+                            <button class="btn" onclick="setIcon('heart')">❤️</button>
+                            <button class="btn" onclick="setIcon('crown')">👑</button>
+                            <button class="btn" onclick="setIcon('fire')">🔥</button>
+                            <button class="btn" onclick="setIcon('anchor')">⚓</button>
+                            <button class="btn" onclick="setIcon('leaf')">🌿</button>
+                            <button class="btn" onclick="setIcon('fish')">🐟</button>
+                            <button class="btn" onclick="setIcon('chalice')">🍷</button>
+                            <button class="btn" onclick="setIcon('rays')">☀</button>
+                            <button class="btn" onclick="setIcon('wings')">👼</button>
+                            <button class="btn" onclick="setIcon('olive')">🕊️🌿</button>
+                        </div>
+                        
+                        <label style="margin-top:10px">Adjust Sticker</label>
+                        <div class="grid-3">
+                            <div><label>Color</label><input type="color" value="#ffffff" oninput="setIconColor(this.value)"></div>
+                            <div><label>Size</label><input type="range" min="50" max="200" value="100" oninput="setIconSize(this.value)"></div>
+                            <div><label>Rotate</label><input type="range" min="0" max="360" value="0" oninput="setIconRotation(this.value)"></div>
+                        </div>
+                        <div class="grid-4" style="margin-top:5px">
+                            <button class="btn" onclick="nudgeIcon(0, -5)">⬆</button>
+                            <button class="btn" onclick="nudgeIcon(0, 5)">⬇</button>
+                            <button class="btn" onclick="nudgeIcon(-5, 0)">⬅</button>
+                            <button class="btn" onclick="nudgeIcon(5, 0)">➡</button>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <div class="group-title">Watermark</div>
+                        <div class="grid-2">
+                            <button class="btn" onclick="toggleWatermark()">👁 Toggle</button>
+                            <input type="range" min="0" max="100" value="30" oninput="setWatermarkOpacity(this.value)">
+                        </div>
                     </div>
                 </div>
 
                 <div id="tab-footer" class="ctrl-content">
-                    <label class="d-label">Banner Style</label>
-                    <div class="flex-wrap-grid">
-                        <button class="btn" onclick="setBannerStyle('')">Glass</button>
-                        <button class="btn" onclick="setBannerStyle('b-solid')">Dark</button>
-                        <button class="btn" onclick="setBannerStyle('b-gold')">Gold</button>
-                        <button class="btn" onclick="setBannerStyle('b-boxed')">Boxed</button>
-                        <button class="btn" onclick="setBannerStyle('b-gradient')">Grad</button>
-                        <button class="btn" onclick="setBannerStyle('b-minimal')">Mini</button>
-                        <button class="btn" onclick="setBannerStyle('b-floating-stripe')">Stripe</button>
-                        <button class="btn" onclick="setBannerStyle('b-outline-bold')">Bold</button>
-                        <button class="btn" onclick="setBannerStyle('b-split')">Split</button>
+                    <div class="ctrl-group">
+                        <div class="group-title">Banner Style</div>
+                        <div class="flex-wrap-grid">
+                            <button class="btn" onclick="setBannerStyle('')">Glass</button>
+                            <button class="btn" onclick="setBannerStyle('b-solid')">Dark</button>
+                            <button class="btn" onclick="setBannerStyle('b-gold')">Gold</button>
+                            <button class="btn" onclick="setBannerStyle('b-boxed')">Boxed</button>
+                            <button class="btn" onclick="setBannerStyle('b-gradient')">Grad</button>
+                            <button class="btn" onclick="setBannerStyle('b-minimal')">Mini</button>
+                            <button class="btn" onclick="setBannerStyle('b-floating-stripe')">Stripe</button>
+                            <button class="btn" onclick="setBannerStyle('b-outline-bold')">Bold</button>
+                            <button class="btn" onclick="setBannerStyle('b-split')">Split</button>
+                        </div>
                     </div>
 
-                    <label class="d-label" style="margin-top:15px">Footer Text</label>
-                    <div class="grid-2">
-                        <input type="text" class="text-input" id="inAuthor" placeholder="Author" value="Rev. A Daniel Paul" oninput="updateFooter()">
-                        <input type="text" class="text-input" id="inBrand" placeholder="Brand" value="CHRIST MANDIR" oninput="updateFooter()">
+                    <div class="ctrl-group">
+                        <div class="group-title">Info & Branding</div>
+                        <div class="grid-2">
+                            <input type="text" class="text-input" id="inAuthor" placeholder="Author" value="Rev. A Daniel Paul" oninput="updateFooter()">
+                            <input type="text" class="text-input" id="inBrand" placeholder="Brand" value="CHRIST MANDIR" oninput="updateFooter()">
+                        </div>
+                        <div class="grid-2" style="margin-top:10px">
+                            <button class="btn" onclick="document.getElementById('authUpload').click()">👤 Photo</button>
+                            <button class="btn" onclick="resetAuthImg()">🔄 Reset</button>
+                        </div>
+                        <input type="file" id="authUpload" accept="image/*" onchange="uploadAuth(this)" style="display:none">
+                        
+                        <label style="margin-top:10px">Date</label>
+                        <input type="date" id="datePicker" onchange="updateDate(this.value)">
                     </div>
-                    
-                    <label class="d-label" style="margin-top:10px">Author Photo</label>
-                    <div class="grid-2">
-                        <button class="btn" onclick="document.getElementById('authUpload').click()">👤 Change</button>
-                        <button class="btn" onclick="resetAuthImg()">🔄 Reset</button>
-                    </div>
-                    <input type="file" id="authUpload" accept="image/*" onchange="uploadAuth(this)" style="display:none">
-                    
-                    <label class="d-label" style="margin-top:10px">Custom Date</label>
-                    <input type="date" id="datePicker" onchange="updateDate(this.value)">
                 </div>
             </div>
         </div>
@@ -618,8 +688,10 @@
     let nudgeX = 0, nudgeY = 0;
     let iconX = 0, iconY = 0;
     let strokeW = 0, strokeC = '#000000';
-    let shadowBlur = 0, shadowC = '#000000';
+    let shadowX = 2, shadowY = 2, shadowBlur = 0, shadowC = '#000000';
     let cardBorderW = 0, cardBorderC = '#ffffff';
+    let bgPosX = 50, bgPosY = 50, bgScale = 110;
+    let boxColor = '#ffffff', boxOp = 0, boxBlur = 0;
     const defaultAuthImg = "https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png";
 
     window.addEventListener('paste', e => {
@@ -714,6 +786,20 @@
         }
     }
     
+    function setBgGradient(grad) {
+        document.getElementById('bg-layer').style.backgroundImage = grad;
+    }
+    
+    function setBgPos(x, y) {
+        if(x !== null) bgPosX = x;
+        if(y !== null) bgPosY = y;
+        document.getElementById('bg-layer').style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+    }
+    function setBgZoom(val) {
+        bgScale = val;
+        document.getElementById('bg-layer').style.backgroundSize = `${bgScale}%`;
+    }
+    
     function uploadAuth(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -731,11 +817,10 @@
         document.getElementById('bg-layer').style.backgroundImage = `url(${bg})`;
     }
 
-    /* --- BASIC CONTROLS --- */
-    function adjustFontSize(delta) {
-        currentFontSize += delta;
-        document.getElementById('verse-text').style.fontSize = currentFontSize + "px";
-    }
+    /* --- TYPOGRAPHY --- */
+    function adjustFontSize(delta) {} // kept for compat
+    function setFontSize(val) { document.getElementById('verse-text').style.fontSize = val + "px"; }
+    function setFontWeight(val) { document.getElementById('verse-text').style.fontWeight = val; }
 
     function alignText(posClass) {
         const content = document.getElementById('content-layer');
@@ -763,34 +848,28 @@
         const rgb2 = hexToRgb(c2);
         document.getElementById('overlay-layer').style.background = `linear-gradient(180deg, rgba(${rgb1}, ${overlayOp}), rgba(${rgb2}, ${overlayOp}))`;
     }
+    function setOverlayBlendMode(val) {
+        document.getElementById('overlay-layer').style.mixBlendMode = val;
+    }
 
-    function setFrame(index) { document.getElementById('frame-layer').style.cssText = frames[index]; }
-    
     function setFont(font) {
         document.getElementById('verse-text').style.fontFamily = font;
     }
     
-    function setRandomFont() {
-        const f = fontList[Math.floor(Math.random() * fontList.length)];
-        document.getElementById('verse-text').style.fontFamily = f;
-        document.getElementById('fontSelect').value = f;
-    }
-
     function setColor(c) {
         const t = document.getElementById('verse-text');
         t.style.color = c; t.style.backgroundImage = 'none'; t.style.webkitTextFillColor = 'initial';
         document.getElementById('verse-ref').style.color = c;
+        document.getElementById('divider-line').style.background = c;
     }
     
     function setTextGradient(type) {
         const t = document.getElementById('verse-text');
         if(type === 'gold') t.style.backgroundImage = 'linear-gradient(45deg, #D4AF37, #FEE140, #D4AF37)';
         if(type === 'ocean') t.style.backgroundImage = 'linear-gradient(45deg, #00C9FF, #92FE9D)';
-        if(type === 'sunset') t.style.backgroundImage = 'linear-gradient(45deg, #fc00ff, #00dbde)';
         t.style.webkitBackgroundClip = 'text'; t.style.webkitTextFillColor = 'transparent';
     }
 
-    function refreshStyle() { setRandomFont(); setFrame(Math.floor(Math.random() * 3)); }
     function setBannerStyle(cls) { const b = document.getElementById('cardBanner'); b.className = 'banner ' + cls; }
     
     /* NEW TEXT CONTROLS */
@@ -806,78 +885,110 @@
         t.style.textDecoration = t.style.textDecoration === s ? 'none' : s;
     }
     function setTextTransform(val) { document.getElementById('verse-text').style.textTransform = val; }
-    function setRefSize(val) { document.getElementById('verse-ref').style.fontSize = val + 'px'; }
     
+    /* REFERENCE STYLING */
+    function setRefSize(val) { document.getElementById('verse-ref').style.fontSize = val + 'px'; }
+    function setRefMargin(val) { document.getElementById('verse-ref').style.marginTop = val + 'px'; }
+    function setRefColor(val) { document.getElementById('verse-ref').style.color = val; }
+    function setRefAlign(val) { document.getElementById('verse-ref').style.display = 'block'; document.getElementById('verse-ref').style.textAlign = val; document.getElementById('verse-ref').style.width = '100%';}
+
     function setTextStroke(val) { strokeW = val; updateStroke(); }
-    function setStrokeColor(val) { strokeC = val; updateStroke(); }
     function updateStroke() { document.getElementById('verse-text').style.webkitTextStroke = `${strokeW}px ${strokeC}`; }
     
+    function setShadowX(val) { shadowX = val; updateShadow(); }
+    function setShadowY(val) { shadowY = val; updateShadow(); }
     function setShadowBlur(val) { shadowBlur = val; updateShadow(); }
     function setShadowColor(val) { shadowC = val; updateShadow(); }
     function updateShadow() {
-        document.getElementById('verse-text').style.textShadow = `2px 2px ${shadowBlur}px ${shadowC}`;
+        document.getElementById('verse-text').style.textShadow = `${shadowX}px ${shadowY}px ${shadowBlur}px ${shadowC}`;
     }
 
-    function setTextHighlight(val) {
-        document.getElementById('verse-text').style.backgroundColor = val;
+    /* TEXT BOX STYLING */
+    function setBoxColor(val) { boxColor = val; updateTextBox(); }
+    function setBoxOpacity(val) { boxOp = val/100; updateTextBox(); }
+    function setBoxBlur(val) { boxBlur = val; updateTextBox(); }
+    function setBoxPadding(val) { document.getElementById('content-layer').style.padding = val + 'px'; }
+    function updateTextBox() {
+        const rgb = hexToRgb(boxColor);
+        document.getElementById('content-layer').style.background = `rgba(${rgb}, ${boxOp})`;
+        document.getElementById('content-layer').style.backdropFilter = `blur(${boxBlur}px)`;
+        document.getElementById('content-layer').style.webkitBackdropFilter = `blur(${boxBlur}px)`;
+    }
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255,255,255';
+    }
+    
+    /* DIVIDER LINE */
+    function toggleDivider() { 
+        const d = document.getElementById('divider-line');
+        d.style.display = d.style.display === 'block' ? 'none' : 'block';
     }
 
     /* CARD DESIGN CONTROLS */
     function setCardBorderWidth(val) { cardBorderW = val; updateCardBorder(); }
     function setCardBorderColor(val) { cardBorderC = val; updateCardBorder(); }
+    function setCardBorderStyle(val) { 
+        document.getElementById('mainCard').style.borderStyle = val; 
+    }
     function updateCardBorder() {
-        document.getElementById('mainCard').style.border = `${cardBorderW}px solid ${cardBorderC}`;
+        document.getElementById('mainCard').style.borderWidth = cardBorderW + 'px';
+        document.getElementById('mainCard').style.borderColor = cardBorderC;
+        if(document.getElementById('mainCard').style.borderStyle === '') document.getElementById('mainCard').style.borderStyle = 'solid';
     }
     function setCardRadius(val) {
         document.getElementById('mainCard').style.borderRadius = val + 'px';
         document.querySelector('.inner-frame').style.borderRadius = (val - 10) + 'px';
     }
-    function setCardBlur(val) {
-        // Blur the card background (requires backdrop-filter support on element or pseudo)
-        // Since we have image inside, we can't blur the parent easily without blurrying content.
-        // We will apply blur to bg-layer 
-        // NOTE: This duplicates filter function, so let's combine in updateFilters or just treat it separately if independent.
-        // For now, let's make it blur the overlay layer to create a "frosted" look on top of BG.
-        // Actually, let's just use it as an alias for image blur for simplicity in this structure.
-        updateFilters(); 
-    }
 
     /* FILTERS & EFFECTS */
     function updateFilters() {
-        const inputs = document.querySelectorAll('#tab-background input[type=range]');
-        // Order of inputs in that tab: bright, contrast, saturate, blur, vignette, noise, overlay
-        // We need specific indices for filter CSS.
-        // The first group (filters) are indices 0-3
-        if(inputs.length < 4) return;
+        const groups = document.querySelectorAll('.ctrl-group');
+        // Find group 3 in BG tab
+        const inputsF = document.getElementById('tab-background').getElementsByTagName('input');
+        // Inputs: 0:file 1:panX 2:panY 3:zoom 4:bri 5:con 6:blur 7:vig 8:noise 9:ovStart 10:ovEnd 11:ovOp
+        // This is fragile if HTML changes. Let's use layout logic in future. 
+        // For now, in "Filters & FX" group:
+        // Bri is 4th range in that tab? No.
+        // Let's just grab by specific parent logic
+        const container = document.getElementById('tab-background');
+        const ranges = container.querySelectorAll('input[type=range]');
+        // 0:PanX 1:PanY 2:Zoom 3:Bri 4:Con 5:Blur 6:Vig 7:Noise 8:OvOp 9:BorderW 10:Rad
         
-        const f_bri = inputs[0].value;
-        const f_con = inputs[1].value;
-        const f_sat = inputs[2].value;
-        const f_blur = inputs[3].value;
-        document.getElementById('bg-layer').style.filter = `brightness(${f_bri}%) contrast(${f_con}%) saturate(${f_sat}%) blur(${f_blur}px)`;
+        const f_bri = ranges[3].value;
+        const f_con = ranges[4].value;
+        const f_blur = ranges[5].value;
+        
+        document.getElementById('bg-layer').style.filter = `brightness(${f_bri}%) contrast(${f_con}%) blur(${f_blur}px)`;
     }
 
     function setVignette(val) {
         const v = document.getElementById('vignette-layer');
-        // Radial gradient from transparent center to black edges
-        // val 0 to 100.
-        // 0 = transparent. 100 = strong black corners.
-        // We adjust the percentage of the transparent start point.
-        // High val = small transparent circle (more vignette). Low val = big circle.
-        const stop = 100 - (val * 0.8); // 100 -> 20%, 0 -> 100%
+        const stop = 100 - (val * 0.8); 
         v.style.background = `radial-gradient(circle, transparent ${stop}%, rgba(0,0,0, ${val/100}) 100%)`;
     }
 
     function setNoise(val) {
         document.getElementById('noise-layer').style.opacity = val / 100;
     }
+    
+    function setPattern(val) {
+        const p = document.getElementById('pattern-layer');
+        p.style.opacity = val === 'none' ? 0 : 0.3;
+        if(val === 'dots') p.style.backgroundImage = 'radial-gradient(#fff 1px, transparent 1px)';
+        if(val === 'lines') p.style.backgroundImage = 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)';
+        if(val === 'grid') p.style.backgroundImage = 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)';
+    }
+    
+    function setTexture(type) {
+        const t = document.getElementById('texture-layer');
+        t.style.opacity = type === 'none' ? 0 : 0.4;
+        if(type === 'paper') t.style.backgroundImage = 'url("https://www.transparenttextures.com/patterns/cream-paper.png")';
+        if(type === 'canvas') t.style.backgroundImage = 'url("https://www.transparenttextures.com/patterns/canvas-orange.png")';
+    }
 
 
     /* DECOR */
-    function toggleEl(id) {
-        const el = document.getElementById(id);
-        el.style.display = el.style.display === 'none' ? 'block' : 'none';
-    }
     function setIcon(type) {
         document.querySelectorAll('.card-icon').forEach(i => i.style.display = 'none');
         if(type !== 'none') document.getElementById('icon-'+type).style.display = 'block';
@@ -888,7 +999,6 @@
         iconX += x; iconY += y;
         document.getElementById('stickerLayer').style.transform = `translate(${iconX}px, ${iconY}px)`;
     }
-    function setIconOpacity(val) { document.getElementById('stickerLayer').style.opacity = val/100; }
     function setIconSize(val) { document.querySelectorAll('.card-icon').forEach(i => i.style.fontSize = val + 'px'); }
     function toggleWatermark() {
         const w = document.getElementById('watermark');
@@ -905,6 +1015,13 @@
         if (!banner.classList.contains('b-solid') && !banner.classList.contains('b-gold')) {
              banner.style.background = "rgba(80, 80, 80, 0.9)"; banner.style.border = "1px solid rgba(255,255,255,0.3)";
         }
+        
+        const content = clone.querySelector('.content');
+        if(content.style.backdropFilter) {
+             content.style.background = content.style.background.replace(')', ', 0.9)'); 
+             content.style.backdropFilter = "none";
+        }
+
         document.body.appendChild(clone);
         return clone;
     }
@@ -922,14 +1039,11 @@
     function closePreview() { document.getElementById('preview-modal').style.display = 'none'; }
 
     async function downloadCard() {
-        const btns = document.querySelectorAll('.hb-save, .save-btn'); // Select all save buttons
-        const originalTexts = [];
+        const btns = document.querySelectorAll('.hb-save, .save-btn'); 
         btns.forEach(b => { 
             if(b.querySelector('.dt-btn-label')) {
-                 originalTexts.push(b.querySelector('.dt-btn-label').innerText);
                  b.querySelector('.dt-btn-label').innerText = "Wait...";
             } else {
-                 originalTexts.push(b.innerText);
                  b.innerText = "⏳"; 
             }
         });
