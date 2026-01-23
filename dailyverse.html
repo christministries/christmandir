@@ -34,6 +34,26 @@
             height: 100vh; width: 100vw;
             font-family: var(--font-body); color: var(--text-main);
             display: flex; flex-direction: column; overflow: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .biblical-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; overflow: hidden;
+            background: linear-gradient(to bottom, #eef2f3, #e0eafc);
+        }
+        .bg-icon {
+            position: absolute;
+            fill: #00897b; /* Primary color base */
+            opacity: 0.05; /* Subtle */
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.06; }
+            90% { opacity: 0.06; }
+            100% { transform: translateY(-10vh) rotate(20deg) scale(1); opacity: 0; }
         }
 
         /* --- 1. HEADERS --- */
@@ -79,6 +99,7 @@
             position: relative; overflow: hidden;
             flex-direction: column; 
             padding-top: 60px;
+            z-index: 1; /* Above BG */
         }
 
         .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; }
@@ -126,18 +147,35 @@
         .noise-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; opacity: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); transition: 0.3s; mix-blend-mode: overlay; }
         .inner-frame { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; border-radius: 20px; z-index: 2; pointer-events: none; transition: 0.5s; }
         
-        .content { position: relative; z-index: 4; height: 400px; padding: 45px; display: flex; flex-direction: column; box-sizing: border-box; transition: 0.3s; border-radius: 10px; }
-        .v-text { font-size: 28px; line-height: 1.6; font-weight: 700; width: 100%; transition: 0.1s; }
-        .text-divider { width: 60px; height: 2px; background: currentColor; margin: 15px 0; display: none; opacity: 0.7; }
-        .v-ref { font-size: 13px; margin-top: 5px; display: inline-block; transition: 0.3s; }
+        /* Card Dust Particles */
+        .dust-container { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:3; overflow:hidden; }
+        .dust-dot { position: absolute; background: rgba(255,255,255,0.4); border-radius: 50%; animation: floatDust linear infinite; }
+        @keyframes floatDust {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .content { position: relative; z-index: 4; height: 400px; padding: 45px; display: flex; flex-direction: column; box-sizing: border-box; transition: 0.3s; border-radius: 10px; transform-origin: center; }
         
+        .v-text { font-size: 28px; line-height: 1.6; font-weight: 700; width: 100%; transition: 0.1s; }
+        
+        #ref-span { 
+            font-size: 14px; 
+            font-weight: 600; 
+            margin-top: 10px; 
+            display: block; 
+            opacity: 0.9;
+        }
+
         .pos-center { justify-content: center; align-items: center; text-align: center; }
         .pos-left { justify-content: center; align-items: flex-start; text-align: left; }
         .pos-right { justify-content: center; align-items: flex-end; text-align: right; }
         
         /* Banner Styles */
         .banner { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 340px; height: 82px; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.4); border-radius: 18px; transition: 0.3s; }
-        .banner.b-solid { background: var(--dark); border: none; }
+        .banner.b-solid { background: var(--text-main); border: none; }
         .banner.b-gold { background: var(--gold); border: none; }
         .banner.b-minimal { background: transparent; border: none; backdrop-filter: none; }
         .banner.b-boxed { width: 95%; border-radius: 10px; background: rgba(0,0,0,0.8); border: 1px solid #333; }
@@ -148,9 +186,9 @@
         .banner.b-split .banner-left, .banner.b-split .person-info { background: rgba(255,255,255,0.2); backdrop-filter: blur(20px); padding: 5px 12px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.3); height: 100%; }
         
         .banner-left { display: flex; align-items: center; }
-        .logo-img { height: 55px; width: auto; border-radius: 5px; margin-right: 8px; object-fit: contain; }
+        .logo-img { height: 55px; width: auto; border-radius: 5px; margin-right: 6px; object-fit: contain; }
         .banner-date { font-size: 9px; font-weight: 800; color: #fff; border-left: 1.2px solid rgba(255,255,255,0.4); border-right: 1.2px solid rgba(255,255,255,0.4); padding: 0 8px; white-space: nowrap; letter-spacing: 0.5px; }
-        .cross-icon { color: rgba(255, 255, 255, 0.9); margin-right: 8px; width: 14px; height: 14px; flex-shrink: 0; }
+        .cross-icon { color: rgba(255, 255, 255, 0.9); margin-right: 6px; width: 14px; height: 14px; flex-shrink: 0; }
         .person-info { display: flex; align-items: center; gap: 10px; }
         .person-text { display: flex; flex-direction: column; align-items: flex-end; text-align: right; line-height: 1.25; }
         .author-name { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.3px; white-space: nowrap; }
@@ -281,6 +319,8 @@
     </style>
 </head>
 <body>
+    
+    <div id="page-background" class="biblical-bg"></div>
 
     <header class="mobile-header">
         <div class="logo-mobile">Christ <span>Mandir</span></div>
@@ -314,6 +354,9 @@
                         <div id="overlay-layer" class="overlay-layer"></div>
                         <div id="vignette-layer" class="vignette-layer"></div>
                         <div id="noise-layer" class="noise-layer"></div>
+                        
+                        <div id="dust-container" class="dust-container"></div>
+                        
                         <div id="frame-layer" class="inner-frame"></div>
                         <div class="watermark" id="watermark">CHRIST MANDIR</div>
                         
@@ -337,8 +380,6 @@
 
                         <div id="content-layer" class="content pos-center">
                             <div id="verse-text" class="v-text"></div>
-                            <div id="divider-line" class="text-divider"></div>
-                            <div id="verse-ref" class="v-ref"></div>
                         </div>
 
                         <div class="banner" id="cardBanner">
@@ -375,7 +416,6 @@
                 <div class="ctrl-tabs">
                     <button class="tab-btn active" onclick="switchTab('background', this)">🌄 Canvas</button>
                     <button class="tab-btn" onclick="switchTab('text', this)">✍️ Verse</button>
-                    <button class="tab-btn" onclick="switchTab('reference', this)">📖 Ref</button>
                     <button class="tab-btn" onclick="switchTab('decor', this)">✨ Decor</button>
                     <button class="tab-btn" onclick="switchTab('footer', this)">🏷️ Footer</button>
                 </div>
@@ -452,30 +492,36 @@
 
                 <div id="tab-text" class="ctrl-content">
                     <div class="ctrl-group">
-                        <div class="group-title">Content</div>
+                        <div class="group-title">Verse & Reference</div>
                         <textarea id="inputVerse" placeholder="Type Verse..." oninput="updateText()">నీకు విరోధముగా రూపింపబడిన ఏ ఆయుధమును వర్ధిల్లదు.</textarea>
+                        <input type="text" class="ref-input" id="inputRef" placeholder="Ref (e.g. Isaiah 54:17)" value="యెషయా 54:17" oninput="updateText()" style="margin-top:8px;">
+                        <button class="btn" id="refLayoutBtn" onclick="toggleRefLayout()" style="margin-top:8px;">Layout: Block (New Line)</button>
                     </div>
 
                     <div class="ctrl-group">
                         <div class="group-title">Font</div>
                         <select id="fontSelect" onchange="setFont(this.value)"></select>
                         <div class="grid-2">
-                            <div><label>Size</label><input type="range" min="10" max="60" value="28" oninput="setFontSize(this.value)"></div>
-                            <div><label>Weight</label><input type="range" min="100" max="900" step="100" value="700" oninput="setFontWeight(this.value)"></div>
+                            <div><label>Verse Size</label><input type="range" min="10" max="60" value="28" oninput="setFontSize(this.value)"></div>
+                            <div><label>Ref Size</label><input type="range" min="10" max="40" value="14" oninput="setRefSize(this.value)"></div>
                         </div>
-                        <div class="grid-4" style="margin-top:5px">
-                            <button class="btn" onclick="toggleStyle('italic')">I</button>
-                            <button class="btn" onclick="toggleDecoration('underline')">U</button>
+                        <div class="grid-2" style="margin-top:5px">
+                             <div><label>Weight</label><input type="range" min="100" max="900" step="100" value="700" oninput="setFontWeight(this.value)"></div>
+                             <div><label>Ref Color</label><input type="color" value="#ffffff" oninput="setRefColor(this.value)"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="ctrl-group">
+                        <div class="group-title">Style Controls</div>
+                        <div class="grid-4">
+                            <button class="btn" onclick="toggleStyle('italic')">Italic</button>
+                            <button class="btn" onclick="toggleDecoration('underline')">Under</button>
                             <button class="btn" onclick="setTextTransform('uppercase')">AA</button>
                             <button class="btn" onclick="setTextTransform('none')">Aa</button>
                         </div>
-                    </div>
-
-                    <div class="ctrl-group">
-                        <div class="group-title">Color & Style</div>
-                        <div class="grid-2">
-                            <input type="color" oninput="setColor(this.value)" value="#ffffff">
-                            <button class="btn" onclick="setTextGradient('gold')">Gold</button>
+                        <div class="grid-2" style="margin-top:8px;">
+                             <input type="color" oninput="setColor(this.value)" value="#ffffff" title="Verse Color">
+                             <button class="btn" onclick="setTextGradient('gold')">Gold Text</button>
                         </div>
                         <div class="swatch-grid">
                             <div class="swatch" style="background:#fff" onclick="setColor('#fff')"></div>
@@ -483,17 +529,12 @@
                             <div class="swatch" style="background:#D4AF37" onclick="setColor('#D4AF37')"></div>
                             <div class="swatch" style="background:#e74c3c" onclick="setColor('#e74c3c')"></div>
                             <div class="swatch grad-1" onclick="setTextGradient('gold')"></div>
-                            <div class="swatch grad-2" onclick="setTextGradient('ocean')"></div>
                         </div>
                     </div>
 
                     <div class="ctrl-group">
-                        <div class="group-title">Spacing & Alignment</div>
-                        <div class="grid-2">
-                            <div><label>Line Ht</label><input type="range" min="1" max="3" step="0.1" value="1.6" oninput="setLineHeight(this.value)"></div>
-                            <div><label>Letter Sp</label><input type="range" min="-2" max="10" value="0" oninput="setLetterSpacing(this.value)"></div>
-                        </div>
-                        <div class="grid-3" style="margin-top:5px">
+                        <div class="group-title">Layout</div>
+                        <div class="grid-3">
                             <button class="btn" onclick="alignText('pos-left')">Left</button>
                             <button class="btn" onclick="alignText('pos-center')">Center</button>
                             <button class="btn" onclick="alignText('pos-right')">Right</button>
@@ -501,11 +542,29 @@
                             <button class="btn" onclick="setVerticalAlign('center')">Mid</button>
                             <button class="btn" onclick="setVerticalAlign('flex-end')">Bot</button>
                         </div>
+                        <div class="grid-2" style="margin-top:8px;">
+                            <div><label>Line Ht</label><input type="range" min="1" max="3" step="0.1" value="1.6" oninput="setLineHeight(this.value)"></div>
+                            <div><label>Ref Gap</label><input type="range" min="0" max="50" value="10" oninput="setRefMargin(this.value)"></div>
+                        </div>
                     </div>
 
                     <div class="ctrl-group">
-                        <div class="group-title">Shadow & Stroke</div>
+                        <div class="group-title">Effects (More Controls)</div>
                         <div class="grid-2">
+                             <div><label>Opacity</label><input type="range" min="0" max="100" value="100" oninput="setTextOpacity(this.value)"></div>
+                             <div><label>Rotate</label><input type="range" min="-45" max="45" value="0" oninput="setTextRotation(this.value)"></div>
+                        </div>
+                        <div class="grid-2" style="margin-top:5px;">
+                             <div><label>Skew</label><input type="range" min="-20" max="20" value="0" oninput="setTextSkew(this.value)"></div>
+                             <div><label>Spacing</label><input type="range" min="-2" max="10" value="0" oninput="setLetterSpacing(this.value)"></div>
+                        </div>
+                        
+                        <div class="group-title" style="margin-top:10px;">Outline & Shadow</div>
+                        <div class="grid-2">
+                             <div><label>Stroke W</label><input type="range" min="0" max="5" step="0.5" value="0" oninput="setTextStrokeWidth(this.value)"></div>
+                             <div><label>Stroke Col</label><input type="color" value="#000000" oninput="setTextStrokeColor(this.value)"></div>
+                        </div>
+                        <div class="grid-2" style="margin-top:5px;">
                             <div><label>Shadow X</label><input type="range" min="-10" max="10" value="2" oninput="setShadowX(this.value)"></div>
                             <div><label>Shadow Y</label><input type="range" min="-10" max="10" value="2" oninput="setShadowY(this.value)"></div>
                         </div>
@@ -524,34 +583,6 @@
                         <div class="grid-2" style="margin-top:5px">
                              <div><label>Blur</label><input type="range" min="0" max="20" value="0" oninput="setBoxBlur(this.value)"></div>
                              <div><label>Padding</label><input type="range" min="0" max="60" value="0" oninput="setBoxPadding(this.value)"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="tab-reference" class="ctrl-content">
-                    <div class="ctrl-group">
-                        <div class="group-title">Reference Text</div>
-                        <input type="text" class="ref-input" id="inputRef" placeholder="Ref" value="యెషయా 54:17" oninput="updateText()">
-                    </div>
-
-                    <div class="ctrl-group">
-                        <div class="group-title">Styling</div>
-                        <div class="grid-2">
-                            <div><label>Size</label><input type="range" min="10" max="40" value="13" oninput="setRefSize(this.value)"></div>
-                            <div><label>Gap</label><input type="range" min="0" max="50" value="5" oninput="setRefMargin(this.value)"></div>
-                        </div>
-                        <div class="grid-2" style="margin-top:5px">
-                            <input type="color" value="#ffffff" oninput="setRefColor(this.value)">
-                            <button class="btn" onclick="toggleDivider()">Divider</button>
-                        </div>
-                    </div>
-                    
-                    <div class="ctrl-group">
-                        <div class="group-title">Ref Position</div>
-                        <div class="grid-3">
-                            <button class="btn" onclick="setRefAlign('left')">Left</button>
-                            <button class="btn" onclick="setRefAlign('center')">Center</button>
-                            <button class="btn" onclick="setRefAlign('right')">Right</button>
                         </div>
                     </div>
                 </div>
@@ -667,7 +698,6 @@
         <a href="stories.html" class="nav-item"><span>📚</span> Stories</a>
         <a href="quiz.html" class="nav-item"><span>🧩</span> Quiz</a>
         <a href="dailyverse.html" class="nav-item active"><span>✨</span> Verse</a>
-
     </nav>
 
     <div id="preview-modal" onclick="closePreview()"><img id="preview-img" src=""></div>
@@ -681,17 +711,31 @@
         'Poppins', 'Inter', 'Playfair Display', 'Lora', 'Montserrat', 
         'Great Vibes', 'Oswald', 'Merriweather', 'Roboto Slab' // English/Stylized
     ];
-    const frames = ['border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);', 'border: 2px solid #D4AF3733; box-shadow: inset 0 0 40px rgba(0,0,0,0.5);', 'border: 0.5px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);', 'border: none;'];
     
+    // Custom Biblical SVG Paths for Background
+    const biblicalIcons = [
+        "M12 2L12 22M5 9L19 9", // Cross (Stroke)
+        "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.5 1.43 4.26 4.14 4.26 7.41 0 1.97-.81 3.73-2.12 4.96z", // Globe/World
+        "M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z", // Bible Bookmark
+        "M21.58 16.09l-1.09-7.66C20.21 6.46 18.52 5 16.53 5H7.47C5.48 5 3.79 6.46 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19h.06c.91 0 1.76-.39 2.37-1.05C8.07 17.2 9.01 17 10 17c.56 0 1.09.06 1.59.17.25.05.47.19.64.38.61.66 1.46 1.05 2.37 1.05h.06c1.54 0 2.74-1.37 2.52-2.91z", // Open Book (Simple)
+        "M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99z", // Triangle/Trinity
+        "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", // Heart
+        "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" // Circle/Eternity
+    ];
+
     let currentFontSize = 28;
     let overlayOp = 0.4;
     let nudgeX = 0, nudgeY = 0;
     let iconX = 0, iconY = 0;
-    let strokeW = 0, strokeC = '#000000';
     let shadowX = 2, shadowY = 2, shadowBlur = 0, shadowC = '#000000';
+    let strokeW = 0, strokeC = '#000000';
     let cardBorderW = 0, cardBorderC = '#ffffff';
     let bgPosX = 50, bgPosY = 50, bgScale = 110;
     let boxColor = '#ffffff', boxOp = 0, boxBlur = 0;
+    let refDisplayBlock = true;
+    let refSizeVal = 14; 
+    let refColorVal = "#ffffff";
+    let refMarginVal = 10;
     const defaultAuthImg = "https://static.wixstatic.com/media/be4f11_18047e27125e4dadaf1a8a064f0271da~mv2.png";
 
     window.addEventListener('paste', e => {
@@ -710,6 +754,7 @@
     function init() {
         populateFonts();
         initParticles();
+        initPageBackground(); // New Background
         const now = new Date();
         const istDate = new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', month: 'short', day: 'numeric', year: 'numeric' }).format(now).toUpperCase();
         document.getElementById('bannerDate').innerText = istDate;
@@ -719,6 +764,38 @@
         window.addEventListener('resize', fitCardToScreen);
     }
     
+    // --- NEW: Page Background Animation ---
+    function initPageBackground() {
+        const bgContainer = document.getElementById('page-background');
+        // Dense: 50 icons
+        for (let i = 0; i < 50; i++) {
+            const svgNS = "http://www.w3.org/2000/svg";
+            const icon = document.createElementNS(svgNS, "svg");
+            icon.setAttribute("viewBox", "0 0 24 24");
+            icon.classList.add("bg-icon");
+            
+            // Randomly select a path
+            const pathData = biblicalIcons[Math.floor(Math.random() * biblicalIcons.length)];
+            const path = document.createElementNS(svgNS, "path");
+            path.setAttribute("d", pathData);
+            icon.appendChild(path);
+            
+            // Random Positioning & Animation
+            const size = Math.random() * 40 + 20; // 20px to 60px
+            const left = Math.random() * 100;
+            const duration = Math.random() * 30 + 20; // 20s to 50s
+            const delay = Math.random() * -50; // Negative delay to start mid-animation
+            
+            icon.style.width = size + "px";
+            icon.style.height = size + "px";
+            icon.style.left = left + "%";
+            icon.style.animationDuration = duration + "s";
+            icon.style.animationDelay = delay + "s";
+            
+            bgContainer.appendChild(icon);
+        }
+    }
+
     function populateFonts() {
         const sel = document.getElementById('fontSelect');
         fontList.forEach(f => {
@@ -733,10 +810,12 @@
     function initParticles() {
         const p = document.getElementById('dust-container');
         if(!p) return;
+        p.innerHTML = '';
         for(let i=0; i<20; i++) {
             let d = document.createElement('div');
             d.className = 'dust-dot';
             d.style.left = Math.random()*100 + '%';
+            d.style.top = Math.random()*100 + '%'; 
             d.style.width = Math.random()*4 + 'px';
             d.style.height = d.style.width;
             d.style.animationDuration = (Math.random()*10 + 10) + 's';
@@ -762,8 +841,26 @@
     }
 
     function updateText() {
-        document.getElementById('verse-text').innerText = document.getElementById('inputVerse').value;
-        document.getElementById('verse-ref').innerText = document.getElementById('inputRef').value;
+        const verse = document.getElementById('inputVerse').value;
+        const ref = document.getElementById('inputRef').value;
+        document.getElementById('verse-text').innerHTML = `${verse}<span id="ref-span">${ref}</span>`;
+        reapplyRefStyles();
+    }
+    
+    function reapplyRefStyles() {
+        const span = document.getElementById('ref-span');
+        if(span) {
+            span.style.fontSize = refSizeVal + 'px';
+            span.style.color = refColorVal;
+            span.style.display = refDisplayBlock ? 'block' : 'inline';
+            if(refDisplayBlock) {
+                span.style.marginTop = refMarginVal + 'px';
+                span.style.marginLeft = '0px';
+            } else {
+                span.style.marginTop = '0px';
+                span.style.marginLeft = refMarginVal + 'px';
+            }
+        }
     }
     
     function updateFooter() {
@@ -818,23 +915,16 @@
     }
 
     /* --- TYPOGRAPHY --- */
-    function adjustFontSize(delta) {} // kept for compat
     function setFontSize(val) { document.getElementById('verse-text').style.fontSize = val + "px"; }
     function setFontWeight(val) { document.getElementById('verse-text').style.fontWeight = val; }
 
     function alignText(posClass) {
         const content = document.getElementById('content-layer');
-        content.classList.remove('pos-center', 'pos-left', 'pos-right', 'pos-top', 'pos-bottom');
+        content.classList.remove('pos-center', 'pos-left', 'pos-right');
         content.classList.add(posClass);
     }
     
-    function nudgeText(x, y) {
-        nudgeX += x; nudgeY += y;
-        document.getElementById('content-layer').style.transform = `translate(${nudgeX}px, ${nudgeY}px)`;
-    }
-    
     function setVerticalAlign(val) { document.getElementById('content-layer').style.justifyContent = val; }
-    function setPadding(val) { document.getElementById('content-layer').style.padding = val + "px"; }
 
     function setOverlayOpacity(val) { overlayOp = val / 100; setOverlayGradient(); }
     function setOverlayGradient() {
@@ -859,8 +949,6 @@
     function setColor(c) {
         const t = document.getElementById('verse-text');
         t.style.color = c; t.style.backgroundImage = 'none'; t.style.webkitTextFillColor = 'initial';
-        document.getElementById('verse-ref').style.color = c;
-        document.getElementById('divider-line').style.background = c;
     }
     
     function setTextGradient(type) {
@@ -886,15 +974,34 @@
     }
     function setTextTransform(val) { document.getElementById('verse-text').style.textTransform = val; }
     
-    /* REFERENCE STYLING */
-    function setRefSize(val) { document.getElementById('verse-ref').style.fontSize = val + 'px'; }
-    function setRefMargin(val) { document.getElementById('verse-ref').style.marginTop = val + 'px'; }
-    function setRefColor(val) { document.getElementById('verse-ref').style.color = val; }
-    function setRefAlign(val) { document.getElementById('verse-ref').style.display = 'block'; document.getElementById('verse-ref').style.textAlign = val; document.getElementById('verse-ref').style.width = '100%';}
-
-    function setTextStroke(val) { strokeW = val; updateStroke(); }
-    function updateStroke() { document.getElementById('verse-text').style.webkitTextStroke = `${strokeW}px ${strokeC}`; }
+    /* REFERENCE STYLING VARIABLES */
+    function setRefSize(val) { refSizeVal = val; reapplyRefStyles(); }
+    function setRefColor(val) { refColorVal = val; reapplyRefStyles(); }
+    function setRefMargin(val) { refMarginVal = val; reapplyRefStyles(); }
     
+    function toggleRefLayout() {
+        refDisplayBlock = !refDisplayBlock;
+        const btn = document.getElementById('refLayoutBtn');
+        btn.innerText = refDisplayBlock ? "Layout: Block (New Line)" : "Layout: Inline";
+        reapplyRefStyles();
+    }
+
+    /* MORE CONTROLS (EFFECTS) */
+    function setTextOpacity(val) { document.getElementById('verse-text').style.opacity = val/100; }
+    
+    let tRotate = 0; let tSkew = 0;
+    function setTextRotation(val) { tRotate = val; updateTextTransform(); }
+    function setTextSkew(val) { tSkew = val; updateTextTransform(); }
+    function updateTextTransform() {
+        document.getElementById('content-layer').style.transform = `rotate(${tRotate}deg) skew(${tSkew}deg)`;
+    }
+
+    function setTextStrokeWidth(val) { strokeW = val; updateTextStroke(); }
+    function setTextStrokeColor(val) { strokeC = val; updateTextStroke(); }
+    function updateTextStroke() {
+        document.getElementById('verse-text').style.webkitTextStroke = `${strokeW}px ${strokeC}`;
+    }
+
     function setShadowX(val) { shadowX = val; updateShadow(); }
     function setShadowY(val) { shadowY = val; updateShadow(); }
     function setShadowBlur(val) { shadowBlur = val; updateShadow(); }
@@ -919,12 +1026,6 @@
         return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255,255,255';
     }
     
-    /* DIVIDER LINE */
-    function toggleDivider() { 
-        const d = document.getElementById('divider-line');
-        d.style.display = d.style.display === 'block' ? 'none' : 'block';
-    }
-
     /* CARD DESIGN CONTROLS */
     function setCardBorderWidth(val) { cardBorderW = val; updateCardBorder(); }
     function setCardBorderColor(val) { cardBorderC = val; updateCardBorder(); }
@@ -938,26 +1039,18 @@
     }
     function setCardRadius(val) {
         document.getElementById('mainCard').style.borderRadius = val + 'px';
-        document.querySelector('.inner-frame').style.borderRadius = (val - 10) + 'px';
+        document.querySelector('.inner-frame').style.borderRadius = Math.max(0, val - 10) + 'px';
     }
 
     /* FILTERS & EFFECTS */
     function updateFilters() {
-        const groups = document.querySelectorAll('.ctrl-group');
-        // Find group 3 in BG tab
-        const inputsF = document.getElementById('tab-background').getElementsByTagName('input');
-        // Inputs: 0:file 1:panX 2:panY 3:zoom 4:bri 5:con 6:blur 7:vig 8:noise 9:ovStart 10:ovEnd 11:ovOp
-        // This is fragile if HTML changes. Let's use layout logic in future. 
-        // For now, in "Filters & FX" group:
-        // Bri is 4th range in that tab? No.
-        // Let's just grab by specific parent logic
-        const container = document.getElementById('tab-background');
-        const ranges = container.querySelectorAll('input[type=range]');
-        // 0:PanX 1:PanY 2:Zoom 3:Bri 4:Con 5:Blur 6:Vig 7:Noise 8:OvOp 9:BorderW 10:Rad
+        const groups = document.getElementById('tab-background').querySelectorAll('.ctrl-group');
+        const filterGroup = groups[2]; 
+        const ranges = filterGroup.querySelectorAll('input[type=range]');
         
-        const f_bri = ranges[3].value;
-        const f_con = ranges[4].value;
-        const f_blur = ranges[5].value;
+        const f_bri = ranges[0].value;
+        const f_con = ranges[1].value;
+        const f_blur = ranges[2].value;
         
         document.getElementById('bg-layer').style.filter = `brightness(${f_bri}%) contrast(${f_con}%) blur(${f_blur}px)`;
     }
@@ -987,7 +1080,6 @@
         if(type === 'canvas') t.style.backgroundImage = 'url("https://www.transparenttextures.com/patterns/canvas-orange.png")';
     }
 
-
     /* DECOR */
     function setIcon(type) {
         document.querySelectorAll('.card-icon').forEach(i => i.style.display = 'none');
@@ -1012,6 +1104,7 @@
         clone.style.transform = "none"; clone.style.boxShadow = "none"; clone.style.margin = "0"; clone.style.position = "fixed"; clone.style.left = "-9999px"; clone.style.top = "0"; clone.style.zIndex = "9999";
         const banner = clone.querySelector('.banner');
         banner.style.backdropFilter = "none"; banner.style.webkitBackdropFilter = "none";
+        
         if (!banner.classList.contains('b-solid') && !banner.classList.contains('b-gold')) {
              banner.style.background = "rgba(80, 80, 80, 0.9)"; banner.style.border = "1px solid rgba(255,255,255,0.3)";
         }
