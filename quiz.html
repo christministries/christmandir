@@ -1,10 +1,11 @@
-<!quiz html>
+<!DOCTYPE html>
 <html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Christ Mandir Bible Quiz</title>
     
+            <link rel="icon" type="image/jpeg" href="https://static.wixstatic.com/media/be4f11_bfb077792aa04801bea4f29807adbb43~mv2.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -19,7 +20,7 @@
             --wrong: #e53935;
             --bg-color: #f0f2f5;
             --card-bg: rgba(255, 255, 255, 0.95);
-            --glass-nav: rgba(255, 255, 255, 0.85);
+            --glass-nav: rgba(255, 255, 255, 0.95);
             --text-main: #2d3436;
             --text-light: #636e72;
             
@@ -67,25 +68,26 @@
         /* MOBILE NAV */
         @media (max-width: 767px) {
             header {
-                bottom: 20px; left: 50%; transform: translateX(-50%);
-                width: 92%; max-width: 380px; height: 70px;
+                bottom: 0; left: 0; /* Sticked to bottom, full width */
+                width: 100%; height: 65px;
                 background: var(--glass-nav);
                 backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-                border-radius: 40px;
-                box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
-                border: 1px solid rgba(255,255,255,0.6);
+                border-radius: 0; /* NO RADIUS */
+                box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+                border-top: 1px solid rgba(255,255,255,0.6);
             }
             .logo { display: none; }
-            .nav-links { height: 100%; justify-content: space-evenly; padding: 0 10px; }
-            .nav-links li { position: relative; }
-            .nav-links li a { flex-direction: column; font-size: 0.7rem; color: var(--text-light); gap: 4px; padding: 5px 10px; }
-            .nav-links li a span { font-size: 1.5rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+            .nav-links { height: 100%; justify-content: space-between; padding: 0 5px; }
+            .nav-links li { position: relative; flex: 1; }
+            .nav-links li a { flex-direction: column; font-size: 0.65rem; color: var(--text-light); gap: 2px; padding: 8px 0; height: 100%; }
+            .nav-links li a span { font-size: 1.4rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
             
-            .nav-links li a.active { color: var(--primary); }
-            .nav-links li a.active span { transform: translateY(-5px) scale(1.1); filter: drop-shadow(0 5px 5px rgba(0,137,123,0.3)); }
+            .nav-links li a.active { color: var(--primary); background: transparent; box-shadow: none; }
+            .nav-links li a.active span { transform: translateY(-3px) scale(1.1); color: var(--primary); }
             
             .quiz-container { height: 100vh !important; }
-            .welcome-page, .quiz-body-container, .result-screen { padding-bottom: 120px !important; }
+            /* Adjusted padding bottom to account for fixed nav bar height */
+            .welcome-page, .quiz-body-container, .result-screen { padding-bottom: 80px !important; }
             .btn-group { flex-direction: row !important; gap: 12px; }
             .btn-action { font-size: 0.95rem !important; padding: 14px !important; }
         }
@@ -364,8 +366,6 @@
         }
     }, {once:true});
 
-    // NOTE: Removed global click listener for 'ui-click'. Sounds only play on specific events.
-
     function playSound(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
 
@@ -377,7 +377,6 @@
         gainNode.connect(masterGain);
 
         if (type === 'ui-click') {
-            // Renamed internally to tick-score for clarity, used in score counting
             osc.type = 'sine';
             osc.frequency.setValueAtTime(800, now);
             osc.frequency.exponentialRampToValueAtTime(1200, now + 0.05);
@@ -387,7 +386,6 @@
             osc.stop(now + 0.05);
         }
         else if (type === 'tick') {
-            // Warning tick (last 5 seconds)
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(1200, now);
             gainNode.gain.setValueAtTime(0.1, now);
@@ -396,7 +394,6 @@
             osc.stop(now + 0.05);
         }
         else if (type === 'timeout') {
-            // Timer Runout
             osc.type = 'sawtooth';
             osc.frequency.setValueAtTime(300, now);
             osc.frequency.linearRampToValueAtTime(50, now + 0.5);
@@ -406,12 +403,10 @@
             osc.stop(now + 0.5);
         }
         else if (type === 'correct') {
-            // Correct Answer
             playNote(523.25, now, 0.1, 'sine');
             playNote(659.25, now + 0.05, 0.2, 'sine');
         } 
         else if (type === 'wrong') {
-            // Wrong Answer
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(350, now);
             osc.frequency.exponentialRampToValueAtTime(40, now + 0.3);
@@ -421,12 +416,11 @@
             osc.stop(now + 0.3);
         }
         else if (type === 'win') {
-            // Winner Page Fanfare
             const speed = 0.1;
-            playNote(523.25, now, speed, 'triangle'); // C
-            playNote(659.25, now + speed, speed, 'triangle'); // E
-            playNote(783.99, now + speed*2, speed, 'triangle'); // G
-            playNote(1046.50, now + speed*3, 0.4, 'triangle'); // C (High)
+            playNote(523.25, now, speed, 'triangle'); 
+            playNote(659.25, now + speed, speed, 'triangle'); 
+            playNote(783.99, now + speed*2, speed, 'triangle'); 
+            playNote(1046.50, now + speed*3, 0.4, 'triangle'); 
         }
     }
 
@@ -446,7 +440,69 @@
     // --- 2. QUESTION BANK (FRESH & UNIQUE) ---
     const masterQuestionBank = [
         // ================= EASY LEVEL (Fresh Basics) =================
-        { q: "దేవుడు ఆదామును 'నీవు ఎక్కడ ఉన్నావు?' అని ఎప్పుడు అడిగాడు?", a: ["ఆదాము పాపం చేసి దాక్కున్నప్పుడు", "ఉదయం పూట", "సాయంత్రం పూట", "మధ్యాహ్నం పూట"], c: 0, level: "easy" },
+        { q: "బైబిల్లో ఎంతమంది దొంగలు యేసుతో పాటు సిలువ వేయబడ్డారు?", a: ["ఇద్దరు", "ముగ్గురు", "ఒకరు", "నలుగురు"], c: 0, level: "easy" },
+        { q: "యేసుక్రీస్తు ఏ రోజున దేవాలయంలోని విక్రయించేవారిని వెళ్లగొట్టాడు?", a: ["యెరూషలేము ప్రవేశం తరువాత", "పుట్టినప్పుడు", "బాప్తిస్మం రోజున", "రాత్రి పూట"], c: 0, level: "easy" },
+        { q: "బైబిల్లో 'విత్తనము' (Seed) దేనికి సాదృశ్యంగా చెప్పబడింది?", a: ["దేవుని వాక్యము", "డబ్బు", "మనుష్యులు", "పాపము"], c: 0, level: "easy" },
+        { q: "పిలాతు యేసును విడిచిపెట్టడానికి బదులుగా ఏ ఖైదీని విడుదల చేశాడు?", a: ["బర్అబ్బా", "యూదా", "పేతురు", "బార్తిమయి"], c: 0, level: "easy" },
+        { q: "యేసుక్రీస్తు సమాధికి కావలి ఉన్నది ఎవరు?", a: ["రోమా సైనికులు", "శిష్యులు", "దూతలు", "యాజకులు"], c: 0, level: "easy" },
+        { q: "యోహాను సువార్త ప్రకారం యేసు చేసిన రెండవ అద్భుతం ఏది?", a: ["ప్రధాని కుమారుని బాగుచేయుట", "నీటిని ద్రాక్షారసంగా మార్చుట", "గుడ్డివానికి చూపునిచ్చుట", "నడచుట"], c: 0, level: "easy" }, 
+        { q: "సౌలు (పౌలు) ఏ తెగకు (Tribe) చెందినవాడు?", a: ["బెన్యామీను", "యూదా", "లేవి", "యోసేపు"], c: 0, level: "easy" },
+        { q: "బైబిల్లో 'వాక్యము' (The Word) అని ఎవరిని పిలుస్తారు?", a: ["యేసుక్రీస్తు", "మోషే", "దావీదు", "యోహాను"], c: 0, level: "easy" },
+        { q: "ఇశ్రాయేలీయులు ఏ సముద్రం గుండా పొడి నేల మీద నడిచారు?", a: ["ఎర్ర సముద్రం", "మధ్యధరా సముద్రం", "గలిలయ సముద్రం", "మృత సముద్రం"], c: 0, level: "easy" },
+        { q: "మోషే సీనాయి కొండ మీద ఎన్ని రోజులు ఉన్నాడు?", a: ["40 పగలు, 40 రాత్రులు", "7 రోజులు", "3 రోజులు", "10 రోజులు"], c: 0, level: "easy" },
+        { q: "బైబిల్లో 'కన్నీటి ప్రవక్త' (Weeping Prophet) ఎవరు?", a: ["యిర్మీయా", "యెషయా", "దానియేలు", "యోనా"], c: 0, level: "easy" },
+        { q: "సొలొమోను దేవాలయం కట్టడానికి ఎవరు సహాయం చేశారు?", a: ["హీరాము (Tyre King)", "ఫరో", "నెబుకద్నెజరు", "సైరస్"], c: 0, level: "easy" },
+        { q: "దావీదు ఎవరిని చంపి అతని భార్యను చేసుకున్నాడు?", a: ["ఊరియా", "నాబాలు", "సౌలు", "అబ్నేరు"], c: 0, level: "easy" },
+        { q: "యేసుక్రీస్తు ఎవరిని 'అబద్ధమునకు జనకుడు' (Father of Lies) అని పిలిచాడు?", a: ["అపవాది (సాతాను)", "కయీను", "యూదా", "హేరోదు"], c: 0, level: "easy" },
+        { q: "పరలోక రాజ్యంలో గొప్పవాడు ఎవడు?", a: ["తన్ను తాను తగ్గించుకొనువాడు", "ధనవంతుడు", "బలవంతుడు", "జ్ఞాని"], c: 0, level: "easy" },
+        { q: "యేసుక్రీస్తు ఏ భాషలో 'ఏలీ ఏలీ లామా సబక్తానీ' అని అరిచాడు?", a: ["హెబ్రీ (అరామిక్)", "గ్రీకు", "లాటిన్", "తెలుగు"], c: 0, level: "easy" },
+        { q: "యేసుక్రీస్తు ఎవరిని 'బండ' (Rock) అని పిలిచాడు?", a: ["పేతురు", "యోహాను", "యాకోబు", "తోమా"], c: 0, level: "easy" },
+        { q: "బైబిల్లో మొత్తం ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["66", "39", "27", "72"], c: 0, level: "easy" },
+        { q: "పాత నిబంధనలో ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["39", "27", "66", "12"], c: 0, level: "easy" },
+        { q: "క్రొత్త నిబంధనలో ఎన్ని పుస్తకాలు ఉన్నాయి?", a: ["27", "39", "66", "4"], c: 0, level: "easy" },
+        { q: "యేసుక్రీస్తు శిష్యులలో 'వైద్యుడు' ఎవరు?", a: ["లూకా", "మత్తయి", "మార్కు", "యోహాను"], c: 0, level: "easy" },
+        { q: "పౌలు ఏ పట్టణంలో పుట్టాడు?", a: ["తార్సు", "యెరూషలేము", "రోమ్", "అంతియొకయ"], c: 0, level: "easy" },
+        { q: "మొదటి మానవుడు ఆదామును దేవుడు దేనితో చేశాడు?", a: ["మట్టి", "రాయి", "చెక్క", "నీరు"], c: 0, level: "easy" },
+        { q: "కయీను తన తమ్ముడైన హేబెలును ఎక్కడ చంపాడు?", a: ["పొలములో", "ఇంటిలో", "దేవాలయంలో", "నది దగ్గర"], c: 0, level: "easy" },
+        { q: "నోవహు ఓడ తలుపు ఎవరు మూశారు?", a: ["దేవుడు (యెహోవా)", "నోవహు", "దూత", "గాలి"], c: 0, level: "easy" },
+        { q: "అబ్రాహాము కుమారుడు ఇస్సాకుకు భార్యను ఎక్కడి నుండి తెచ్చారు?", a: ["హారాను (స్వదేశం)", "ఐగుప్తు", "కనాను", "సొదొమ"], c: 0, level: "easy" },
+        { q: "యాకోబు పన్నెండు మంది కుమారులలో చిన్నవాడు ఎవరు?", a: ["బెన్యామీను", "యోసేపు", "యూదా", "రూబెను"], c: 0, level: "easy" },
+        { q: "మోషే చేతిలోని కర్ర పాముగా మారినప్పుడు మోషే ఏమి చేశాడు?", a: ["భయపడి పారిపోయాడు", "దాన్ని పట్టుకున్నాడు", "దాన్ని చంపాడు", "చూస్తూ ఉండిపోయాడు"], c: 0, level: "easy" },
+        { q: "ఇశ్రాయేలీయులు అరణ్యంలో దేవునికి కోపం తెప్పించి ఏ విగ్రహం చేసుకున్నారు?", a: ["బంగారు దూడ", "బయలు విగ్రహం", "రాతి స్తంభం", "చెక్క బొమ్మ"], c: 0, level: "easy" },
+        { q: "యెహోషువ నాయకత్వంలో ఇశ్రాయేలీయులు ఏ నదిని దాటారు?", a: ["యొర్దాను", "నైలు", "యూఫ్రటీస్", "రొద్ద"], c: 0, level: "easy" },
+
+        // ================= HARD LEVEL (Unique & Obscure - Zero Repeats) =================
+        { q: "నిర్గమకాండంలో దేవుని మందిర వస్తువులు చేయడానికి పిలువబడిన శిల్పి?", a: ["బెసలేలు", "హూరాము", "అహోలియాబు", "కహాతీ"], c: 0, level: "hard" }, // Bezalel
+        { q: "బెసలేలుకు సహాయకుడు ఎవరు?", a: ["అహోలియాబు", "కలేబు", "యెఫున్నె", "నహషోను"], c: 0, level: "hard" }, // Oholiab
+        { q: "మోయాబు రాజు అయిన 'ఎగ్లోను' (Eglon) ఎలా ఉండేవాడు?", a: ["మిక్కిలి స్థూలకాయుడు (Very fat)", "పొడగరి", "అందగాడు", "కుంటివాడు"], c: 0, level: "hard" },
+        { q: "ఎగ్లోను రాజును చంపిన ఎడమ చేతి వాటం గల న్యాయాధిపతి?", a: ["ఏహూదు", "గిద్యోను", "సంసోను", "బారాకు"], c: 0, level: "hard" },
+        { q: "సౌలు సైన్యాధిపతి (Commander) ఎవరు?", a: ["అబ్నేరు", "యోవాబు", "అమాశ", "బెనాయా"], c: 0, level: "hard" },
+        { q: "దావీదుకు అరణ్యంలో ఆహారం పంపిన గిలియాదు వృద్ధుడు?", a: ["బర్జిల్లయి", "షోబీ", "మాకీరు", "మీకా"], c: 0, level: "hard" }, // Barzillai
+        { q: "దావీదు కుమారుడైన అబ్షాలోము సైన్యాధిపతి ఎవరు?", a: ["అమాశ", "యోవాబు", "అబ్నేరు", "అబీషై"], c: 0, level: "hard" }, // Amasa
+        { q: "యోవాబు ఎవరిని గడ్డం పట్టుకుని ముద్దు పెట్టుకున్నట్లు నటించి చంపాడు?", a: ["అమాశను", "అబ్నేరును", "అబ్షాలోమును", "ఊరియాను"], c: 0, level: "hard" },
+        { q: "సొలొమోను దేవాలయ స్తంభాలకు (యాకీను, బోయజు) పని చేసిన ఇత్తడి పనివాడు ఎవరు?", a: ["హీరాము (Tyre Craftsman)", "బెసలేలు", "అహోలియాబు", "తూబల్కయీను"], c: 0, level: "hard" }, // Hiram/Huram (not the king, the craftsman)
+        { q: "హిజ్కియా కుమారుడైన మనష్షేను బబులోను రాజులు ఎలా తీసుకువెళ్లారు?", a: ["ముక్కులకు గాలము వేసి, సంకెళ్లతో", "రథము మీద", "గౌరవంగా", "చంపి"], c: 0, level: "hard" },
+        { q: "పౌలు సువార్త ప్రకటించినప్పుడు సైప్రస్ (Cyprus) ద్వీపపు అధికారి (Proconsul) ఎవరు?", a: ["సెర్గియు పౌలు", "గల్లియోను", "ఫేలిక్సు", "ఫేస్తు"], c: 0, level: "hard" },
+        { q: "సైప్రస్ ద్వీపంలో పౌలును ఎదిరించిన మాంత్రికుడు ఎవరు?", a: ["బర్యేసు (ఎలుమ)", "సీమోను", "స్కేవ", "దేమేత్రియ"], c: 0, level: "hard" },
+        { q: "పౌలుకు ఆత్మీయ కుమారుడైన తిమోతి తల్లి పేరు?", a: ["యూనీకే", "లోయి", "దమరి", "ప్రిస్కిల్లా"], c: 0, level: "hard" },
+        { q: "తిమోతి అమ్మమ్మ (Grandmother) పేరు?", a: ["లోయి", "యూనీకే", "అన్నా", "మరియ"], c: 0, level: "hard" },
+        { q: "యూదులు పౌలును చంపడానికి కుట్ర పన్నగా, దానిని పౌలుకు చెప్పినది ఎవరు?", a: ["పౌలు మేనల్లుడు (Sister's son)", "ఒక సైనికుడు", "లూకా", "తిమోతి"], c: 0, level: "hard" },
+        { q: "పౌలును విచారించిన గవర్నర్ ఫేలిక్సు భార్య పేరు?", a: ["ద్రుసిల్ల", "బెర్నీకే", "హేరోదియ", "సలోమే"], c: 0, level: "hard" },
+        { q: "అగ్రిప్ప రాజు సహోదరి (Sister) పేరు?", a: ["బెర్నీకే", "ద్రుసిల్ల", "క్లౌదియ", "యూలియ"], c: 0, level: "hard" },
+        { q: "పౌలు రోమ్ వెళ్తుండగా ఓడలో ఎంతమంది ప్రయాణికులు ఉన్నారు?", a: ["276 మంది", "120 మంది", "300 మంది", "50 మంది"], c: 0, level: "hard" },
+        { q: "మెలితే (Malta) ద్వీపంలో పాము కరిచినప్పుడు పౌలు ఏమి చేశాడు?", a: ["దానిని మంటలో దులిపివేశాడు", "భయపడ్డాడు", "మందు వేసుకున్నాడు", "చనిపోయాడు"], c: 0, level: "hard" },
+        { q: "మెలితే ద్వీపపు అధికారి అయిన పుబ్లియు తండ్రికి పౌలు ఏ వ్యాధిని బాగుచేశాడు?", a: ["జ్వరము మరియు రక్తభేది (Dysentery)", "కుష్ఠము", "గజ్జి", "గుడ్డితనం"], c: 0, level: "hard" },
+        { q: "పౌలు రోమ్ లో ఉన్నప్పుడు అతని దగ్గరకు వచ్చిన 'ఒనేసిము' అనే దాసుని యజమానుడు ఎవరు?", a: ["ఫిలేమోను", "తిమోతి", "తీతు", "అకుల"], c: 0, level: "hard" },
+        { q: "2 తిమోతి పత్రికలో పౌలు ఎవరిని 'కంచు పనివాడు' (Coppersmith) అని చెప్పి, వాడు నాకు చాలా కీడు చేశాడన్నాడు?", a: ["అలెక్సాండరు", "హెర్మొగెనే", "ఫిగేలు", "దేమ"], c: 0, level: "hard" },
+        { q: "అపోస్తులుడైన పౌలు ఎవరిని 'ఇహలోకమును ప్రేమించి నన్ను విడిచి వెళ్ళిపోయాడు' అన్నాడు?", a: ["దేమ", "లూకా", "మార్కు", "తీతు"], c: 0, level: "hard" },
+        { q: "యూదా పత్రికలో 'వీరు దారి తప్పిపోయిన నక్షత్రములు' (Wandering Stars) అని ఎవరిని ఉద్దేశించి అన్నాడు?", a: ["భక్తిహీనులైన బోధకులు", "దూతలు", "రాజకీయ నాయకులు", "అన్యజనులు"], c: 0, level: "hard" },
+        { q: "ప్రకటన గ్రంథంలో 'అబద్ధ ప్రవక్త' (False Prophet) దేని ముందు అద్భుతాలు చేశాడు?", a: ["మృగము (Beast) ఎదుట", "దేవుని ఎదుట", "యెరూషలేములో", "సముద్రం మీద"], c: 0, level: "hard" },
+        { q: "ప్రకటన గ్రంథంలో 200 కోట్ల సైన్యం దేని మీద కూర్చుని ఉంది?", a: ["గుర్రముల మీద", "రథాల మీద", "మేఘాల మీద", "సింహాల మీద"], c: 0, level: "hard" },
+        { q: "ప్రకటన గ్రంథంలో 'గొర్రెపిల్ల' (Lamb) వలె ఉండి 'ఘటసర్పము' (Dragon) వలె మాట్లాడునది ఏది?", a: ["భూమిలో నుండి వచ్చిన మృగము", "సముద్ర మృగము", "అబద్ధ ప్రవక్త", "దయ్యము"], c: 0, level: "hard" },
+        { q: "ప్రకటన గ్రంథంలో 'యూఫ్రటీస్' నది ఎండిపోవుట ఏ పాత్ర కుమ్మరించినప్పుడు జరుగుతుంది?", a: ["ఆరవ పాత్ర", "ఏడవ పాత్ర", "మొదటి పాత్ర", "నాలుగవ పాత్ర"], c: 0, level: "hard" },
+        { q: "ప్రకటన గ్రంథంలో 'దేవుని ఉగ్రత' దేనితో పోల్చబడింది?", a: ["ద్రాక్షారసము (Wine of Wrath)", "అగ్ని", "కత్తి", "వరద"], c: 0, level: "hard" },
+        { q: "పౌలును యూదుల నుండి కాపాడి కైసరయకు పంపిన సహస్రాధిపతి పేరు?", a: ["క్లౌదియ లూసియ (Claudius Lysias)", "కార్నేలి", "జూలియస్", "పుబ్లియు"], c: 0, level: "hard" },
+          { q: "దేవుడు ఆదామును 'నీవు ఎక్కడ ఉన్నావు?' అని ఎప్పుడు అడిగాడు?", a: ["ఆదాము పాపం చేసి దాక్కున్నప్పుడు", "ఉదయం పూట", "సాయంత్రం పూట", "మధ్యాహ్నం పూట"], c: 0, level: "easy" },
         { q: "కాపరి లేని గొర్రెల వలె ఉన్న ప్రజలను చూసి యేసు ఏమి పొందాడు?", a: ["కనికరము (Compassion)", "కోపము", "విసుగు", "సంతోషం"], c: 0, level: "easy" },
         { q: "యేసుక్రీస్తు ఎవరిని 'అబద్ధమునకు జనకుడు' (Father of Lies) అని చెప్పాడు?", a: ["అపవాది (సాతాను)", "కయీను", "ఫరో", "యూదా"], c: 0, level: "easy" },
         { q: "బైబిల్లో 'విత్తనము' దేనికి సాదృశ్యం?", a: ["దేవుని వాక్యము", "డబ్బు", "విశ్వాసం", "పంట"], c: 0, level: "easy" },
@@ -2107,7 +2163,6 @@
         { q: "ప్రకటన గ్రంథంలో 'దేవుని ఉగ్రత' దేనితో పోల్చబడింది?", a: ["ద్రాక్షారసము (Wine of Wrath)", "అగ్ని", "కత్తి", "వరద"], c: 0, level: "hard" },
         { q: "పౌలును యూదుల నుండి కాపాడి కైసరయకు పంపిన సహస్రాధిపతి పేరు?", a: ["క్లౌదియ లూసియ (Claudius Lysias)", "కార్నేలి", "జూలియస్", "పుబ్లియు"], c: 0, level: "hard" }
     ];
-
 
     let quizSet = [], currentQ = 0, score = 0, timer, timeLimit = 15, userAnswers = [];
 
