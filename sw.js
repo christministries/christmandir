@@ -1,6 +1,6 @@
 // CHANGE THIS VERSION NUMBER EVERY TIME YOU UPDATE YOUR CODE
 // Example: 'christ-mandir-v2', 'christ-mandir-v3', etc.
-const CACHE_NAME = 'christ-mandir-v3.4';
+const CACHE_NAME = 'christ-mandir-v3.5';
 
 // List of files to cache immediately
 const ASSETS_TO_CACHE = [
