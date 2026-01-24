@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Daily Verse - Christ Mandir</title>
     
+        <link rel="icon" type="image/jpeg" href="https://static.wixstatic.com/media/be4f11_bfb077792aa04801bea4f29807adbb43~mv2.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@300;500;700;900&family=Playfair+Display:wght@700&family=Lora:ital,wght@1,600&family=Montserrat:wght@800&family=Great+Vibes&family=Oswald:wght@500&family=Merriweather:wght@300&family=Roboto+Slab:wght@600&family=Hind+Guntur:wght@300;400;600;700&family=Tenali+Ramakrishna&family=Suranna&family=Ramabhadra&family=Mallanna&family=Mandali&family=NTR&family=Peddana&family=Timmana&family=Dhurjati&family=Gurajada&family=Lakki+Reddy&family=Ravi+Prakash&family=Sree+Krushnadevaraya&family=Ponnala&display=swap" rel="stylesheet">
@@ -24,6 +25,7 @@
             --group-bg: #f8f9fa;
             --border-color: #e9ecef;
             --font-head: 'Poppins', sans-serif;
+            
             --font-body: 'Inter', sans-serif;
         }
         
@@ -294,13 +296,17 @@
 
         /* --- 5. BOTTOM NAV (Mobile Only) --- */
         .bottom-nav {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 92%; max-width: 380px; height: 70px;
+            position: fixed; 
+            bottom: 0; 
+            left: 0;
+            width: 100%; 
+            height: 70px;
             background: var(--glass-nav);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-radius: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 0; /* No rounded corners */
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05); /* Top shadow */
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.6);
             display: flex; justify-content: space-evenly; align-items: center;
             z-index: 1000;
         }
