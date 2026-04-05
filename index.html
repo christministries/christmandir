@@ -97,7 +97,6 @@
             body { padding-top: 0; padding-bottom: 90px; } 
             
             header {
-                /* UPDATED: Stick to bottom fully with NO curves */
                 top: auto; 
                 bottom: 0; 
                 left: 0; 
@@ -108,7 +107,7 @@
                 background: rgba(255, 255, 255, 0.96); 
                 backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
                 
-                border-radius: 0; /* CHANGED: Set to 0 for square corners */
+                border-radius: 0; 
                 
                 box-shadow: 0 -5px 20px rgba(0,0,0,0.05); 
                 border: none;
@@ -149,11 +148,11 @@
            ========================================= */
         #welcome-banner {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.75); /* Darker dim for focus */
+            background-color: rgba(0, 0, 0, 0.75); 
             z-index: 5000;
             display: flex; justify-content: center; align-items: center;
             opacity: 1; transition: opacity 0.5s ease;
-            cursor: pointer; /* Indicates clickable background */
+            cursor: pointer; 
         }
         
         .banner-content {
@@ -166,7 +165,7 @@
             border: 3px solid var(--gold);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: default; /* Prevents clicks inside the box from closing */
+            cursor: default; 
         }
 
         @keyframes popIn {
@@ -182,7 +181,7 @@
         .close-banner:hover { color: var(--xmas-red); transform: scale(1.1); }
 
         .banner-title {
-            font-family: var(--font-script); font-size: 3.5rem; color: var(--xmas-red);
+            font-family: var(--font-script); font-size: 3.5rem; color: var(--primary-dark);
             margin-bottom: 5px; line-height: 1.1;
         }
         .banner-year {
@@ -249,8 +248,6 @@
             max-width: 800px; margin: 0 auto 30px; color: #eee; font-size: 1rem; line-height: 1.7; font-family: var(--font-body);
         }
 
-        
-
         /* SERVICES */
         #services {
             padding: 80px 5%; text-align: center;
@@ -271,12 +268,37 @@
         .service-card span { transition: 0.4s; display: inline-block; }
         .service-card:hover span { transform: scale(1.2) rotate(10deg); }
 
-        /* PASTORAL */
-        #pastoral-team {
+        /* ABOUT US & PASTORAL TEAM */
+        #about-us {
             padding: 80px 5%; text-align: center;
             background: linear-gradient(rgba(255,253,232,0.9), rgba(255,253,232,0.9)), url('https://www.transparenttextures.com/patterns/christmas-magic.png');
             background-color: #fffde7;
         }
+        
+        .about-text-container {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--gold);
+            text-align: left;
+            color: #444;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .about-text-container h3 {
+            color: var(--primary-dark); font-family: var(--font-head); font-size: 1.8rem; text-align: center; margin-bottom: 15px;
+        }
+
+        .about-text-container p { margin-bottom: 15px; }
+
+        .about-quote {
+            font-style: italic; color: #555; background: #fdfaf0; padding: 15px 20px; border-radius: 10px; border-left: 3px solid var(--gold); margin-bottom: 15px; font-size: 0.95rem;
+        }
+
         .pastor-flex { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;}
 
         .pastor-card {
@@ -392,6 +414,36 @@
             .banner-year { font-size: 2.5rem; }
             .banner-msg { font-size: 0.9rem; }
             .banner-content { padding: 25px 15px; }
+
+            /* PASTORAL CARDS MOBILE FIX (SIDE BY SIDE) */
+            .pastor-flex {
+                flex-direction: row; /* Force them to align side by side */
+                gap: 15px; /* Reduce gap to fit both cards nicely */
+                justify-content: space-between;
+                flex-wrap: nowrap; /* Prevent wrapping onto the next line */
+            }
+            
+            .pastor-card {
+                width: 48%; /* 50% width minus gap compensation */
+                padding: 15px 10px;
+            }
+
+            .pastor-img-container {
+                width: 80px; /* Scale down the photo container */
+                height: 80px;
+                border-width: 3px; /* Slightly thinner border */
+                margin-bottom: 10px;
+            }
+            
+            .pastor-info h3 { font-size: 0.9rem; }
+            .pastor-info p { font-size: 0.7rem; }
+            
+            /* Adjust padding for the new About Us text container */
+            .about-text-container {
+                padding: 20px 15px;
+                font-size: 0.95rem;
+            }
+            .about-text-container h3 { font-size: 1.4rem; }
         }
 
         /* Modal */
@@ -406,13 +458,11 @@
         <div class="banner-content">
             <span class="close-banner" onclick="document.getElementById('welcome-banner').style.opacity = '0'; setTimeout(()=> {document.getElementById('welcome-banner').style.display='none'; document.body.classList.remove('no-scroll');}, 500);">×</span>
             
-            <h2 class="banner-title">Lent<br>Days</h2>
+            <h2 class="banner-title">Happy<br>Easter</h2>
             <div class="banner-year">2026</div>
             <p class="banner-msg">
-                Palm Sunday: March 29, 2026 <br>Holy Thursday (Maundy Thursday): April 2, 2026<br>
-
-Good Friday: April 3, 2026<br>
-Easter Sunday: April 5, 2026<br>May this year bring you abundant peace, joy, and blessings.
+                "I am the resurrection and the life. The one who believes in me will live, even though they die." <br><strong style="color:var(--primary-dark)">- John 11:25</strong><br><br>
+                May the miracle of Easter bring you renewed hope, faith, and profound joy. Wishing you and your family a blessed Easter season!
             </p>
         </div>
     </div>
@@ -443,7 +493,7 @@ Easter Sunday: April 5, 2026<br>May this year bring you abundant peace, joy, and
                     
                     <div class="btn-row">
                         <a href="dailyverse.html" class="btn-main">Daily Verse</a>
-                        <a href="#nativity" class="btn-text">Join Us</a>
+                        <a href="#about-us" class="btn-text">About Us</a>
                     </div>
                 </div>
             </div>
@@ -462,7 +512,7 @@ Easter Sunday: April 5, 2026<br>May this year bring you abundant peace, joy, and
 
                 <div class="nativity-footer-text reveal">
                     <p style="color:#ccc; font-size:1.1rem;">
-                       reminds us that this season is about the ultimate gift of love. May the peace of Christ rule in your hearts this Christmas and always.
+                        reminds us that this season is about the ultimate gift of love. May the peace of Christ rule in your hearts this Christmas and always.
                     </p>
                 </div>
             </div>
@@ -497,11 +547,30 @@ Easter Sunday: April 5, 2026<br>May this year bring you abundant peace, joy, and
             </div>
         </section>
 
-        <section id="pastoral-team" class="section-clean">
+        <section id="about-us" class="section-clean">
             <div class="container">
+                
+                <div class="about-text-container reveal">
+                    <h3>Welcome to Our Cherished Community</h3>
+                    <p style="text-align: center; color: var(--gold); font-weight: bold; font-size: 1.1rem; margin-bottom: 25px;">Start with God – seek His will and follow His path.</p>
+                    
+                    <p><strong>Christ Ministries</strong><br>Warm and heartily welcome to you to Christ ministries in different culture and religious land of India.</p>
+                    
+                    <p>Bible says we shall be like Christ. We are the part of in His body, Jesus Christ ministry is our ministry. We are in Him to preach the gospel to all nations, teach God's plan and purpose of In Christ, from Christ, for Christ.</p>
+                    
+                    <div class="about-quote">
+                        "The spirit of the lord is upon me because he has anointed me to preach the gospel to the poor. He has sent me to heal the broken hearted to preach the deliver to captives and recovery of sight to blind to set at liberty those who are oppressed. to preach acceptable year of the lord ..... today this scripture is fulfilled in your hearing" <strong>(Luke 4:18)</strong>
+                    </div>
+
+                    <div class="about-quote">
+                        And when he had called His twelve disciples to him, He gave them power over unclean spirit to cast them out and to heal all kinds of disease <strong>(Matthew 10:1)</strong>. Then Jesus came and spoke to them out, saying "All authority has been given to me in Heaven and Earth."
+                    </div>
+                </div>
+
                 <div class="section-title reveal">
                     <h2>Pastoral Team</h2>
                 </div>
+                
                 <div class="pastor-flex">
                     <div class="pastor-card reveal">
                         <div class="pastor-img-container">
@@ -639,9 +708,6 @@ Easter Sunday: April 5, 2026<br>May this year bring you abundant peace, joy, and
         // --- 3. WELCOME BANNER LOGIC ---
         // Close when clicking outside the box
         document.getElementById('welcome-banner').addEventListener('click', function(e) {
-            // "this" refers to the background wrapper (#welcome-banner).
-            // If the user clicks the background, e.target is the background.
-            // If they click the white box, e.target is the .banner-content (and we do nothing)
             if (e.target === this) {
                 this.style.opacity = '0';
                 setTimeout(() => {
